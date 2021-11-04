@@ -1,4 +1,4 @@
-# HydropGenerate
+# HydroGenerate
 
 ## Installation Instructions
 
