@@ -41,7 +41,7 @@ conda install -c conda-forge jupyterlab
 ```
 
 **Authors**
-
+```
 Bhaskar Mitra
 
 Juan Gallego-Calderon
@@ -49,3 +49,4 @@ Juan Gallego-Calderon
 Shiloh Elliott
 
 Thomas M. Mosier
+```
