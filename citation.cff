@@ -1,0 +1,19 @@
+Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series
+message: "If you use this software, please cite it as below."
+preferred-citation:
+type: misc
+authors:
+- family-names: "Mitra"
+  given-names: "Bhaskar"
+- family-names: "Gallego-Calderon"
+  given-names: "Juan F"
+- family-names: "Elliott"
+  given-names: "Shiloh N"
+- family-names: "Mosier"
+  given-names: "Thomas M"
+- family-names: "USDOE Office of Energy Efficiency and Renewable Energy"
+title: "Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series"
+version: 1.0.0
+doi: 10.11578/dc.20211112.1
+date-released: 2021-10-01
+url: "https://github.com/IdahoLabResearch/HydroGenerate"
