@@ -55,7 +55,7 @@ Thomas M. Mosier
 
 If you are using our repositpry kindly refer to this [document](https://www.osti.gov/biblio/1829986).
 
-_Bibtex:_
+_Bibtex_
 ```
 
 
