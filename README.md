@@ -53,7 +53,7 @@ Thomas M. Mosier
 
 **Citation**
 
-If you are using our repositpry kindly refer to this [document](https://www.osti.gov/biblio/1829986).
+If you are using our repository kindly refer to this [document](https://www.osti.gov/biblio/1829986).
 
 _Bibtex_
 ```
