@@ -32,7 +32,7 @@ OWNED RIGHTS.
 
 Authors:
 
-Bhaska Mitra
+Bhaskar Mitra
 Juan Gallego-Calderon
-Shiloh Elliot
+Shiloh Elliott
 Thomas Mosier
