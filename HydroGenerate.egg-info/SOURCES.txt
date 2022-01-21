@@ -1,0 +1,9 @@
+LICENSE
+NOTICE.txt
+README.md
+setup.py
+HydroGenerate.egg-info/PKG-INFO
+HydroGenerate.egg-info/SOURCES.txt
+HydroGenerate.egg-info/dependency_links.txt
+HydroGenerate.egg-info/requires.txt
+HydroGenerate.egg-info/top_level.txt
