@@ -17,6 +17,8 @@ import pandas as pd
 from abc import ABC, abstractmethod
 # from datetime import datetime
 # from abc import ABC, abstractmethod
+
+from numbers import Number
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
@@ -81,6 +83,14 @@ def turbine_type_selector(head):
     df1 = df[(head > df.Start) & (head <= df.End)] # Select turbine type based on head
     return df1['Turbine'].to_string(index=False).strip()
 
+# Flow range calculation
+class FlowRange():
+
+    def flowrange_calculator(self, turbine):
+        if isinstance(turbine.flow, Number):
+            range = np.linspace(0.6, 1.2, 18) # the values are %
+            turbine.flow = turbine.flow * range
+
 # Turbine efficiency and sizing
 # Runner diameter for reaction turbines
 class ReactionTurbines():
@@ -118,6 +128,7 @@ class FrancisTurbine(Turbine):
         er = (1 - ep_) * ep     # Efficiency at full load (e_r)
 
         # Efficiencies at flows below and above peak efficiency flow (e_q)
+        FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.flow
         for i in range(len(Q)):
             if (Q[i] < Qp):        # flows below Qd
@@ -143,6 +154,7 @@ class KaplanTurbine(Turbine):
         ed = (0.095 + enq) * (1 - 0.789 * d**(-0.2))         # Runner size adjustment to peak efficiency (^e_d)
         ep = (0.905 - enq + ed) - 0.0305 + 0.005 * turbine.Rm      # Turbine peak efficiency (e_p)
         Qp = 0.75 * Qd      # Peak efficiency flow (Q_p)
+        FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.flow
         turbine.effi_cal = (1 - 3.5 * ((Qp - Q) / Qp)**6) * ep     # Efficiency at flows above and below Qp
         turbine.effi_cal = np.where(turbine.effi_cal <= 0 , 0, turbine.effi_cal) # Correct negative efficiencies
@@ -159,6 +171,7 @@ class PropellorTurbine(Turbine):
         ed = (0.095 + enq) * (1 - 0.789 * d**(-0.2))         # Runner size adjustment to peak efficiency (^e_d)
         ep = (0.905 - enq + ed) - 0.0305 + 0.005 * turbine.Rm      # Turbine peak efficiency (e_p)
         Qp = Qd      # Peak efficiency flow (Q_p)
+        FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.flow
         turbine.effi_cal = (1 - 1.25 * ((Qp - Q) / Qp)**1.13) * ep     # Efficiency at flows above and below Qp
         turbine.effi_cal = np.where(turbine.effi_cal <= 0 , 0, turbine.effi_cal) # Correct negative efficiencies
@@ -178,9 +191,9 @@ class PeltonTurbine(Turbine):
           d = 49.4 * h**0.5 * j**0.02 / n       # Outside diameter of runner (d)
           ep = 0.864 * d**0.04      # Turbine peak efficiency
           Qp = (0.662 + 0.001 * j) * Qd # Peak efficiency flow
+          FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
           Q = turbine.flow
           turbine.effi_cal = (1 - ((1.31 + 0.025*j) * (abs(Qp - Q) / (Qp))**(5.6 + 0.4*j))) * ep          # Efficiency at flows above and below peak efficiency flow (e_q)
-          turbine.effi_cal = turbine.effi_cal.to_numpy()
 
 class TurgoTurbine(Turbine):
       
@@ -193,6 +206,7 @@ class CrossFlowTurbine(Turbine):
         def turbine_calculator(self, turbine):
 
             Qd = turbine.design_flow 
+            FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
             Q = turbine.flow
             turbine.effi_cal = 0.79 - 0.15 *((Qd - Q) / Qd) - 1.37 * ((Qd - Q) / Q)**14 # Efficiency (e_q)
             turbine.effi_cal = np.where(turbine.effi_cal <= 0 , 0, turbine.effi_cal)
@@ -225,11 +239,12 @@ if __name__ == "__main__":
     # # df = pd.read_csv(os.path.join('.','data','turbine.csv'))
 
     # Example 1. Calculating the design flow based on an existing time seriers
-    flow_info = pd.read_csv('data_test.csv')
-    design_flow = PercentExceedance(pctime_runfull = None).designflow_calculator(flow = flow_info['discharge_cfs'])
-    print(design_flow)
+    # flow_info = pd.read_csv('data_test.csv')['discharge_cfs']
+    flow_info = 100
+    #design_flow = PercentExceedance(pctime_runfull = None).designflow_calculator(flow = flow_info['discharge_cfs'])
+    # print(design_flow)
 
-    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info['discharge_cfs'], head= 100, design_flow = 4120, 
+    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info, head= 20, design_flow = 100, 
                                            head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
     
     # Cross-Flow turbine
@@ -238,56 +253,56 @@ if __name__ == "__main__":
     print("\nEfficiency",turbine_parameters.effi_cal)
     print("\nCrossFlow")
     print(len(turbine_parameters.effi_cal))
-    # print(type(turbine_parameters.effi_cal))
+    print(type(turbine_parameters.effi_cal))
 
-    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info['discharge_cfs'], head= 100, design_flow = 4120, 
+    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info, head= 100, design_flow = 4120, 
                                            head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
     # # Pelton turbine
-    # turb = PeltonTurbine()
-    # turb.turbine_calculator(turbine = turbine_parameters)
-    # # print("\nEfficiency",turbine_parameters.effi_cal)
-    # print("\nPelton")
-    # print(len(turbine_parameters.effi_cal))
-    # print(type(turbine_parameters.effi_cal))
+    turb = PeltonTurbine()
+    turb.turbine_calculator(turbine = turbine_parameters)
+    # print("\nEfficiency",turbine_parameters.effi_cal)
+    print("\nPelton")
+    print(len(turbine_parameters.effi_cal))
+    print(type(turbine_parameters.effi_cal))
 
-    # turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info['discharge_cfs'], head= 100, design_flow = 4120, 
-    #                                        head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
-    # # Turgo turbine
-    # turb = TurgoTurbine()
-    # turb.turbine_calculator(turbine = turbine_parameters)
-    # # print("\nEfficiency",turbine_parameters.effi_cal)
-    # print("\nTurgo")
-    # print(len(turbine_parameters.effi_cal))
-    # print(type(turbine_parameters.effi_cal))
+    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info, head= 100, design_flow = 4120, 
+                                           head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
+    # Turgo turbine
+    turb = TurgoTurbine()
+    turb.turbine_calculator(turbine = turbine_parameters)
+    # print("\nEfficiency",turbine_parameters.effi_cal)
+    print("\nTurgo")
+    print(len(turbine_parameters.effi_cal))
+    print(type(turbine_parameters.effi_cal))
 
-    # turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info['discharge_cfs'], head= 100, design_flow = 4120, 
-    #                                        head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
-    # # Propellor Turbine
-    # turb = PropellorTurbine()
-    # turb.turbine_calculator(turbine = turbine_parameters)
-    # # print("\nEfficiency",turbine_parameters.effi_cal)
-    # print("\nPropellor")
-    # print(len(turbine_parameters.effi_cal))
-    # print(type(turbine_parameters.effi_cal))
+    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info, head= 100, design_flow = 4120, 
+                                           head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
+    # Propellor Turbine
+    turb = PropellorTurbine()
+    turb.turbine_calculator(turbine = turbine_parameters)
+    # print("\nEfficiency",turbine_parameters.effi_cal)
+    print("\nPropellor")
+    print(len(turbine_parameters.effi_cal))
+    print(type(turbine_parameters.effi_cal))
 
-    # turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info['discharge_cfs'], head= 100, design_flow = 4120, 
-    #                                        head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
-    # # Kaplan Turbine
-    # turb = KaplanTurbine()
-    # turb.turbine_calculator(turbine = turbine_parameters)
-    # # print("\nEfficiency",turbine_parameters.effi_cal)
-    # print("\nKaplan")
-    # print(len(turbine_parameters.effi_cal))
-    # print(type(turbine_parameters.effi_cal))
+    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info, head= 100, design_flow = 4120, 
+                                           head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
+    # Kaplan Turbine
+    turb = KaplanTurbine()
+    turb.turbine_calculator(turbine = turbine_parameters)
+    # print("\nEfficiency",turbine_parameters.effi_cal)
+    print("\nKaplan")
+    print(len(turbine_parameters.effi_cal))
+    print(type(turbine_parameters.effi_cal))
 
-    # turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info['discharge_cfs'], head= 100, design_flow = 4120, 
-    #                                        head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
-    # # Francis Turbine
-    # turb = FrancisTurbine()
-    # turb.turbine_calculator(turbine = turbine_parameters)
-    # # print("\nEfficiency",turbine_parameters.effi_cal)
-    # print("\nFrancis")
-    # print(len(turbine_parameters.effi_cal))
-    # print(type(turbine_parameters.effi_cal))
+    turbine_parameters = TurbineParameters(turbine_type = None, flow= flow_info, head= 100, design_flow = 4120, 
+                                           head_loss = None, Rm= None, pctime_runfull= None, generator_efficiency = None)  # Initialize a TurbinePower instance
+    # Francis Turbine
+    turb = FrancisTurbine()
+    turb.turbine_calculator(turbine = turbine_parameters)
+    # print("\nEfficiency",turbine_parameters.effi_cal)
+    print("\nFrancis")
+    print(len(turbine_parameters.effi_cal))
+    print(type(turbine_parameters.effi_cal))
 
     

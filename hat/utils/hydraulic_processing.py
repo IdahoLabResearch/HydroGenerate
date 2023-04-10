@@ -20,8 +20,8 @@ nu = 0.0000011223 # Kinematic viscosity of water (m2/s) at 60F (~15.6C) - preval
 
 # Hydraulic design parameters
 class HydraulicDesignParameters:
-    def __init__(self, flow, design_flow, head, penstock_length, penstock_diameter, penstock_material,
-                 head_loss, max_headloss_allowed, headloss_method):
+    def __init__(self, flow, design_flow, head, penstock_length, penstock_diameter, penstock_material, penstock_frictionfactor,
+                 head_loss, max_headloss_allowed, headloss_method, head_loss_calculation):
         '''
         This class initializes hydraulic parameters needed for multiple calculations 
         Input variables:
@@ -37,11 +37,12 @@ class HydraulicDesignParameters:
         self.head_loss = head_loss       
         self.max_headloss_allowed = max_headloss_allowed
         self.headloss_method = headloss_method
+        self.penstock_frictionfactor = penstock_frictionfactor
 
         # internal parameters
         self.Re = []
-        self.penstock_frictionfactor = None
         self.design_diameter = None
+        self.head_loss_calculation = head_loss_calculation
 
         
     # Reynolds number calculator 
@@ -187,8 +188,7 @@ class DarcyWeisbach(HeadLoss):
         
         hydraulic_parameters.penstock_diameter = hydraulic_parameters.design_diameter       # update     
     
-    # head loss for a time series of flow using DW
-    def headloss_calculator_ts(self, hydraulic_parameters):
+    def headloss_calculator_ts(self, hydraulic_parameters):    # head loss for multiple values of flow
             
             if hydraulic_parameters.penstock_length is None:
                 return
@@ -199,14 +199,18 @@ class DarcyWeisbach(HeadLoss):
                 ff = hydraulic_parameters.penstock_frictionfactor       # DW friction factor 
                 L = hydraulic_parameters.penstock_length # 
                 head_loss = ff * L * V**2 / (D * 2*g)      # DW head loss for flow != design_flow
-                head_loss = head_loss.to_numpy()
                 return head_loss
 
 class HazenWilliamns(HeadLoss):
 
     def headloss_calculator(self, hydraulic_parameters):
 
-        C = HW_RoughnessSelector().roughness_selector(material = hydraulic_parameters.penstock_material) # HW roughness factor (C)
+        if hydraulic_parameters.penstock_frictionfactor is None:
+            C = HW_RoughnessSelector().roughness_selector(material = hydraulic_parameters.penstock_material) # HW roughness factor (C)
+        
+        else:
+            C = hydraulic_parameters.penstock_frictionfactor
+        
         L = hydraulic_parameters.penstock_length # Penstock lenght
         Q = hydraulic_parameters.design_flow 
                 
@@ -235,13 +239,40 @@ class HazenWilliamns(HeadLoss):
 
         return None        
 
+    def headloss_calculator_ts(self, hydraulic_parameters):
+            if hydraulic_parameters.penstock_length is None:
+                return
+            
+            else:
+                D = hydraulic_parameters.design_diameter
+                C = hydraulic_parameters.penstock_frictionfactor
+                L = hydraulic_parameters.penstock_length # 
+                Q = hydraulic_parameters.flow
+                head_loss = 10.67 * L * Q**1.852 / (C**1.852 * D**4.87)   # HW head loss 
+                return head_loss
 
 
 if __name__ == "__main__":
         
-    # Example 1. penstock diameter is not known. Maximum head loss allowed is not specified
+    # # Example 1. penstock diameter is not known. Maximum head loss allowed is not specified
+    # hyd_param = HydraulicDesignParameters(flow = 20, design_flow = 20, head = 50, penstock_length = 50, penstock_diameter = None, 
+    #                                       penstock_material = None, head_loss= None, max_headloss_allowed = None, headloss_method= 'a')
+        
+    # # Darcy Weisbach 
+    # hl = DarcyWeisbach()
+    # hl.headloss_calculator(hyd_param)
+
+    # print("\nPenstockDiameter:",hyd_param.penstock_diameter)
+    # print("Head Loss:",hyd_param.head_loss)
+    # print("FrictionFactor",hyd_param.penstock_frictionfactor)
+    
+
+    RoughnessCoefficients(material= 'MyOwnMaterial', hazenwiliams_c= 150, darcyweisbach_epsilon= 1, mannings_n= 1)
+
+     # Example 1. penstock diameter is not known. Maximum head loss allowed is not specified
     hyd_param = HydraulicDesignParameters(flow = 20, design_flow = 20, head = 50, penstock_length = 50, penstock_diameter = None, 
-                                          penstock_material = None, head_loss= None, max_headloss_allowed = None, headloss_method= 'a')
+                                          penstock_material = 'MyOwnMaterial', head_loss= None, max_headloss_allowed = None, headloss_method= 'Hazen-Williams',
+                                          head_loss_calculation= True)
         
     # Darcy Weisbach 
     hl = DarcyWeisbach()
@@ -250,7 +281,8 @@ if __name__ == "__main__":
     print("\nPenstockDiameter:",hyd_param.penstock_diameter)
     print("Head Loss:",hyd_param.head_loss)
     print("FrictionFactor",hyd_param.penstock_frictionfactor)
-    
+
+
     # # Example 2. penstock diameter is not known. Maximum head loss is set to 5%
     # hyd_param = HydraulicDesignParameters(flow= 2, design_flow= 2, head= 50, penstock_length= 50, penstock_diameter= None, 
     #                                       penstock_material= None, head_loss= None, max_headloss_allowed= 0.05)

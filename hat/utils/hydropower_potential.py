@@ -17,8 +17,8 @@ import pandas as pd
 from datetime import datetime
 import os
 from abc import ABC, abstractmethod
-from hydraulic_processing import *
-from turbine_calculation import *
+from hat.utils.hydraulic_processing import *
+from hat.utils.turbine_calculation import *
 from numbers import Number
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
@@ -97,7 +97,33 @@ class Units:
         
         return flow, head, design_flow, head_loss, penstock_length, penstock_diameter
 
-    def us_to_si_conversion(flow, head, design_flow, head_loss, penstock_length, penstock_diameter):
+    def us_to_si_conversion(self):
+        
+        if self.flow is not None:
+            self.flow = self.flow / cfs_to_cms # m3/s tp cfs
+
+        if self.design_flow is not None:
+            self.design_flow = self.design_flow / cfs_to_cms #  # m3/s tp cfs
+
+        if self.head is not None:
+            self.head = self.head / ft_to_m # m to ft 
+
+        if self.head_loss is not None:
+            self.head_loss = self.head_loss / ft_to_m # m to ft
+
+        if self.net_head is not None:
+            self.net_head = self.net_head / ft_to_m # m to ft
+    
+        if self.max_headloss_allowed is not None:
+            self.max_headloss_allowed = self.max_headloss_allowed / ft_to_m # m to ft 
+
+        if self.penstock_length is not None:
+            self.penstock_length = self.penstock_length / ft_to_m # m to ft 
+
+        if self.penstock_diameter is not None:
+            self.penstock_diameter = self.penstock_diameter / ft_to_m # m to ft
+
+    def us_to_si_conversion_ge(flow, head, design_flow, head_loss, penstock_length, penstock_diameter):
         
         if flow is not None:
             flow = flow / cfs_to_cms # m3/s tp cfs
@@ -184,21 +210,46 @@ class Diversion(Hydropower):
         if hp_params.design_flow is None:
             hp_params.design_flow, hp_params.pctime_runfull = calculate_design_flow(hp_params.flow)
 
-        # Head loss calculation
-        if hp_params.headloss_method == 'Darcy-Weisbach': # DW
-            print('DW_here')
-            hl = DarcyWeisbach()
-            hl.headloss_calculator(hp_params)
+        # Head loss calculation 
+        if hp_params.head_loss_calculation:
 
-
-            # for time series of flow
-            if not isinstance(hp_params.flow, float):
+            if hp_params.penstock_length is None:
+                raise ValueError("Penstock length is required for head loss computations if" \
+                                 " head_loss_calculation is True")
+            
+            if hp_params.headloss_method == 'Darcy-Weisbach': # Darcy-Weisbach
+                hl = DarcyWeisbach()
+                hl.headloss_calculator(hp_params)
                 hp_params.head_loss = hl.headloss_calculator_ts(hp_params)
+
+            if hp_params.headloss_method == 'Hazen-Williams': # Hazen-Williams
+                hl = HazenWilliamns()
+                hl.headloss_calculator(hp_params)
+                hp_params.head_loss = hl.headloss_calculator_ts(hp_params)
+        
+        else:  
+            hp_params.head_loss = 0
 
         # Turbine calculation
         if hp_params.turbine_type == 'Kaplan':
                 turb = KaplanTurbine()
                 turb.turbine_calculator(hp_params)
+
+        # Turbine calculation
+        if hp_params.turbine_type == 'Francis':
+                turb = FrancisTurbine()
+                turb.turbine_calculator(hp_params)
+
+
+
+
+
+
+
+
+
+
+
         
         # Generator efficiency
         if hp_params.generator_efficiency is None:
@@ -206,17 +257,16 @@ class Diversion(Hydropower):
         else:
              hp_params.generator_efficiency =  hp_params.generator_efficiency / 100 # percent to proportion
         
-        generator_effieincy = hp_params.generator_efficiency
+        generator_efficiency = hp_params.generator_efficiency
         turbine_efficiency = hp_params.effi_cal
-        n = turbine_efficiency * generator_effieincy
-        n_max = np.max(turbine_efficiency) * generator_effieincy
-        h = hp_params.head
+        n = turbine_efficiency * generator_efficiency # overal system efficiency
+        n_max = np.max(turbine_efficiency) * generator_efficiency # maximum system efficiency
+        h = hp_params.head - hp_params.head_loss # net hydraulic head
 
         hp_params.rated_power = n_max * g * rho *  hp_params.design_flow * h / 1000 # HP potential in kilowatts
         hp_params.power = n * g * rho *  hp_params.flow * h / 1000 # HP potential in kilowatts
+        hp_params.net_head = h # update
 
-
- 
 # Function to calculate hydropower potential  
 def calculate_hp_potential(flow, head= None, rated_power= None, 
                            hydropower_type= 'Simple', units= 'US',
@@ -224,8 +274,8 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
                            design_flow= None, # flow_data_type= 'Timeseries', flow_column='discharge(cfs)', 
                            overall_system_efficiency = None,
                            turbine_type= None, generator_efficiency= None,  
-                           head_loss= None, 
-                           penstock_length= None, penstock_diameter= None, penstock_material= None,
+                           head_loss= None, head_loss_calculation = True,
+                           penstock_length= None, penstock_diameter= None, penstock_material= None, penstock_frictionfactor = None,
                            pctime_runfull = None, max_headloss_allowed= None,
                            turbine_Rm = None,
                            pelton_n_jets = None):
@@ -240,13 +290,15 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
             flow, head, rated_power = Simple.hydropower_calculation(flow, head, rated_power, head_loss, overall_system_efficiency)
     
             flow, head, design_flow, head_loss, penstock_length, penstock_diameter = \
-                Units.us_to_si_conversion(flow, head, design_flow, head_loss, penstock_length, penstock_diameter)
+                Units.us_to_si_conversion_ge(flow, head, design_flow, head_loss, penstock_length, penstock_diameter)
             return flow, head, rated_power
 
         else:
             hyd_pm = HydraulicDesignParameters(flow= flow, design_flow= design_flow, head= head, 
                                                penstock_length= penstock_length, penstock_diameter= penstock_diameter, 
                                                penstock_material= penstock_material, head_loss= head_loss, 
+                                               penstock_frictionfactor= penstock_frictionfactor,
+                                               head_loss_calculation= head_loss_calculation,
                                                max_headloss_allowed= max_headloss_allowed,
                                                headloss_method = headloss_method)       # Initialize
 
@@ -259,6 +311,10 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
         # Diversion projects
         if hydropower_type == 'Diversion':
             Diversion().hydropower_calculation(hp_params = all_params)
+
+        # units conversion - back to US
+        if units == 'US':
+                Units.us_to_si_conversion(all_params)
 
         # Hydropower.hydropower_calculation(all_params)
         
