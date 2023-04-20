@@ -40,37 +40,43 @@ def merge_instances(ob1, ob2):
 def calculate_head(rated_flow, rated_power):
     '''
     Returns the head in meters based on known rated flow (m3/s) and rated power (W)
+    Input = flow 9
+    
     '''
     return rated_power/(rho*g*rated_flow) 
 
-# function to calculate design flow
-def calculate_design_flow(flow, pctime_runfull = None):
-    '''
-    Function to calculate the design flow for a turbine given a percent of exceedance and 
-    flow values 
+# # function to calculate design flow
+# def calculate_design_flow(flow, pctime_runfull = None):
+#     '''
+#     Function to calculate the design flow for a turbine given a percent of exceedance and 
+#     flow values 
     
-    Inputs:
-    - flow: a set of flow values meassured at the site of interest
-    - pctime_runfull: percent of time the turbine is running full [1:100]
-    '''
+#     Inputs:
+#     - flow: a set of flow values meassured at the site of interest
+#     - pctime_runfull: percent of time the turbine is running full [1:100]
+#     '''
+#     if isinstance(flow, pd.DataFrame):
+#         print('here')
+#         # flow = 
 
-    if isinstance(flow, Number):
-        design_flow = flow # when a single value of flow is provided this is the design flow
-        pe = pctime_runfull
 
-    else:
-        pc_e = np.linspace(100, 1, 100) # 100:1
-        flow_percentiles = np.percentile(flow, q = np.linspace(1, 100, 100)) # percentiles to compute, 1:100
-        flowduration_curve = {'Flow': flow_percentiles, 'Percent_Exceedance':pc_e} # Flow duration curve
+#     if isinstance(flow, Number):
+#         design_flow = flow # when a single value of flow is provided this is the design flow
+#         pe = pctime_runfull
+
+#     else:
+#         pc_e = np.linspace(100, 1, 100) # 100:1
+#         flow_percentiles = np.percentile(flow, q = np.linspace(1, 100, 100)) # percentiles to compute, 1:100
+#         flowduration_curve = {'Flow': flow_percentiles, 'Percent_Exceedance':pc_e} # Flow duration curve
     
-        if pctime_runfull is not None: # for user defined parameters
-            pe = np.round(pctime_runfull)
-        else: 
-            pe = 20 # default value for the percent of time a turine will run full 
+#         if pctime_runfull is not None: # for user defined parameters
+#             pe = np.round(pctime_runfull)
+#         else: 
+#             pe = 20 # default value for the percent of time a turine will run full 
 
-        design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe])
+#         design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe])
 
-    return design_flow, pe
+#     return design_flow, pe
 
 # Unit transformation
 class Units:
@@ -110,6 +116,9 @@ class Units:
 
         if self.head_loss is not None:
             self.head_loss = self.head_loss / ft_to_m # m to ft
+
+        if self.design_headloss is not None:
+            self.design_headloss = self.design_headloss / ft_to_m # m to ft
 
         if self.net_head is not None:
             self.net_head = self.net_head / ft_to_m # m to ft
@@ -192,7 +201,6 @@ class Simple(Hydropower):
 # Diversion - Run-of-river
 class Diversion(Hydropower):
 
-    # def hydropower_calculation(self, turbine, hydraulic_parameters):
     def hydropower_calculation(self, hp_params):
 
         # If a head is not given - update later
@@ -208,8 +216,13 @@ class Diversion(Hydropower):
 
         # Calculate design flow
         if hp_params.design_flow is None:
-            hp_params.design_flow, hp_params.pctime_runfull = calculate_design_flow(hp_params.flow)
+            # hp_params.design_flow, hp_params.pctime_runfull = calculate_design_flow(hp_params.flow)
+            designflow = PercentExceedance()
+            designflow.designflow_calculator(hp_params)
 
+        # Add flow range for turbine evaluation if a sinlge flow value is given
+        FlowRange().flowrange_calculator(turbine= hp_params)
+        
         # Head loss calculation 
         if hp_params.head_loss_calculation:
 
@@ -240,17 +253,6 @@ class Diversion(Hydropower):
                 turb = FrancisTurbine()
                 turb.turbine_calculator(hp_params)
 
-
-
-
-
-
-
-
-
-
-
-        
         # Generator efficiency
         if hp_params.generator_efficiency is None:
             hp_params.generator_efficiency = 0.98 
@@ -259,13 +261,41 @@ class Diversion(Hydropower):
         
         generator_efficiency = hp_params.generator_efficiency
         turbine_efficiency = hp_params.effi_cal
-        n = turbine_efficiency * generator_efficiency # overal system efficiency
-        n_max = np.max(turbine_efficiency) * generator_efficiency # maximum system efficiency
-        h = hp_params.head - hp_params.head_loss # net hydraulic head
+        n = turbine_efficiency * generator_efficiency       # overal system efficiency
+        n_max = np.max(turbine_efficiency) * generator_efficiency       # maximum system efficiency
+        hd = hp_params.head - hp_params.design_headloss      # net hydraulic head at design flow
+        h = hp_params.head - hp_params.head_loss        # net hydraulic head
+        Qd = hp_params.design_flow      # Design flow
+        Q = hp_params.flow
 
-        hp_params.rated_power = n_max * g * rho *  hp_params.design_flow * h / 1000 # HP potential in kilowatts
-        hp_params.power = n * g * rho *  hp_params.flow * h / 1000 # HP potential in kilowatts
-        hp_params.net_head = h # update
+        hp_params.rated_power = n_max * g * rho * Qd * hd / 1000        # HP potential in kilowatts for design flow
+        hp_params.power = n * g * rho * Q * h / 1000        # HP potential in kilowatts
+        hp_params.net_head = hd # update
+        hp_params.head = h
+        
+class Hydrokinetics(Hydropower):
+    
+    def hydropower_calculation(self, hp_params):
+        hp_params.rated_power = 1        # HP potential in kilowatts - Working here
+
+
+
+
+
+
+def pd_checker(flow, flow_column):
+    
+    if isinstance(flow, pd.DataFrame):      # check if a pandas dataframe is used
+        
+        if flow_column is None:
+            raise ValueError("When using a pandas dataframe, users must indicate what column" \
+                             " has the flow values using 'flow_column = \"Name\"'")
+        else:         
+            flow_data = flow[flow_column]        # Extract flow from a pandas dataframe column
+        
+    else:
+        flow_data = flow
+    return flow_data
 
 # Function to calculate hydropower potential  
 def calculate_hp_potential(flow, head= None, rated_power= None, 
@@ -276,9 +306,10 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
                            turbine_type= None, generator_efficiency= None,  
                            head_loss= None, head_loss_calculation = True,
                            penstock_length= None, penstock_diameter= None, penstock_material= None, penstock_frictionfactor = None,
-                           pctime_runfull = None, max_headloss_allowed= None,
-                           turbine_Rm = None,
-                           pelton_n_jets = None):
+                           pctime_runfull= None, max_headloss_allowed= None,
+                           turbine_Rm= None,
+                           pelton_n_jets= None,
+                           flow_column= None):
         
         # units conversion
         if units == 'US':
@@ -294,7 +325,9 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
             return flow, head, rated_power
 
         else:
-            hyd_pm = HydraulicDesignParameters(flow= flow, design_flow= design_flow, head= head, 
+            flow_data = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
+
+            hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head, 
                                                penstock_length= penstock_length, penstock_diameter= penstock_diameter, 
                                                penstock_material= penstock_material, head_loss= head_loss, 
                                                penstock_frictionfactor= penstock_frictionfactor,
@@ -302,9 +335,11 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
                                                max_headloss_allowed= max_headloss_allowed,
                                                headloss_method = headloss_method)       # Initialize
 
-            turb_pm = TurbineParameters(turbine_type= turbine_type, flow= flow, design_flow= design_flow, head= head,
-                                        head_loss= head_loss, generator_efficiency= generator_efficiency,
-                                        Rm= turbine_Rm, pctime_runfull= pctime_runfull, pelton_n_jets = pelton_n_jets)        # Initialize
+            turb_pm = TurbineParameters(turbine_type= turbine_type, 
+                                        flow= flow_data, design_flow= design_flow, flow_column = flow_column,
+                                        head= head, head_loss= head_loss, 
+                                        generator_efficiency= generator_efficiency,
+                                        Rm= turbine_Rm, pctime_runfull= pctime_runfull, pelton_n_jets= pelton_n_jets)        # Initialize
             
             all_params = merge_instances(hyd_pm, turb_pm) # merge 
         
@@ -315,6 +350,11 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
         # units conversion - back to US
         if units == 'US':
                 Units.us_to_si_conversion(all_params)
+
+        # TODO: Check here if a pd.dataframe exist and do... visualization, ts
+        # This seem
+
+
 
         # Hydropower.hydropower_calculation(all_params)
         

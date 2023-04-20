@@ -10,10 +10,6 @@ This script handles head loss calculations and penstock sizing
 
 import numpy as np
 from abc import ABC, abstractmethod
-from numbers import Number
-   
-# TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
-# TODO: validate that the method implemented is correct. Juan to cross-check the equations
 
 g = 9.81 # acceleration of gravity (m/s^2)
 nu = 0.0000011223 # Kinematic viscosity of water (m2/s) at 60F (~15.6C) - prevalent stream water temperature 
@@ -25,6 +21,15 @@ class HydraulicDesignParameters:
         '''
         This class initializes hydraulic parameters needed for multiple calculations 
         Input variables:
+        - flow: Flow value / values (m3/s)
+        - head: available head (m)
+        - penstock_lenght: lenght of the penstock (m)
+        - penstock_material: (CastIron, Concrete, GalvanizedIron, Plastic, Steel )
+        - penstock_frictionfactor: Hazen-Williams C, Darcy Weisbach Epsilon, Manning's n
+        - head_loss: head loss in the penstock (m)
+        - max_headloss_allowed: maximum head loss allowed in the penstock, in percentage of head (1-100)
+        - headloss_method: method to compute head loss (Darcy-Weisbach, Hazen-Williams) -  TODO: add Manning
+        - head_loss_calculation: boolean, should head loss be calculated 
         Returns: None
         '''
         # Inputs
@@ -48,8 +53,8 @@ class HydraulicDesignParameters:
     # Reynolds number calculator 
     def reynoldsnumber_calculator(self):
 
-        self.designdiameter_calculator()
-        self.Re = 4 * self.design_flow / (np.pi * self.design_diameter * nu) # Reynolds number  
+        self.designdiameter_calculator()        # calculate diameter
+        self.Re = 4 * self.design_flow / (np.pi * self.design_diameter * nu)        # Reynolds number  
 
     # Design diameter calculator - initial assumed diameter
     def designdiameter_calculator(self):
@@ -57,14 +62,11 @@ class HydraulicDesignParameters:
         if self.penstock_diameter is not None:  # penstock diameter is known
             self.design_diameter = self.penstock_diameter    
 
-        else:   # penstock diameter calculation based on head, flow, and length
+        else:   # penstock diameter will be calculate
             if self.design_diameter is None:    # if design diameter is also none (not chekcking diameter) 
-                # self.design_diameter = 1.517 * self.design_flow**0.5 / self.head**0.25  # USBR 1986 equation
-                self.design_diameter = 0.01
+                self.design_diameter = 0.01     # starting value for iteration
 
-# Design flow
-
-# Roughness
+# Roughness coefficients
 class RoughnessCoefficients:
     def __init__(self, material, darcyweisbach_epsilon, hazenwiliams_c, mannings_n):
         self.material = material
@@ -72,7 +74,7 @@ class RoughnessCoefficients:
         self.hazenwiliams_c = hazenwiliams_c
         self.mannings_n = mannings_n
     
-    class Values:       # Values from Epanet documentation
+    class Values:       # roughness values copied from Epanet documentation 
         def __init__(self):
             self.roughnesscoefficients = { }
             self.add_roughnesscoefficient_values("CastIron", 0.00025908, 135, 0.0135)
@@ -81,10 +83,10 @@ class RoughnessCoefficients:
             self.add_roughnesscoefficient_values("Plastic", 0.000001524, 145, 0.013)
             self.add_roughnesscoefficient_values("Steel", 0.00004572, 145, 0.016)
 
-        def add_roughnesscoefficient_values(self, material, darcyweisbach_epsilon, hazenwiliams_c, mannings_n):
+        def add_roughnesscoefficient_values(self, material, darcyweisbach_epsilon, hazenwiliams_c, mannings_n):     # method for adding roughness values
             self.roughnesscoefficients[material] = RoughnessCoefficients(material, darcyweisbach_epsilon, hazenwiliams_c, mannings_n)
        
-# Methods for roughness calculation
+# Roughness selection
 class Roughness(ABC):
     @abstractmethod
     def roughness_selector(self, material):
@@ -94,18 +96,18 @@ class DW_RoughnessSelector(Roughness):      # Darcy-Weisbach roughness selector
     
     def roughness_selector(self, material):
         roughness_coefficients = RoughnessCoefficients.Values()
-        if material is not None:
+        if material is not None:        # user provided material
             epsilon = roughness_coefficients.roughnesscoefficients[material].darcyweisbach_epsilon
-        else:
+        else:       # the default material is steel
             epsilon = roughness_coefficients.roughnesscoefficients['Steel'].darcyweisbach_epsilon
         return epsilon
     
 class HW_RoughnessSelector(Roughness):      # Hazen-Williams roughness selector
     def roughness_selector(self, material):
         roughness_coefficients = RoughnessCoefficients.Values()
-        if material is not None:
+        if material is not None:        # user provided material
             C = roughness_coefficients.roughnesscoefficients[material].hazenwiliams_c
-        else:
+        else:       # the default material is steel
             C = roughness_coefficients.roughnesscoefficients['Steel'].hazenwiliams_c        # defaul to steel
         return C
 
@@ -146,7 +148,7 @@ class HeadLoss(ABC):
     def headloss_calculator(self, hydraulic_parameters):
         pass
      
-class DarcyWeisbach(HeadLoss):
+class DarcyWeisbach(HeadLoss):      # Head loss calculator using Darcy-Weisbach
 
     def headloss_calculator(self, hydraulic_parameters):     
         
@@ -154,15 +156,22 @@ class DarcyWeisbach(HeadLoss):
         D = hydraulic_parameters.design_diameter        # Design diameter
         L = hydraulic_parameters.penstock_length        # Penstock lenght
         V = hydraulic_parameters.design_flow / (np.pi * (D/2)**2)      # V = Q/A
-        ff = DW_FrictionFactor().frictionfactor_calculator(hydraulic_parameters)        # DW friction factor   
+        
+        if hydraulic_parameters.penstock_frictionfactor is None:        # if a value of ff is not given
+            ff = DW_FrictionFactor().frictionfactor_calculator(hydraulic_parameters)        # DW friction factor   
+
+        else:       # calculate the friction factor
+            ff = hydraulic_parameters.penstock_frictionfactor
+
         head_loss =  ff * L * V**2 / (D * 2*g)      # DW head loss
         hydraulic_parameters.penstock_frictionfactor = ff       # update
-        hydraulic_parameters.head_loss = head_loss      # update
+        # hydraulic_parameters.head_loss = head_loss      # update
+        hydraulic_parameters.design_headloss = head_loss
         
         if hydraulic_parameters.penstock_diameter is None:
             DarcyWeisbach().diameter_check(hydraulic_parameters)        # Check: head loss does not exceed the max allowed head loss - increase D until reached
 
-    def diameter_check(self, hydraulic_parameters):
+    def diameter_check(self, hydraulic_parameters):     # 
 
         # max head loss allowes 
         max_headloss_allowed = hydraulic_parameters.max_headloss_allowed
@@ -174,38 +183,38 @@ class DarcyWeisbach(HeadLoss):
 
         # if a penstcok lenght is not provided head loss = head * max allowed losses
         if hydraulic_parameters.penstock_length is None: 
-            hydraulic_parameters.head_loss = hl = hydraulic_parameters.head * max_headloss_allowed      # update
+            hydraulic_parameters.design_headloss = hl = hydraulic_parameters.head * max_headloss_allowed      # update
         
         else:
-            hl = hydraulic_parameters.head_loss     # head loss 
+            hl = hydraulic_parameters.design_headloss     # head loss 
             h = hydraulic_parameters.head       # head
  
             if hl > max_headloss_allowed * h:       # head loss larger than maximum allowed
-                while hl > max_headloss_allowed * h:
-                    hydraulic_parameters.design_diameter = hydraulic_parameters.design_diameter + 0.1
-                    DarcyWeisbach().headloss_calculator(hydraulic_parameters)
-                    hl = hydraulic_parameters.head_loss
+                while hl > max_headloss_allowed * h:        # iterate until head loss is less than the max allowed
+                    hydraulic_parameters.design_diameter = hydraulic_parameters.design_diameter + 0.1       # increase by 0.1
+                    DarcyWeisbach().headloss_calculator(hydraulic_parameters)       # Recursion 
+                    hl = hydraulic_parameters.design_headloss       # update after each step
         
         hydraulic_parameters.penstock_diameter = hydraulic_parameters.design_diameter       # update     
     
     def headloss_calculator_ts(self, hydraulic_parameters):    # head loss for multiple values of flow
             
-            if hydraulic_parameters.penstock_length is None:
-                return
+            if hydraulic_parameters.penstock_length is None:        # penstock lenght not provided
+                raise ValueError("The penstock lenght is required for head loss calculations")
             
             else:
                 D = hydraulic_parameters.design_diameter
                 V = hydraulic_parameters.flow / (np.pi * (D/2)**2)      # V = Q/A
                 ff = hydraulic_parameters.penstock_frictionfactor       # DW friction factor 
                 L = hydraulic_parameters.penstock_length # 
-                head_loss = ff * L * V**2 / (D * 2*g)      # DW head loss for flow != design_flow
+                head_loss = ff * L * V**2 / (D * 2*g)      # D-W head loss for flow != design_flow
                 return head_loss
 
-class HazenWilliamns(HeadLoss):
+class HazenWilliamns(HeadLoss):     # Head loss calculator using Hazen-Williams
 
     def headloss_calculator(self, hydraulic_parameters):
 
-        if hydraulic_parameters.penstock_frictionfactor is None:
+        if hydraulic_parameters.penstock_frictionfactor is None:        # if a value of C is not given
             C = HW_RoughnessSelector().roughness_selector(material = hydraulic_parameters.penstock_material) # HW roughness factor (C)
         
         else:
@@ -220,17 +229,17 @@ class HazenWilliamns(HeadLoss):
 
         else:          
             if hydraulic_parameters.max_headloss_allowed is not None:
-                head_loss = hydraulic_parameters.max_headloss_allowed * hydraulic_parameters.head
+                head_loss = hydraulic_parameters.max_headloss_allowed * hydraulic_parameters.head / 100
             else:
                 head_loss = 0.1 * hydraulic_parameters.head
 
             D = (10.67 * L * Q**1.852 / (C**1.852 * head_loss))**(1/4.87) # Calculated diameter
-            hydraulic_parameters.head_loss = head_loss
+            hydraulic_parameters.design_headloss = head_loss
             hydraulic_parameters.penstock_diameter = D  # update
         
         hydraulic_parameters.penstock_frictionfactor = C    # update
         hydraulic_parameters.reynoldsnumber_calculator()    # update
-        hydraulic_parameters.head_loss = head_loss  # update
+        hydraulic_parameters.design_headloss = head_loss  # update
         
         # if hydraulic_parameters.penstock_diameter is None: 
         #     diametercheck = DiameterCheck(head_loss)
@@ -250,7 +259,6 @@ class HazenWilliamns(HeadLoss):
                 Q = hydraulic_parameters.flow
                 head_loss = 10.67 * L * Q**1.852 / (C**1.852 * D**4.87)   # HW head loss 
                 return head_loss
-
 
 if __name__ == "__main__":
         

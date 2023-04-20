@@ -25,7 +25,8 @@ from numbers import Number
 
 # Turbine Parameters
 class TurbineParameters:
-    def __init__(self, turbine_type, flow, design_flow, head, head_loss, generator_efficiency, Rm, pctime_runfull, pelton_n_jets = None):
+    def __init__(self, turbine_type, flow, design_flow, flow_column, head, head_loss, generator_efficiency, Rm, pctime_runfull, 
+                 pelton_n_jets):
         '''
         This class initializes the calculation of hydropower potential for a specific turbine type
         Input variables:
@@ -51,6 +52,7 @@ class TurbineParameters:
         self.Rm = Rm
         self.pctime_runfull = pctime_runfull
         self.pelton_n_jets = pelton_n_jets
+        self.flow_column = flow_column
 
         # Calculated 
         # self.h = abs(self.head - np.nanmax(self.h_f)) # rated head on turbine [m]
@@ -64,6 +66,7 @@ class TurbineParameters:
         self.pmax = 0       # maximum power
         self.pmin = 0       # minimun power
         self.power = []     # array that contains the power 
+        self.design_efficiency = None
         self.effi_cal = []  # contains the range of efficiencies for the flow range
         self.turb_cap = 0
         self.raw_power = []
@@ -127,7 +130,7 @@ class FrancisTurbine(Turbine):
         ep_ = 0.0072 * nq**0.4      # Drop in efficiency at full load (^e_p)
         er = (1 - ep_) * ep     # Efficiency at full load (e_r)
 
-        # Efficiencies at flows below and above peak efficiency flow (e_q)
+        # Efficiencies at flows below and above peak efficiency flow
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.flow
         for i in range(len(Q)):
@@ -154,7 +157,7 @@ class KaplanTurbine(Turbine):
         ed = (0.095 + enq) * (1 - 0.789 * d**(-0.2))         # Runner size adjustment to peak efficiency (^e_d)
         ep = (0.905 - enq + ed) - 0.0305 + 0.005 * turbine.Rm      # Turbine peak efficiency (e_p)
         Qp = 0.75 * Qd      # Peak efficiency flow (Q_p)
-        FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
+        # FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.flow
         turbine.effi_cal = (1 - 3.5 * ((Qp - Q) / Qp)**6) * ep     # Efficiency at flows above and below Qp
         turbine.effi_cal = np.where(turbine.effi_cal <= 0 , 0, turbine.effi_cal) # Correct negative efficiencies
@@ -214,29 +217,38 @@ class CrossFlowTurbine(Turbine):
 # Functions to calculate design flow. 
 class DesignFlow(ABC):
     @abstractmethod
-    def designflow_calculator(self, flow):
+    def designflow_calculator(self, turbine):
         pass
 
 # Flow duration curve selection based on a percentage of exceedance
 class PercentExceedance(DesignFlow):
     
-    def __init__(self, pctime_runfull):
-        self.pctime_runfull = pctime_runfull
+    def designflow_calculator(self, turbine):
 
-    def designflow_calculator(self, flow):
-        pc_e = np.linspace(100, 1, 100) # 100:1
-        flow_percentiles = np.percentile(flow, q = np.linspace(1, 100, 100)) # percentiles to compute, 1:100
-        flow_duration = {'Flow': flow_percentiles, 'Percent_Exceedance':pc_e} # Flow duration curve
-    
-        if self.pctime_runfull is not None: # for user defined parameters
-            pe = np.round(self.pctime_runfull)
+        pe = turbine.pctime_runfull     # percentago of time a turbine is running full
+        flow = turbine.flow     # user-entered flow
+        
+        if pe is not None: # for user defined parameters
+            pe = np.round(pe)       # User defined 
         else: 
-            pe = 80 # default value for the percent of time a turine will run full 
-        return flow_duration['Flow'][flow_duration['Percent_Exceedance'] == pe].item()
+            pe = 80     # default value for the percent of time a turine will run full 
+
+        if isinstance(flow, Number):
+            design_flow = flow      # when a single value of flow is provided, this is the design flow
+
+        else:
+            pc_e = np.linspace(100, 1, 100)     
+            flow_percentiles = np.percentile(flow, q = np.linspace(1, 100, 100))        # percentiles to compute, 1:100
+            flowduration_curve = {'Flow': flow_percentiles, 'Percent_Exceedance':pc_e}      # Flow duration curve
+            design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe])     # flow for the selected percent of excedante
+        
+        turbine.design_flow = design_flow       # Update
+        turbine.pctime_runfull = pe     # Update
+
+
 
 if __name__ == "__main__":
 
-    # # df = pd.read_csv(os.path.join('.','data','turbine.csv'))
 
     # Example 1. Calculating the design flow based on an existing time seriers
     # flow_info = pd.read_csv('data_test.csv')['discharge_cfs']
