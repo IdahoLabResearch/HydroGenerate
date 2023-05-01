@@ -32,8 +32,9 @@ ft_to_m = 0.3048 # feet to meters
 nu = 0.0000011223 # Kinematic viscosity of water (m2/s) at 60F (~15.6C) - prevalent stream water temperature 
 
 # Function to combine two instances
-def merge_instances(ob1, ob2):
-    ob1.__dict__.update(ob2.__dict__)
+def merge_instances(ob1, *args):
+    for d in args:
+        ob1.__dict__.update(d.__dict__)
     return ob1
 
 # function to calculated head 
@@ -211,11 +212,12 @@ class Diversion(Hydropower):
         # Calculate design flow
         if hp_params.design_flow is None:
             # hp_params.design_flow, hp_params.pctime_runfull = calculate_design_flow(hp_params.flow)
-            designflow = PercentExceedance()
-            designflow.designflow_calculator(hp_params)
+            # designflow = PercentExceedance()
+            # designflow.designflow_calculator(hp_params)
+            PercentExceedance().designflow_calculator(hp_params) # TODO
 
         # Add flow range for turbine evaluation if a sinlge flow value is given
-        FlowRange().flowrange_calculator(turbine= hp_params)
+        FlowRange().flowrange_calculator(hp_params)
         
         # Head loss calculation 
         if hp_params.head_loss_calculation: # If head loss are calculated
@@ -225,15 +227,13 @@ class Diversion(Hydropower):
                                  " head_loss_calculation is True")
             
             if hp_params.headloss_method == 'Darcy-Weisbach': # Darcy-Weisbach
-                hl = DarcyWeisbach()
-                hl.headloss_calculator(hp_params)       # head loss at design parameters
-                hl.headloss_calculator_ts(hp_params)        # head loss for a range of flow values
+                DarcyWeisbach().headloss_calculator(hp_params)       # head loss at design parameters
+                DarcyWeisbach().headloss_calculator_ts(hp_params)        # head loss for a range of flow values
 
             elif hp_params.headloss_method == 'Hazen-Williams': # Hazen-Williams
-                hl = HazenWilliamns()
-                hl.headloss_calculator(hp_params)       # head loss at design parameters
-                hl.headloss_calculator_ts(hp_params)        # head loss for a range of flow values
-        
+                HazenWilliamns().headloss_calculator(hp_params)       # head loss at design parameters
+                HazenWilliamns().headloss_calculator_ts(hp_params)        # head loss for a range of flow values
+
         else:  
             hp_params.head_loss = 0
 
@@ -259,7 +259,7 @@ class Diversion(Hydropower):
         # Generator efficiency
         if hp_params.generator_efficiency is None:
             hp_params.generator_efficiency = 0.98 
-            
+
         else:
              hp_params.generator_efficiency =  hp_params.generator_efficiency / 100 # percent to proportion
         
@@ -283,8 +283,27 @@ class Diversion(Hydropower):
 class Hydrokinetic(Hydropower):
     
     def hydropower_calculation(self, hp_params):
-        hp_params.rated_power = 1        # HP potential in kilowatts - Working here
-        print('Worki in progress')
+        
+        # System efficiency
+        if hp_params.system_efficiency:
+            n = hp_params.system_efficiency
+
+        else:
+            n = hp_params.system_efficiency = 59        # Efficiency in percentage - Betz Limit - Maximum 
+
+        n = n /100 # efficiency 
+
+        # Area of blades
+        if hp_params.hk_swept_area is None:
+            Hydrokinetic_Turbine().turbine_calculator(hp_params)        # calculate swept area of blades
+        
+        A = hp_params.hk_swept_area     # Swept Area of blades, m2
+        
+        # 
+        V = hp_params.average_velocity
+
+        P = 0.5 * n * rho * A * V / 1000       # Power in KW
+        hp_params.rated_power = P       # HP potential in kilowatts - Working here
 
 # Function to check if a pandas dataframe is used and extract flow values
 def pd_checker(flow, flow_column):
@@ -308,22 +327,25 @@ class HydropowerCost(ABC):
     def hydropower_calculation(self, turbine, hydraulic_parameters):
         pass
 
-
-
-
 # Function to calculate hydropower potential  
-def calculate_hp_potential(flow, head= None, rated_power= None, 
+def calculate_hp_potential(flow= None, head= None, rated_power= None, 
                            hydropower_type= 'Basic', units= 'US',
                            headloss_method= 'Darcy-Weisbach',
                            design_flow= None, # flow_data_type= 'Timeseries', flow_column='discharge(cfs)', 
                            system_efficiency = None,
                            turbine_type= None, generator_efficiency= None,  
                            head_loss= None, head_loss_calculation = True, design_headloss= None,
-                           penstock_length= None, penstock_diameter= None, penstock_material= None, penstock_frictionfactor = None,
+                           penstock_length= None, penstock_diameter= None, penstock_material= None, frictionfactor = None,
                            pctime_runfull= None, max_headloss_allowed= None,
                            turbine_Rm= None,
                            pelton_n_jets= None,
-                           flow_column= None):
+                           flow_column= None,
+                           average_velocity= None,
+                           channel_bottom_width= None,
+                           hk_blade_diameter= None, 
+                           hk_blade_heigth= None, 
+                           hk_blade_type= None, 
+                           hk_swept_area = None):
     
      
     # Check if a pandas dataframe
@@ -332,10 +354,12 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
     hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head,
                                        penstock_length= penstock_length, penstock_diameter= penstock_diameter, 
                                        penstock_material= penstock_material, head_loss= head_loss, 
-                                       penstock_frictionfactor= penstock_frictionfactor,
+                                       frictionfactor= frictionfactor,
                                        head_loss_calculation= head_loss_calculation,
                                        max_headloss_allowed= max_headloss_allowed,
-                                       headloss_method = headloss_method)       # Initialize
+                                       headloss_method = headloss_method,
+                                       average_velocity= average_velocity,
+                                       channel_bottom_width= channel_bottom_width)       # Initialize
 
     turb_pm = TurbineParameters(turbine_type= turbine_type, 
                                 flow= flow_data, design_flow= design_flow, flow_column = flow_column,
@@ -343,9 +367,11 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
                                 rated_power= rated_power,
                                 system_efficiency= system_efficiency,
                                 generator_efficiency= generator_efficiency,
-                                Rm= turbine_Rm, pctime_runfull= pctime_runfull, pelton_n_jets= pelton_n_jets)        # Initialize
+                                Rm= turbine_Rm, pctime_runfull= pctime_runfull, pelton_n_jets= pelton_n_jets,
+                                hk_blade_diameter= hk_blade_diameter, hk_blade_heigth= hk_blade_heigth, hk_blade_type= hk_blade_type, 
+                                hk_swept_area= hk_swept_area)        # Initialize
     
-    all_params = merge_instances(hyd_pm, turb_pm)       # merge 
+    all_params = merge_instances(hyd_pm, turb_pm, turb_pm)       # merge 
 
     # units conversion - US to Si
     if units == 'US':       
@@ -357,10 +383,10 @@ def calculate_hp_potential(flow, head= None, rated_power= None,
 
     # Diversion projects
     elif hydropower_type == 'Diversion':
-        Diversion().hydropower_calculation(hp_params = all_params)
+        Diversion().hydropower_calculation(all_params)
     
     elif hydropower_type == 'Hydrokinetic':
-        Hydrokinetic().hydropower_calculation(hp_params = all_params)
+        Hydrokinetic().hydropower_calculation(all_params)
 
     # units conversion - SI to US
     if units == 'US':

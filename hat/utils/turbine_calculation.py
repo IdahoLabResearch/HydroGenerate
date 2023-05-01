@@ -27,7 +27,8 @@ from numbers import Number
 class TurbineParameters:
     def __init__(self, turbine_type, flow, design_flow, flow_column, head, head_loss, rated_power,
                  system_efficiency,
-                 generator_efficiency, Rm, pctime_runfull, pelton_n_jets):
+                 generator_efficiency, Rm, pctime_runfull, pelton_n_jets, 
+                 hk_blade_diameter, hk_blade_heigth, hk_blade_type, hk_swept_area):
         '''
         This class initializes the calculation of hydropower potential for a specific turbine type
         Input variables:
@@ -56,6 +57,10 @@ class TurbineParameters:
         self.pctime_runfull = pctime_runfull
         self.pelton_n_jets = pelton_n_jets
         self.flow_column = flow_column
+        self.hk_blade_diameter = hk_blade_diameter # Hydrokinetic turbine blade diameter m
+        self.hk_blade_heigth = hk_blade_heigth # Hydrokinetic turbine blade height m
+        self.hk_blade_type = hk_blade_type # Hydrokinetic turbine blade type: 'ConventionalRotor' , "H-DarrieusRotor", "DarrieusRotor"
+        self.hk_swept_area = hk_swept_area # Hydrokinetic turbine blade spwept area m2
 
         # Calculated 
         # self.h = abs(self.head - np.nanmax(self.h_f)) # rated head on turbine [m]
@@ -219,6 +224,39 @@ class CrossFlowTurbine(Turbine):
             Q = turbine.flow    # flow range
             turbine.effi_cal = 0.79 - 0.15 *((Qd - Q) / Qd) - 1.37 * ((Qd - Q) / Q)**14     # Efficiency (e_q)
             turbine.effi_cal = np.where(turbine.effi_cal <= 0 , 0, turbine.effi_cal)        # Correct negative efficiencies
+
+class Hydrokinetic_Turbine(Turbine):
+    def turbine_calculator(self, turbine):
+
+        if turbine.hk_blade_type is None:       # if a turbine type is not given
+            turbine.hk_blade_type = 'ConventionalRotor'     # default - update
+        
+        if turbine.hk_blade_diameter:
+            D = turbine.hk_blade_diameter
+        else:
+            D = 1       # default, 1 m
+        
+        turbine.hk_blade_diameter = D       # update
+
+        if turbine.hk_blade_type == 'ConventionalRotor':
+            A = np.pi * D**2 / 4        # Hydrokinetic turbine blade spwept area m2
+        
+        else:       # Height is needed
+            if turbine.hk_blade_heigth:     # if the blade height is known
+                H = turbine.hk_blade_heigth
+            else:
+                H = 1 # default, 1 m
+
+            turbine.hk_blade_heigth = H       # update
+
+        if turbine.hk_blade_type == 'H-DarrieusRotor':
+            A = D * H       # Hydrokinetic turbine blade spwept area m2
+
+        elif turbine.hk_blade_type == 'DarrieusRotor':         
+            A = 0.65 * D * H        # Hydrokinetic turbine blade spwept area m2
+        
+        turbine.hk_swept_area = A       # update
+
 # End of turbine funcitons
 
 # Functions to calculate design flow. 
@@ -229,7 +267,7 @@ class DesignFlow(ABC):
 
 # Flow duration curve selection based on a percentage of exceedance
 class PercentExceedance(DesignFlow):
-    
+
     def designflow_calculator(self, turbine):
 
         pe = turbine.pctime_runfull     # percentage of time a turbine is running full
@@ -253,8 +291,13 @@ class PercentExceedance(DesignFlow):
         turbine.pctime_runfull = pe     # Update
 
 
-if __name__ == "__main__":
+# Hydrokinetic turbines https://www.sciencedirect.com/science/article/pii/S136403211930440X?via%3Dihub
 
+
+
+
+
+if __name__ == "__main__":
 
     # Example 1. Calculating the design flow based on an existing time seriers
     flow_info = pd.read_csv('data_test.csv')['discharge_cfs']
