@@ -20,6 +20,7 @@ from abc import ABC, abstractmethod
 from hat.utils.hydraulic_processing import *
 from hat.utils.turbine_calculation import *
 from numbers import Number
+from math import exp
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
@@ -72,29 +73,6 @@ class Units:
         if self.penstock_diameter is not None:
             self.penstock_diameter = self.penstock_diameter * ft_to_m       # ft to m
 
-
-    # def us_to_si_conversion(flow, head, design_flow, head_loss, penstock_length, penstock_diameter):
-
-    #     if flow is not None:
-    #         flow = flow * cfs_to_cms # cfs to m3/s
-        
-    #     if head is not None:
-    #         head = head * ft_to_m # ft to m 
-
-    #     if design_flow is not None:
-    #         design_flow = design_flow * cfs_to_cms # cfs to m3/s
-    
-    #     if head_loss is not None:
-    #         head_loss = head_loss * ft_to_m # ft to m 
-
-    #     if penstock_length is not None:
-    #         penstock_length = penstock_length * ft_to_m # ft to m 
-
-    #     if penstock_diameter is not None:
-    #         penstock_diameter = penstock_diameter * ft_to_m # ft to m 
-        
-    #     return flow, head, design_flow, head_loss, penstock_length, penstock_diameter
-
     def si_to_us_conversion(self):
         
         if self.flow is not None:
@@ -123,28 +101,6 @@ class Units:
 
         if self.penstock_diameter is not None:
             self.penstock_diameter = self.penstock_diameter / ft_to_m       # m to ft
-
-    def si_to_us_basic(flow, head, design_flow, head_loss, penstock_length, penstock_diameter):
-        
-        if flow is not None:
-            flow = flow / cfs_to_cms        # m3/s tp cfs
-        
-        if head is not None:
-            head = head / ft_to_m       # m to ft 
-
-        if design_flow is not None:
-            design_flow = design_flow / cfs_to_cms      # m3/s tp cfs
-    
-        if head_loss is not None:
-            head_loss = head_loss / ft_to_m     # m to ft 
-
-        if penstock_length is not None:
-            penstock_length = penstock_length / ft_to_m     # m to ft 
-
-        if penstock_diameter is not None:
-            penstock_diameter = penstock_diameter / ft_to_m     # m to ft 
-        
-        return flow, head, design_flow, head_loss, penstock_length, penstock_diameter
 
 # Hydropower calculation
 class Hydropower(ABC):
@@ -196,7 +152,7 @@ class Basic(Hydropower):
             hp_params.rated_power = P      # update
 
         hp_params.design_headloss = None        # update - for using the same Unit function
-        hp_params.net_head = None        # update - for using the same Unit function
+        hp_params.net_head = h        # update - for using the same Unit function
      
 # Diversion - Run-of-river
 class Diversion(Hydropower):
@@ -236,6 +192,7 @@ class Diversion(Hydropower):
 
         else:  
             hp_params.head_loss = 0
+            hp_params.headloss_method = None        # headlosses are not calculated
 
         # Turbine calculation
         if hp_params.turbine_type == 'Kaplan':
@@ -267,7 +224,12 @@ class Diversion(Hydropower):
         turbine_efficiency = hp_params.effi_cal
         n = turbine_efficiency * generator_efficiency       # overal system efficiency
         n_max = np.max(turbine_efficiency) * generator_efficiency       # maximum system efficiency
-        hd = hp_params.head - hp_params.design_headloss      # net hydraulic head at design flow
+        
+        if hp_params.design_headloss:
+            hd = hp_params.head - hp_params.design_headloss      # net hydraulic head at design flow
+        else:
+            hd = hp_params.head
+
         h = hp_params.head - hp_params.head_loss        # net hydraulic head
         Qd = hp_params.design_flow      # Design flow
         Q = hp_params.flow
@@ -298,8 +260,6 @@ class Hydrokinetic(Hydropower):
             Hydrokinetic_Turbine().turbine_calculator(hp_params)        # calculate swept area of blades
         
         A = hp_params.hk_swept_area     # Swept Area of blades, m2
-        
-        # 
         V = hp_params.average_velocity
 
         P = 0.5 * n * rho * A * V / 1000       # Power in KW
@@ -314,29 +274,141 @@ def pd_checker(flow, flow_column):
             raise ValueError("When using a pandas dataframe, users must indicate what column" \
                              " has the flow values using 'flow_column = \"Name\"'")
         else:         
-            flow_data = flow[flow_column]        # Extract flow from a pandas dataframe column
+            flow_data = flow[flow_column].to_numpy()        # Extract flow from a pandas dataframe column
         
     else:
         flow_data = flow
     return flow_data
 
-# Hydropower Cost calculation. from: https://info.ornl.gov/sites/publications/files/Pub58666.pdf
-class HydropowerCost(ABC):
+# class PandasDatetime:
+
+#     def pandas_datetime_handler
+
+
+
+# Hydropower economic analysis 
+# Economic Parameters
+class EconomicParameters:
+    def __init__(self, resource_category, initial_capital_cost, annual_o_m,     # cost
+                 capacity_factor, electricity_sell_price, n_operation_days,
+                 annual_energy_generated, annual_revenue):
+        '''
+        This class initializes the calculation of hydropower potential for a specific turbine type
+        Input variables:
+        - sell_price: Selects the particular turbine based on available head
+
+        Returns: None
+        '''
+
+        # Inputs
+        self.resource_category = resource_category      # Options: 'Non-PoweredDam', 'NewStream-reachDevelopment', 
+        # 'CanalConduit', 'UnitAddition', 'GeneratorRewind'
+        self.icc = initial_capital_cost # Initial capital cost, milion $
+        self.annual_om = annual_o_m     # Anuual Operation and Maintennance cost, million $
+        self.electricity_sell_price = electricity_sell_price       # selling price of electricity, $/kWh
+        self.capacity_factor = capacity_factor      # capcity factor, %
+        self.n_operation_days = n_operation_days        # number of days the plant operates in a year
+        self.annual_energy_generated = annual_energy_generated        # Annual energy, Kwh
+        self.annual_revenue = annual_revenue        # annual revenue, Million $
+
+# Cost
+class Cost(ABC):
     
     @abstractmethod
-    def hydropower_calculation(self, turbine, hydraulic_parameters):
+    def cost_calculation(self, hp_params):
         pass
+
+# ORNL_HBCM methods obtained from: https://info.ornl.gov/sites/publications/files/Pub58666.pdf
+class ONRL_BaselineCostModeling_V2(Cost):
+
+    def cost_calculation(self, hp_params):
+
+        P = hp_params.rated_power / 1000       # rated power, mW
+        H = hp_params.net_head / ft_to_m        # net head, ft
+
+        if hp_params.resource_category is None:
+            hp_params.resource_category = 'NewStream-reach'
+
+        if hp_params.resource_category == 'NewStream-reach':
+            icc = 11489245 * P**0.976 * 𝐻**-0.240        # Non-Powered Dam
+
+        if hp_params.resource_category == 'Non-PoweredDam':
+            icc = 9605710 * 𝑃**0.977 * 𝐻**-0.126        # New Stream-reach Development
+
+        if hp_params.resource_category == 'CanalConduit':
+            icc = 9297820 * 𝑃**0.810 * 𝐻**-0.10     # Canal / Conduit Project
+
+        if hp_params.resource_category == 'PSH_ExistingInfrastructure':
+            icc = 3008246 * 𝑃 * exp(-0.000460 * P)      # Pumped Storage Hydropower Projects - Existing Infrastructure
+
+        if hp_params.resource_category == 'PSH_Greenfield':
+            icc = 4882655 * 𝑃 * exp(-0.000776 * P)      #  Pumped Storage Hydropower Projects - Greenfield Sites
+
+        if hp_params.resource_category == 'UnitAddition':
+            icc = 4163746 * 𝑃**0.741        # Unit Addition Projects
+
+        if hp_params.resource_category == 'GeneratorRewind':
+            icc = 250147 * 𝑃**0.817     # Generator Rewind Projects
+        
+        icc = icc / 1000000     # icc, million $
+
+        # Annual Operation and Maintennance 
+        annual_om = 225417 * 𝑃**0.54 / 1000000 # Annual Operation Maintennance, million $
+
+        # ORNL_HBCM predicts higher costs for smaller plants, authors sugges using the lesser between Annual OP&M and 2.5% of ICC 
+        if hp_params.resource_category != 'GeneratorRewind':
+            if annual_om > 0.025 * icc:
+                annual_om = 0.025 * icc
+
+        hp_params.icc = icc     # update. ICC, 2014 million dollar        
+        hp_params.annual_om = annual_om     # update, Annual O&M, 2014 million $
+
+# Revenue
+class Revenue(ABC):
+
+    @abstractmethod
+    def revenue_calculation(self, hp_params):
+        pass
+
+class ConstantEletrictyPrice(Revenue):
+     
+     def revenue_calculation(self, hp_params):
+
+        mean_power = np.mean(hp_params.power)
+
+        if hp_params.capacity_factor:
+            annual_energy = hp_params.capacity_factor * mean_power * 365        # annual energy generated, killowatt day 
+            hp_params.n_operation_days = hp_params.capacity_factor * 365        # update  
+        
+        elif hp_params.n_operation_days:
+            if hp_params.n_operation_days > 365:
+                raise ValueError('The number of days in a year a plant operates cannot exceed 365')
+
+            annual_energy = hp_params.n_operation_days * mean_power / 365        # annual energy generatedkillowatt day
+            hp_params.capacity_factor = hp_params.n_operation_days * 100/ 365        # update
+        
+        else:
+             raise ValueError('The number of days a plant operates, or the capacity factor, are needed' \
+                             ' to compute annual energy generated and revenue')
+        
+        if  hp_params.electricity_sell_price is None:
+             hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+
+        hp_params.annual_energy_generated = annual_energy * 24      # units from Kw day to KWh
+        hp_params.annual_revenue =  hp_params.annual_energy_generated * hp_params.electricity_sell_price / 1000000       # annual revenue, M$
+ 
 
 # Function to calculate hydropower potential  
 def calculate_hp_potential(flow= None, head= None, rated_power= None, 
                            hydropower_type= 'Basic', units= 'US',
                            headloss_method= 'Darcy-Weisbach',
-                           design_flow= None, # flow_data_type= 'Timeseries', flow_column='discharge(cfs)', 
+                           design_flow= None, 
                            system_efficiency = None,
                            turbine_type= None, generator_efficiency= None,  
-                           head_loss= None, head_loss_calculation = True, design_headloss= None,
+                           head_loss= None, head_loss_calculation = True, 
                            penstock_length= None, penstock_diameter= None, penstock_material= None, frictionfactor = None,
-                           pctime_runfull= None, max_headloss_allowed= None,
+                           pctime_runfull= None, 
+                           max_headloss_allowed= None,
                            turbine_Rm= None,
                            pelton_n_jets= None,
                            flow_column= None,
@@ -345,7 +417,17 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
                            hk_blade_diameter= None, 
                            hk_blade_heigth= None, 
                            hk_blade_type= None, 
-                           hk_swept_area = None):
+                           hk_swept_area = None,
+                           resource_category= None, 
+                           initial_capital_cost= None, 
+                           annual_o_m= None,
+                           electricity_sell_price= None,
+                           cost_calculation_method= 'ORNL_HBCM',
+                           capacity_factor= None, 
+                           n_operation_days= None, 
+                           annual_energy_generated= None, 
+                           annual_revenue= None,
+                           energy_revenue_caclulation = False):
     
      
     # Check if a pandas dataframe
@@ -371,14 +453,23 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
                                 hk_blade_diameter= hk_blade_diameter, hk_blade_heigth= hk_blade_heigth, hk_blade_type= hk_blade_type, 
                                 hk_swept_area= hk_swept_area)        # Initialize
     
-    all_params = merge_instances(hyd_pm, turb_pm, turb_pm)       # merge 
+    cost_pm = EconomicParameters(resource_category= resource_category, initial_capital_cost= initial_capital_cost,
+                                 annual_o_m= annual_o_m, electricity_sell_price= electricity_sell_price, 
+                                 capacity_factor= capacity_factor, n_operation_days= n_operation_days,
+                                 annual_energy_generated= annual_energy_generated, annual_revenue= annual_revenue) 
+    
+    all_params = merge_instances(hyd_pm, turb_pm, cost_pm)       # merge 
 
     # units conversion - US to Si
     if units == 'US':       
         Units.us_to_si_conversion(all_params)       # convert imputs from US units to SI units
     
+    # No hydropower calculation
+    if hydropower_type is None:
+        all_params.net_head = all_params.head       # update for cost calculation
+
     # Basic hydropower calculation 
-    if hydropower_type == 'Basic':
+    elif hydropower_type == 'Basic':
         Basic().hydropower_calculation(all_params)
 
     # Diversion projects
@@ -387,6 +478,15 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
     
     elif hydropower_type == 'Hydrokinetic':
         Hydrokinetic().hydropower_calculation(all_params)
+
+    # Cost calculation
+    if hydropower_type != 'Hydrokinetic':
+        if cost_calculation_method == 'ORNL_HBCM':
+            ONRL_BaselineCostModeling_V2().cost_calculation(all_params)
+
+    # Annual energy and revenue calculation
+    if energy_revenue_caclulation:
+        ConstantEletrictyPrice().revenue_calculation(all_params)
 
     # units conversion - SI to US
     if units == 'US':

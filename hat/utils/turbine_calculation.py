@@ -290,7 +290,6 @@ class PercentExceedance(DesignFlow):
         turbine.design_flow = design_flow       # Update
         turbine.pctime_runfull = pe     # Update
 
-
 # Hydrokinetic turbines https://www.sciencedirect.com/science/article/pii/S136403211930440X?via%3Dihub
 
 

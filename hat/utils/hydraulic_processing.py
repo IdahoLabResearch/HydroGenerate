@@ -53,6 +53,7 @@ class HydraulicDesignParameters:
         # internal parameters
         self.Re = []        # Reynolds number (unitless / dimensionless)
         self.design_diameter = None     # placeholder for the estimated penstock diameter (m) during calculations.
+        self.design_headloss = None     # placeholder for design head_loss in iterations of multiple flow values
         self.head_loss_calculation = head_loss_calculation      # Calculate head_loss? (boolean) - if net head is available set to False
 
         
