@@ -268,23 +268,21 @@ class Hydrokinetic(Hydropower):
 # Function to check if a pandas dataframe is used and extract flow values
 def pd_checker(flow, flow_column):
     
+    pandas_dataframe = None
+    
     if isinstance(flow, pd.DataFrame):      # check if a pandas dataframe is used
-        
+            
         if flow_column is None:
             raise ValueError("When using a pandas dataframe, users must indicate what column" \
                              " has the flow values using 'flow_column = \"Name\"'")
         else:         
             flow_data = flow[flow_column].to_numpy()        # Extract flow from a pandas dataframe column
+            pandas_dataframe = True
         
-    else:
+    else:       # if flow is not a pandas dataframe
         flow_data = flow
-    return flow_data
 
-# class PandasDatetime:
-
-#     def pandas_datetime_handler
-
-
+    return flow_data, pandas_dataframe
 
 # Hydropower economic analysis 
 # Economic Parameters
@@ -397,6 +395,40 @@ class ConstantEletrictyPrice(Revenue):
         hp_params.annual_energy_generated = annual_energy * 24      # units from Kw day to KWh
         hp_params.annual_revenue =  hp_params.annual_energy_generated * hp_params.electricity_sell_price / 1000000       # annual revenue, M$
  
+class ConstantEletrictyPrice_pd(Revenue):
+
+    def revenue_calculation(self, hp_params, flow):
+        
+        if  hp_params.electricity_sell_price is None:
+            hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+
+        flow['power_kW'] = hp_params.power      # Power, kW
+        flow['efficiency'] = hp_params.effi_cal     # efficiency 
+        hours = flow.index.to_series().diff().values / pd.Timedelta('1 hour')       # time difference in hours
+        flow['energy_kWh'] = flow['power_kW'] * hours       # energy = power * hours (kWh)
+
+        # Generate annual energy, mean efficiency, and flow.
+        flow_md = flow.groupby([flow.index.year]).agg(annual_volume_ft3= (hp_params.flow_column, 'sum'),
+                                                      mean_annual_effienciency = ('efficiency', 'mean'),
+                                                      total_annual_energy_KWh = ('energy_kWh', 'sum'))
+        
+        # flow_md['total_annual_energy_MWh'] = flow_md['total_annual_energy_MWh'] / 1000
+        
+        flow_md['revenue_M$'] = flow_md['total_annual_energy_KWh'] * hp_params.electricity_sell_price / 1000000  
+        flow_md['capacity_factor'] = flow_md['total_annual_energy_KWh'] / (hp_params.rated_power * 6760)
+        flow_md.loc[flow_md['capacity_factor'] > 1, 'capacity_factor'] = 1
+
+        hp_params.dataframe_output = flow
+        hp_params.annual_dataframe_output = flow_md
+
+        # Working here
+        # TODO: verify units of power. Kw hour? or what?
+        # TODO: calculate mean annual power and mean annual revenue to update single parameter output
+         
+
+    
+
+
 
 # Function to calculate hydropower potential  
 def calculate_hp_potential(flow= None, head= None, rated_power= None, 
@@ -427,11 +459,13 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
                            n_operation_days= None, 
                            annual_energy_generated= None, 
                            annual_revenue= None,
-                           energy_revenue_caclulation = False):
+                           annual_caclulation = False):
     
      
     # Check if a pandas dataframe
-    flow_data = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
+    flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
+    # flow_data = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
+
 
     hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head,
                                        penstock_length= penstock_length, penstock_diameter= penstock_diameter, 
@@ -485,13 +519,18 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
             ONRL_BaselineCostModeling_V2().cost_calculation(all_params)
 
     # Annual energy and revenue calculation
-    if energy_revenue_caclulation:
-        ConstantEletrictyPrice().revenue_calculation(all_params)
+    if annual_caclulation:
+        if pandas_dataframe:        # If a pandas dataframe is used
+            ConstantEletrictyPrice_pd().revenue_calculation(all_params, flow= flow)     # calculate revenue when a time-indexed pd.dataframe is given.
+        
+        else:
+            ConstantEletrictyPrice().revenue_calculation(all_params)
 
     # units conversion - SI to US
     if units == 'US':
         Units.si_to_us_conversion(all_params)       # convert imputs from US units to SI units
 
+    
     return all_params
 
 
@@ -501,7 +540,7 @@ if __name__ == "__main__":
     # flow_info = pd.read_csv(os.path.join('.','data_test.csv'))
     
     flow = 500
-    flow_info = pd.read_csv('data_test.csv')['discharge_cfs']
+    flow_info = pd.read_csv('data_test.csv')['discharge_cfs'].to_numpy()
     head = 5
     rated_power = None
 
