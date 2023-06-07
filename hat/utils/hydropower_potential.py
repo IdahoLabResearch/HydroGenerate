@@ -146,8 +146,9 @@ class Units:
         if self.design_headloss is not None:
             self.design_headloss = self.design_headloss / ft_to_m       # m to ft
 
-        if self.net_head is not None:
-            self.net_head = self.net_head / ft_to_m #       m to ft
+        if self.hydropower_type != 'Hydrokinetic':
+            if self.net_head is not None:
+                self.net_head = self.net_head / ft_to_m #       m to ft
     
         if self.max_headloss_allowed is not None:
             self.max_headloss_allowed = self.max_headloss_allowed / ft_to_m     # m to ft 
@@ -445,8 +446,8 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
                            design_flow= None, 
                            system_efficiency = None,
                            turbine_type= None, generator_efficiency= None,  
-                           head_loss= None, head_loss_calculation= True, net_head= None,
-                           penstock_length= None, penstock_diameter= None, penstock_material= None, frictionfactor= None,
+                           head_loss= None, head_loss_calculation= True,
+                           penstock_length= None, penstock_diameter= None, penstock_material= None, penstock_frictionfactor= None,
                            pctime_runfull= None, 
                            max_headloss_allowed= None,
                            turbine_Rm= None,
@@ -475,10 +476,10 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
     # flow_data = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
 
     # initialize all instances: HydraulicDesign, Turbine, and Economic parameters.
-    hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head, net_head= net_head,
+    hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head, #net_head= net_head,
                                        penstock_length= penstock_length, penstock_diameter= penstock_diameter, 
                                        penstock_material= penstock_material, head_loss= head_loss, 
-                                       frictionfactor= frictionfactor,
+                                       penstock_frictionfactor= penstock_frictionfactor,
                                        head_loss_calculation= head_loss_calculation,
                                        max_headloss_allowed= max_headloss_allowed,
                                        headloss_method = headloss_method,
@@ -501,6 +502,7 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
                                  annual_energy_generated= annual_energy_generated, annual_revenue= annual_revenue)        # Initialize 
     
     all_params = merge_instances(hyd_pm, turb_pm, cost_pm)       # merge parameters into a single instance
+    all_params.hydropower_type = hydropower_type        # update
 
     # units conversion - US to Si
     if units == 'US':       
@@ -527,6 +529,9 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
             ONRL_BaselineCostModeling_V2().cost_calculation(all_params)
 
     # Annual energy and revenue calculation
+    
+    # TODO: calculate pandas output when annual_calculation = False
+
     if annual_caclulation:
         if pandas_dataframe:        # If a pandas dataframe is used
             ConstantEletrictyPrice_pd().revenue_calculation(all_params, flow= flow)     # calculate revenue when a time-indexed pd.dataframe is given.
