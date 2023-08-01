@@ -7,7 +7,7 @@ import sys
 
 from setuptools import setup, find_packages
 
-with open(file="README.md", mode="r") as readme_handle:
+with open(file="README.md", mode="r", encoding='utf-8') as readme_handle:
     long_description = readme_handle.read()
 
 REQUIRED = [

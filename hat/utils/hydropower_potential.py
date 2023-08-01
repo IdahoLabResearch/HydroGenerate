@@ -34,9 +34,9 @@ nu = 0.0000011223 # Kinematic viscosity of water (m2/s) at 60F (~15.6C) - preval
 
 # Economic Parameters
 class EconomicParameters:
-    def __init__(self, resource_category, initial_capital_cost, annual_o_m,     # cost
-                 capacity_factor, electricity_sell_price, n_operation_days,
-                 annual_energy_generated, annual_revenue):
+    def __init__(self, resource_category, 
+                 capacity_factor, electricity_sell_price, n_operation_days):
+
         '''
         This class initializes the calculation of hydropower potential for a specific turbine type
         Input variables:
@@ -45,16 +45,10 @@ class EconomicParameters:
         Returns: None
         '''
 
-        # Inputs
         self.resource_category = resource_category      # Options: 'Non-PoweredDam', 'NewStream-reachDevelopment', 
-        # 'CanalConduit', 'UnitAddition', 'GeneratorRewind'
-        self.icc = initial_capital_cost # Initial capital cost, milion $
-        self.annual_om = annual_o_m     # Anuual Operation and Maintennance cost, million $
         self.electricity_sell_price = electricity_sell_price       # selling price of electricity, $/kWh
         self.capacity_factor = capacity_factor      # capcity factor, %
         self.n_operation_days = n_operation_days        # number of days the plant operates in a year
-        self.annual_energy_generated = annual_energy_generated        # Annual energy, Kwh
-        self.annual_revenue = annual_revenue        # annual revenue, Million $
 
 # Function to combine multiple instances
 def merge_instances(ob1, *args):
@@ -106,22 +100,21 @@ class Units:
 
         if self.head_loss is not None:
             self.head_loss = self.head_loss * ft_to_m       # ft to m
-    
-        if self.max_headloss_allowed is not None:
-            self.max_headloss_allowed = self.max_headloss_allowed * ft_to_m     # ft to m
 
         if self.penstock_length is not None:
             self.penstock_length = self.penstock_length * ft_to_m       # ft to m
 
-        if self.average_velocity is not None:
-            self.average_velocity = self.average_velocity * ft_to_m       # ft to m
+        if self.channel_average_velocity is not None:
+            self.channel_average_velocity = self.channel_average_velocity * ft_to_m       # ft to m
 
-        # Hydrokinetics
         if self.penstock_diameter is not None:
             self.penstock_diameter = self.penstock_diameter * ft_to_m       # ft/s to m/s
 
-        if self.channel_bottom_width is not None:
-            self.channel_bottom_width = self.channel_bottom_width * ft_to_m       # ft to m
+        if self.hk_blade_diameter is not None:
+            self.hk_blade_diameter= self.hk_blade_diameter * ft_to_m       # ft to m
+
+        if self.hk_blade_heigth is not None:
+            self.hk_blade_heigth = self.hk_blade_heigth * ft_to_m       # ft to m
 
     def si_to_us_conversion(self):
         
@@ -143,8 +136,8 @@ class Units:
         if self.head_loss is not None:
             self.head_loss = self.head_loss / ft_to_m       # m to ft
 
-        if self.design_headloss is not None:
-            self.design_headloss = self.design_headloss / ft_to_m       # m to ft
+        if self.penstock_design_headloss is not None:
+            self.penstock_design_headloss = self.penstock_design_headloss / ft_to_m       # m to ft
 
         if self.hydropower_type != 'Hydrokinetic':
             if self.net_head is not None:
@@ -159,16 +152,21 @@ class Units:
         if self.penstock_diameter is not None:
             self.penstock_diameter = self.penstock_diameter / ft_to_m       # m to ft
 
-        # Hydrokinetics
-        if self.penstock_diameter is not None:
-            self.penstock_diameter = self.penstock_diameter / ft_to_m       # m/s to ft/s 
+        if self.channel_average_velocity is not None:
+            self.channel_average_velocity = self.channel_average_velocity / ft_to_m       # m/s to ft/s
 
-        if self.channel_bottom_width is not None:
-            self.channel_bottom_width = self.channel_bottom_width / ft_to_m       # m to ft
+        if self.hk_blade_diameter is not None:
+            self.hk_blade_diameter= self.hk_blade_diameter / ft_to_m       # m to ft
+
+        if self.hk_blade_heigth is not None:
+            self.hk_blade_heigth = self.hk_blade_heigth / ft_to_m       # m to ft
+
+        if self.runner_diameter is not None:
+            self.runner_diameter = self.runner_diameter /  ft_to_m       # m to ft
 
 # Hydropower calculation
 class Hydropower(ABC):
-    
+
     @abstractmethod
     def hydropower_calculation(self, hp_params):
         pass
@@ -178,10 +176,10 @@ class Basic(Hydropower):
             
     def hydropower_calculation(self, hp_params):
 
-        flow = hp_params.flow
-        head = hp_params.head
-        rated_power = hp_params.rated_power
-        system_efficiency = hp_params.system_efficiency
+        flow = hp_params.flow       # flow, m3/s
+        head = hp_params.head       # head, m
+        rated_power = hp_params.rated_power     # rated power, KW
+        system_efficiency = hp_params.system_efficiency     # system afficiency
                 
         if len([i for i in [flow, head, rated_power] if i is None]) > 1:
             raise ValueError('Missing inputs. Users must provide flow and head to compute power, flow and power' \
@@ -215,7 +213,7 @@ class Basic(Hydropower):
             P = n * g * rho * flow * h / 1000 # HP potential in kilowatts
             hp_params.rated_power = P      # update
 
-        hp_params.design_headloss = None        # update - for using the same Unit function
+        hp_params.penstock_design_headloss = None        # update - for using the same Unit function
         hp_params.net_head = h        # update - for using the same Unit function
      
 # Diversion - Run-of-river
@@ -256,23 +254,26 @@ class Diversion(Hydropower):
                 CrossFlowTurbine().turbine_calculator(hp_params)
 
         # Head loss calculation 
-        if hp_params.head_loss_calculation: # If head loss are calculated
+        if hp_params.penstock_headloss_calculation: # If head loss in the penstock are calculated
 
             if hp_params.penstock_length is None:
                 raise ValueError("Penstock length is required for head loss computations if" \
-                                 " head_loss_calculation is True")
+                                 " penstock_headloss_calculation is True")
             
-            if hp_params.headloss_method == 'Darcy-Weisbach': # Darcy-Weisbach
-                DarcyWeisbach().headloss_calculator(hp_params)       # head loss at design parameters
-                DarcyWeisbach().headloss_calculator_ts(hp_params)        # head loss for a range of flow values
+            if hp_params.penstock_headloss_method == None:
+                hp_params.penstock_headloss_method = 'Darcy-Weisbach'
 
-            elif hp_params.headloss_method == 'Hazen-Williams': # Hazen-Williams
-                HazenWilliamns().headloss_calculator(hp_params)       # head loss at design parameters
-                HazenWilliamns().headloss_calculator_ts(hp_params)        # head loss for a range of flow values
+            if hp_params.penstock_headloss_method == 'Darcy-Weisbach': # Darcy-Weisbach
+                DarcyWeisbach().penstock_headloss_calculator(hp_params)       # head loss at design parameters
+                DarcyWeisbach().penstock_headloss_calculator_ts(hp_params)        # head loss for a range of flow values
+
+            elif hp_params.penstock_headloss_method == 'Hazen-Williams': # Hazen-Williams
+                HazenWilliamns().penstock_headloss_calculator(hp_params)       # head loss at design parameters
+                HazenWilliamns().penstock_headloss_calculator_ts(hp_params)        # head loss for a range of flow values
 
         else:  
             hp_params.head_loss = 0
-            hp_params.headloss_method = None        # headlosses are not calculated
+            hp_params.penstock_headloss_method = None        # penstock head losses are not calculated
 
         # Generator efficiency
         if hp_params.generator_efficiency is None:
@@ -280,11 +281,12 @@ class Diversion(Hydropower):
         else:
              hp_params.generator_efficiency =  hp_params.generator_efficiency / 100 # percent to proportion
         
-        n = hp_params.effi_cal * hp_params.generator_efficiency       # overal system efficiency
-        n_max = np.max(hp_params.effi_cal) * hp_params.generator_efficiency      # maximum system efficiency
+        n = hp_params.turbine_efficiency * hp_params.generator_efficiency       # overal system efficiency
+        n_max = np.max(hp_params.turbine_efficiency) * hp_params.generator_efficiency      # maximum system efficiency
         
-        if hp_params.design_headloss:       # id design head loss was calculated
-            hd = hp_params.head - hp_params.design_headloss      # net hydraulic head at design flow
+        if hp_params.penstock_design_headloss:        # if design head loss was calculated for penstock only
+            hd = hp_params.head - hp_params.penstock_design_headloss  # net hydraulic head at design flows
+
         else:
             hd = hp_params.head
 
@@ -318,7 +320,7 @@ class Hydrokinetic(Hydropower):
             Hydrokinetic_Turbine().turbine_calculator(hp_params)        # calculate swept area of blades
         
         A = hp_params.hk_swept_area     # Swept Area of blades, m2
-        V = hp_params.average_velocity      # cross sectional average velocity m/s
+        V = hp_params.channel_average_velocity      # cross sectional average velocity m/s
 
         P = 0.5 * n * rho * A * V / 1000       # Power in KW
         hp_params.rated_power = P       # update
@@ -343,10 +345,10 @@ class ONRL_BaselineCostModeling_V2(Cost):
 
         # icc = initial capital cost = f(H, P) in $2014. H in ft, P in MW
         if hp_params.resource_category == 'NewStream-reach':
-            icc = 11489245 * P**0.976 * 𝐻**-0.240        # Non-Powered Dam
-
-        if hp_params.resource_category == 'Non-PoweredDam':
             icc = 9605710 * 𝑃**0.977 * 𝐻**-0.126        # New Stream-reach Development
+           
+        if hp_params.resource_category == 'Non-PoweredDam':
+             icc = 11489245 * P**0.976 * 𝐻**-0.240        # Non-Powered Dam
 
         if hp_params.resource_category == 'CanalConduit':
             icc = 9297820 * 𝑃**0.810 * 𝐻**-0.10     # Canal / Conduit Project
@@ -421,7 +423,7 @@ class ConstantEletrictyPrice_pd(Revenue):
 
         flow['power_kW'] = hp_params.power      # Power, kW
         flow['turbine_flow_cfs'] = hp_params.turbine_flow     # Flow passing by the turbine, cfs
-        flow['efficiency'] = hp_params.effi_cal     # efficiency 
+        flow['efficiency'] = hp_params.turbine_efficiency     # efficiency 
         hours = flow.index.to_series().diff().values / pd.Timedelta('1 hour')       # time difference in hours
         flow['energy_kWh'] = flow['power_kW'] * hours       # energy = power * hours (kWh)
 
@@ -440,36 +442,43 @@ class ConstantEletrictyPrice_pd(Revenue):
         hp_params.annual_dataframe_output = flow_md
 
 # Function to calculate hydropower potential - function users will call 
-def calculate_hp_potential(flow= None, head= None, rated_power= None, 
-                           hydropower_type= 'Basic', units= 'US',
-                           headloss_method= 'Darcy-Weisbach',
+def calculate_hp_potential(flow= None,
+                           head= None, 
+                           rated_power= None, 
+                           hydropower_type= 'Basic', 
+                           units= 'US',
+
+                           penstock_headloss_method= 'Darcy-Weisbach',
                            design_flow= None, 
                            system_efficiency = None,
-                           turbine_type= None, generator_efficiency= None,  
-                           head_loss= None, head_loss_calculation= True,
-                           penstock_length= None, penstock_diameter= None, penstock_material= None, penstock_frictionfactor= None,
+                           generator_efficiency= None,
+                           turbine_type= None,   
+                           head_loss= None, 
+
+                           penstock_headloss_calculation= False,
+                           penstock_length= None, 
+                           penstock_diameter= None, 
+                           penstock_material= None, 
+                           penstock_frictionfactor= None,
+
                            pctime_runfull= None, 
                            max_headloss_allowed= None,
                            turbine_Rm= None,
                            pelton_n_jets= None,
                            flow_column= None,
-                           average_velocity= None,
-                           channel_bottom_width= None,
+
+                           channel_average_velocity= None,
                            hk_blade_diameter= None, 
                            hk_blade_heigth= None, 
                            hk_blade_type= None, 
-                           hk_swept_area = None,
+                           hk_swept_area= None,
+
+                           annual_caclulation = False,
                            resource_category= None, 
-                           initial_capital_cost= None, 
-                           annual_o_m= None,
                            electricity_sell_price= None,
                            cost_calculation_method= 'ORNL_HBCM',
                            capacity_factor= None, 
-                           n_operation_days= None, 
-                           annual_energy_generated= None, 
-                           annual_revenue= None,
-                           annual_caclulation = False):
-    
+                           n_operation_days= None): 
      
     # Check if a pandas dataframe
     flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
@@ -478,17 +487,17 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
     # initialize all instances: HydraulicDesign, Turbine, and Economic parameters.
     hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head, #net_head= net_head,
                                        penstock_length= penstock_length, penstock_diameter= penstock_diameter, 
-                                       penstock_material= penstock_material, head_loss= head_loss, 
+                                       penstock_material= penstock_material, 
+                                       head_loss= head_loss, 
                                        penstock_frictionfactor= penstock_frictionfactor,
-                                       head_loss_calculation= head_loss_calculation,
+                                       penstock_headloss_calculation= penstock_headloss_calculation,
                                        max_headloss_allowed= max_headloss_allowed,
-                                       headloss_method = headloss_method,
-                                       average_velocity= average_velocity,
-                                       channel_bottom_width= channel_bottom_width)       # Initialize
+                                       penstock_headloss_method = penstock_headloss_method,
+                                       channel_average_velocity= channel_average_velocity)
 
     turb_pm = TurbineParameters(turbine_type= turbine_type, 
                                 flow= flow_data, design_flow= design_flow, flow_column = flow_column,
-                                head= head, head_loss= head_loss, 
+                                head= head, 
                                 rated_power= rated_power,
                                 system_efficiency= system_efficiency,
                                 generator_efficiency= generator_efficiency,
@@ -496,10 +505,9 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
                                 hk_blade_diameter= hk_blade_diameter, hk_blade_heigth= hk_blade_heigth, hk_blade_type= hk_blade_type, 
                                 hk_swept_area= hk_swept_area)        # Initialize
     
-    cost_pm = EconomicParameters(resource_category= resource_category, initial_capital_cost= initial_capital_cost,
-                                 annual_o_m= annual_o_m, electricity_sell_price= electricity_sell_price, 
-                                 capacity_factor= capacity_factor, n_operation_days= n_operation_days,
-                                 annual_energy_generated= annual_energy_generated, annual_revenue= annual_revenue)        # Initialize 
+    cost_pm = EconomicParameters(resource_category= resource_category, 
+                                 electricity_sell_price= electricity_sell_price, 
+                                 capacity_factor= capacity_factor, n_operation_days= n_operation_days)
     
     all_params = merge_instances(hyd_pm, turb_pm, cost_pm)       # merge parameters into a single instance
     all_params.hydropower_type = hydropower_type        # update
@@ -544,22 +552,5 @@ def calculate_hp_potential(flow= None, head= None, rated_power= None,
         Units.si_to_us_conversion(all_params)       # convert imputs from US units to SI units
 
     return all_params
-
-
-if __name__ == "__main__":
-
-    # Example 1, calculate basic hydropower potential
-    
-    flow = 500
-    # flow_info = pd.read_csv('data_test.csv')['discharge_cfs'].to_numpy()
-    head = 50
-    rated_power = None
-
-    # hp_calculator = HydroPowerPotential()
-    test = calculate_hp_potential(flow= flow, rated_power= rated_power, head= head,
-                           hydropower_type= 'Basic', penstock_length = 50)
-
-    print('\nRated Power:',test.rated_power)
-
-    
-# Additional examples are provided int the 'HydroGenerateWorkflow.ipynb' file.  
+  
+# Examples are provided int the 'HydroGenerate_Workflow.ipynb' file.  
