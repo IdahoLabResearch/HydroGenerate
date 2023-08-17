@@ -11,6 +11,8 @@ authors:
   given-names: "Shiloh N"
 - family-names: "Mosier"
   given-names: "Thomas M"
+- family-names: "Bastidas Pacheco"
+  given-names: "Camilo J."
 - given-names: "USDOE Office of Energy Efficiency and Renewable Energy"
 title: "Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series"
 version: 1.0.0

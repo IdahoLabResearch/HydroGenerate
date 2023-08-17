@@ -1,19 +1,12 @@
 '''
-Copyright 2021, Battelle Energy Alliance, LLC
+Copyright 2023, Battelle Energy Alliance, LLC
 '''
 
-# -*- coding: utf-8 -*-
 """
-Created on Sun Aug 16 14:15:46 2020
-@author: MITRB
+03-2023
+@author: Camilo J. Bastidas Pacheco, MITRB, J. Gallego-Calderon
 
-This module calculates the power capacity potential and annual energy production based on a head loss and different turbine technologies
-
-01.21.2021 J. Gallego-Calderon:
-- Removed the GUI code since it is no longer needed 
-- The code is modular by using a class that computs the power capacity of different technologies
-- Additional functions support the calculation above by computing the head loss and the AEP
-- An if __name__ == "__main__": section is added so the script can be tested on its own
+This module calculates hydropower potential for diffrent type of hydropower installations
 """
 
 import numpy as np
@@ -23,428 +16,541 @@ from numpy.lib.function_base import median
 import pandas as pd
 from datetime import datetime
 import os
+from abc import ABC, abstractmethod
+from hat.utils.hydraulic_processing import *
+from hat.utils.turbine_calculation import *
+from numbers import Number
+from math import exp
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
 
-class TurbinePower:
-    def __init__(self, name, flow_range, head, maxflow, h_f, k1, k2, sys_effi, Rm):
+# Constant definition / unit conversion
+rho = 1000 # water density in Kg/m^3
+g = 9.81 # acceleration of gravity (m/s^2)
+cfs_to_cms = 0.0283168 # 1 cubic feet per second to cubic meter per second
+ft_to_m = 0.3048 # 1 feet to meters
+nu = 0.0000011223 # Kinematic viscosity of water (m2/s) at 60F (~15.6C) - prevalent stream water temperature 
+
+# Economic Parameters
+class EconomicParameters:
+    def __init__(self, resource_category, 
+                 capacity_factor, electricity_sell_price, n_operation_days):
+
         '''
         This class initializes the calculation of hydropower potential for a specific turbine type
         Input variables:
-        - name: Selects the particular turbine based on available head
-        - flow_range: Range of flow values
-        - head: Potential head of the stream,
-        - maxflow: The maximum flow observed within the data provided
-        - h_f: Head loss
-        - k1 and k2: These are turbine constants
-        - effi_sys: Water to wire efficiency, assumed to be 0.97 or 97%
-        - Rm: Turbine constant
-        - G: Acceleration due to gravity (9.81 m/sec^2)
-        - RHO: Specific density of water (1000 kg/m^3)
+        - sell_price: Selects the particular turbine based on available head
+
         Returns: None
         '''
 
-        # Inputs
-        self.tur_name = name
-        self.flow_range = flow_range
-        self.head = head
-        self.maxflow = maxflow
-        self.h_f = h_f
-        self.k1 = k1
-        self.k2 = k2
-        self.sys_effi = sys_effi
-        self.Rm = Rm
+        self.resource_category = resource_category      # Options: 'Non-PoweredDam', 'NewStream-reachDevelopment', 
+        self.electricity_sell_price = electricity_sell_price       # selling price of electricity, $/kWh
+        self.capacity_factor = capacity_factor      # capcity factor, %
+        self.n_operation_days = n_operation_days        # number of days the plant operates in a year
 
-        # Calculated 
-        self.h = abs(self.head-np.nanmax(self.h_f)) # rated head on turbine [m]
-        
-        # Outputs
-        self.pmax = 0       # maximum power
-        self.pmin = 0       # minimun power
-        self.power = []     # array that contains the power 
-        self.effi_cal = []  # contains the range of efficiencies for the flow range
-        self.turb_cap = 0
-        self.raw_power = []
+# Function to combine multiple instances
+def merge_instances(ob1, *args):
+    for d in args:
+        ob1.__dict__.update(d.__dict__)
+    return ob1
 
-        # Constants
-        self.G=9.81        # acceleration of gravity m/s^2
-        self.RHO=1000      # water density in g/m^3
-
-
-    def calculate_flow(self):
-        '''
-        This function selects the turbine type essential for calculation of turbine efficiency
-        as a function of flow.
-        '''
-
-        if (self.tur_name=='Francis'):
-            self.francis_turbine()
-        elif (self.tur_name=='Kaplan' or  self.tur_name =='Propellor'):
-            self.kaplan()
-        elif(self.tur_name=='Pelton' or self.tur_name=='Turgo'):
-            self.pelton()
-        elif(tur_name=='Crossflow'):
-            self.crossflow()
-        
-        return None
-
-    '''
-    The following defines the variables required to calcuate turbine 
-    efficiency as a function of flow:
-    
-    reac_runsize - Reaction turbine runner size
-    speci_speed - Specific speed of turbine
-    speci_speed - Specific speed adjustment to peak frequency
-    run_size - Runner size adjustment to peak frequency
-    peak_eff - Turbine peak efficiency
-    peak_eff_flow - Peak efficiency flow
-    full_load_eff_drop - Drop in efficiency at full load
-    eff_full_load - Efficiencies at full load
-    effi - Efficiency at flows below/above peak efficiency
-    j - Number of jets
-    rot_sp - Rotational Speed
-    out_run_dia - Outside diameter of runner
-    '''
-
-    def francis_turbine(self):
-        '''
-        This function calculates the efficiency as a function of flow for francis turbine
-        '''
-        #Reaction turbine runner size (d)
-        reac_runsize = self.k1*(self.maxflow)**(0.473)
-        
-        # Specific speed based on flow (n_q)
-        speci_speed = self.k2*(self.h**(-0.5))
-        
-        # Specific speed adjustment to peak efficiency (^e_nq)
-        speed_ad = ((speci_speed - 56)/256)**2
-
-        # Runner size adjustment to peak efficiency (^e_d)
-        run_size = (0.081 + speed_ad)*(1-(0.789*(reac_runsize**(-0.2))))
-
-        # Turbine peak efficiency (e_p)
-        peak_eff = (0.919 - speed_ad + run_size)-0.0305 + 0.005*self.Rm
-
-        # Peak efficiency flow (Q_p)
-        peak_eff_flow = 0.65 * self.maxflow * (speci_speed**0.05)
-        
-        # Drop in efficiency at full load (^e_p)
-        full_load_eff_drop = 0.0072 *(speci_speed)**0.4
-        
-        # Efficiency at full load (e_r)
-        eff_full_load = (1-full_load_eff_drop)*peak_eff
-        
-        # Efficiencies at flows below peak efficiency flow ()
-        for i in range(len(self.flow_range)):
-            if (peak_eff_flow > self.flow_range[i]):
-                effi = (1-(1.25*((peak_eff_flow- self.flow_range[i])/peak_eff_flow)**(3.94 - 0.0195 *speci_speed)))*peak_eff
-                if (effi <= 0):
-                    effi = 0
-                self.effi_cal.append(effi)
-            else:
-                effi = peak_eff- (((self.flow_range[i] - peak_eff_flow)/(self.maxflow - peak_eff_flow)**2)*(peak_eff - eff_full_load))
-                self.effi_cal.append(effi)
-        
-        self.calculate_power()
-    
-        return None
-
-
-    def kaplan(self):
-        '''
-        This function calculates the efficiency as a function of flow for Kaplan turbine
-        '''    
-        # print('Entering Kaplan Calculation Module')
-        reac_runsize = self.k1*(self.maxflow)**(0.473)
-        #print("reac_runsize: ",reac_runsize)
-        speci_speed = self.k2*(self.h**(-0.5))
-        #print("speci_speed: ",speci_speed)
-        speed_ad= ((speci_speed-170)/700)**2
-        run_size = (0.095 + speed_ad)*(1-(0.789*(reac_runsize**(-0.2))))
-        peak_eff = (0.905 - speed_ad + run_size)-0.0305 + 0.005*self.Rm
-        #print("Peak_eff: ", peak_eff)
-        if (self.tur_name=='Kaplan'):
-            peak_eff_flow = 0.75 * self.maxflow
-            #print("Peak eff flow: ",peak_eff_flow)
-            self.effi_cal = (1- 3.5*((peak_eff_flow - self.flow_range)/peak_eff_flow)**6)*peak_eff
-            #print(self.effi_cal)
-            self.effi_cal = np.where(self.effi_cal <=0 , 0, self.effi_cal)
-            #print(self.effi_cal)
-        elif (self.tur_name=='Propellor'):
-            peak_eff_flow = self.maxflow
-            self.effi_cal = (1-1.25((peak_eff_flow - self.flow_range)/peak_eff_flow)**1.13)*peak_eff
-            self.effi_cal = np.where(self.effi_cal <=0 , 0, self.effi_cal)
-
-        self.calculate_power()
-    
-        return None
-
-    def pelton(self):
-        '''
-        This function calculates the efficiency as a function of flow for Pelton turbine
-        '''
-        j = 5   # number of jets (j)
-        # Rotational speed (n)
-        rot_sp = 31*self.h*(self.maxflow/j)**0.5
-        
-        # Outside diameter of runner (d)
-        out_run_dia = (49.4*(self.h**0.5)*j**0.02)/rot_sp
-
-        peak_eff = 0.864* out_run_dia**0.04
-        peak_eff_flow = (0.662+0.001*j)*self.maxflow
-        
-        # Efficiency at flows above and below peak efficiency flow (e_q)
-        effi_pelo = (1-((1.31+0.025*j)*(abs(peak_eff_flow - self.flow_range)/(peak_eff_flow))**(5.6+0.4*j)))*peak_eff    
-        if (self.tur_name==' Pelton turbine'):
-            self.effi_cal = effi_pelo
-        elif(self.tur_name==' Turgo turbine'):
-            self.effi_cal = effi_pelo - 0.03
-        self.effi_cal = np.where(self.effi_cal <=0 , 0, self.effi_cal)
-        
-        self.calculate_power()
-    
-        return None
-
-    def crossflow(self):
-        '''
-        This function calculates the efficiency as a function of flow for 
-        Cross-flow turbine
-        '''
-        peak_eff_flow = self.maxflow
-        # Efficiency (e_q)
-        effi = 0.79 - 0.15 *((peak_eff_flow - self.flow_range)/peak_eff_flow) - 1.37*((peak_eff_flow - self.flow_range)/(peak_eff_flow))**(14)
-        self.effi_cal=effi
-        self.effi_cal = np.where(self.effi_cal <=0 , 0, self.effi_cal)
-        
-        self.calculate_power()
-    
-        return None
-    
-    def calculate_power(self, rated_power=None,val_min=0 ):
-        '''
-        This function calculates power
-        P = rho * g * (head - head_loss) * system_efficiency * turbine_efficiency
-        '''
-        self.power = abs(self.flow_range * (self.head - self.h_f) * self.effi_cal * self.sys_effi * self.G * self.RHO)
-        self.power = self.power/10**6    # converts to MW
-        self.raw_power = self.power
-        self.pmax = max(self.power)
-        self.pmin = min([i for i in self.power if i > val_min], default="EMPTY")
-        if rated_power is not None:
-            turb_cap = rated_power
-        else:
-            self.turb_cap = np.percentile(self.power,75)
-        
-        self.power=np.where(self.power>self.turb_cap,self.turb_cap,self.power)
-        self.effi_cal = [i*100 for i in self.effi_cal]   #Converting the efficiency to percentage
-        return None
-
-
+# function to calculated head 
 def calculate_head(rated_flow, rated_power):
     '''
-    Returns the head in meters based on known rated flow and rated power
+    Returns the head in meters based on known rated flow (m3/s) and rated power (W)
+    Input = flow
+    
     '''
-    rho = 1000 # water density in g/m^3
-    g = 9.81
-    flow_metric = rated_flow/35.313  # convert cu.ft/s to cu.m/s
-    #10*rated_power/flow_gpm
-    return rated_power/(rho*g*flow_metric) 
+    return rated_power/(rho*g*rated_flow) 
 
-
-def calculate_head_loss(system, flow_range, head):
-    # h_f: head loss
-    h_f = 0
-    if (system=='pipe'):
-        h_f = 0.05* flow_range
+# Function to check if a pandas dataframe is used and extract flow values
+def pd_checker(flow, flow_column):
+    
+    pandas_dataframe = False        # flag to track if a pandas dataframe is used outside of this function
+    
+    if isinstance(flow, pd.DataFrame):      # check if a pandas dataframe is used
+            
+        if flow_column is None:
+            raise ValueError("When using a pandas dataframe, users must indicate what column" \
+                             " has the flow values using 'flow_column = \"Name\"'")
+        else:         
+            flow_data = flow[flow_column].to_numpy()        # Extract flow from a pandas dataframe column
+            pandas_dataframe = True
         
-    elif (system=='canal'):
-        h_f= 0.2* flow_range
-    elif (sysetem =='reservoir'):
-        h_f = 0.01*flow_range
+    else:       # if flow is not a pandas dataframe
+        flow_data = flow
+
+    return flow_data, pandas_dataframe
+
+# Unit transformation
+class Units:
     
-    if (min(head-h_f)<0):
-        print("Check value(s) for diameter and Flow")
-        #                   raise SystemExit
-
-    return h_f
-
-
-def max_flow_detection(flow_range):
-    ''' '''
-    return
-
-
-# Annual energy calculation
-# TODO: the constants cent and const are hardcoded. They should an inout from the front-end at some point
-def aep_calculation(turb_obj, op, time_step_hr, cent=5, const=4.1):
-    '''
-    This function calculates the annual energy generation, potential revenue and estimated cost for the selected hydropower
-
-    tot_mwh - Annual Energy in MWh
-    revenue - Estimated total revenue in ($/kWh)
-    const_cost - Estimated construction cost (million $/kWh)
-    per_75 - 75th percentile of calculated calculated power
-    '''
-
-    tot_mwh = 0
-    if (op == 'Timeseries'): 
-        mwh = turb_obj.power * time_step_hr # MWh calculation
-        tot_mwh = sum(mwh)  # Total Energy
-    elif (op == 'Generalized'):
-        valu= []
-        for i in range(len(turb_obj.power)-1):
-            create = ((turb_obj.power[i]+turb_obj.power[i+1])/2)
-            valu.append(create)
-        mwh = sum(valu)  # MWh calculation  
-        tot_mwh = sum(valu) * 438 * 0.8 # Total Energy
-    revenue = (tot_mwh*cent/100)*10e3 #Calculating revenue in Dollars
-    #print((tot_mwh*cent/100)*10e3, revenue, cent)
-    const_cost = turb_obj.turb_cap*const #Construction cost
-    
-    return revenue, const_cost, tot_mwh
-
-def time_diff_hr(dt1,dt2, date_format='%Y-%m-%dT%H:%M:%S.%f'):
-    '''
-    Computes the time interval between flow inputs for annual
-    energy calculation
-    '''
-
-    # Converting str to datetime format
-    dt1 = datetime.strptime(dt1, date_format)
-    dt2 = datetime.strptime(dt2, date_format)
-    # Difference in days
-    timedel = dt2 - dt1
-    time_step_hr = (timedel.days*24*3600 + timedel.seconds)/3600
-    return time_step_hr
-
-
-def turbine_type():
-    '''
-    Place holder to define the turbine type from the size of head
-    '''
-
-    turb_data = {'Head':['Very low head','Low head','Medium head','High head',
-                'Very high head','Very high head'],
-                'Start':[0.5,10,60,150,350,2000],
-                'End':[10,60,150,350,2000,5000],
-                'Turbine':['Kaplan','Kaplan','Francis','Francis','Pelton','Pelton'],
-                'k2':[800,800,600,600,0,0]}
-    
-    df = pd.DataFrame.from_dict(turb_data)
-    return df
-
-
-def calculate_potential(flow_info, rated_flow=None, rated_power=None, turb= None, 
-                        head_input=None,op='Timeseries', sys_effi=None,
-                        system='pipe', flow_column='discharge(cfs)'):
-    '''
-    Parameters
-    Top-level function to calculate the hydropower potential
-    Inputs:
-    - flow_info: dataframe with the discharge(cfs) time-series.
-    - rated_flow: nameplate flow
-    - rated_power: nameplate power capacity
-    - head_input: hydraulic head value in meters. If it is not provided, the code with estimate the head based on rated_flow and rated_power.
-    Output
-    - turbine: object of the type turbine class. The estimate power and efficiency can be accessed as turbine.power and turbine.efficiency.
-    - op: Calculation options, either 'Timeseries' or 'Generalized', Default = 'Timeseries'
-    - maxflow: Maximum flow or design flow for the turbine, if None the maximum value of the provided timeseries is considered. Must be provided if op is Generalised.
-    - system: Identifies the type of installation for hydropower, Available options are 'pipe', 'canal' and 'reservoir', default ='pipe'.
-    '''
-    
-    df = turbine_type()
-    #pd.read_csv(os.path.join('.','hat','utils','turbine.csv'), skipinitialspace=True)
-    
-    #if head_input == None:
+    def us_to_si_conversion(self):
         
-    if head_input is not None:
-        diff_m = head_input/3.28  # convert ft to meters
-    else:
-        diff_m = calculate_head(rated_flow, rated_power)
-    
-    #op = 'Timeseries'  # other option is 'Generalized' and we will need to define maxflow = 350 cfs 
-    head=abs(diff_m)
-    #length = length*1609.34 #Converting mi to m
-    #turb = 'Default'
-    
-    # Error handling
-    if head <= 0.6:
-        #raise ValueError('Head height too low for small-scale hydropower')
-        print("Head height too low for small-scale hydropower")
-        # Ref: https://www.energy.gov/energysaver/planning-microhydropower-system
-        raise SystemExit
+        if self.flow is not None:
+            self.flow = self.flow * cfs_to_cms      # cfs to m3/s
 
-    if (op == 'Timeseries'):
-        #flow_info = flow_info[flow_info[flow_column] !=0] #kcu.ft/s to cu.ft/s
-        if rated_flow is not None:
-            rated_flow = rated_flow
+        if self.design_flow is not None:
+            self.design_flow = self.design_flow * cfs_to_cms        # cfs to m3/s
+
+        if self.head is not None:
+            self.head = self.head * ft_to_m     # ft to m
+
+        if self.head_loss is not None:
+            self.head_loss = self.head_loss * ft_to_m       # ft to m
+
+        if self.penstock_length is not None:
+            self.penstock_length = self.penstock_length * ft_to_m       # ft to m
+
+        if self.channel_average_velocity is not None:
+            self.channel_average_velocity = self.channel_average_velocity * ft_to_m       # ft to m
+
+        if self.penstock_diameter is not None:
+            self.penstock_diameter = self.penstock_diameter * ft_to_m       # ft/s to m/s
+
+        if self.hk_blade_diameter is not None:
+            self.hk_blade_diameter= self.hk_blade_diameter * ft_to_m       # ft to m
+
+        if self.hk_blade_heigth is not None:
+            self.hk_blade_heigth = self.hk_blade_heigth * ft_to_m       # ft to m
+
+    def si_to_us_conversion(self):
+        
+        if self.flow is not None:
+            self.flow = self.flow / cfs_to_cms      # m3/s tp cfs
+
+        if self.turbine_flow is not None:
+            self.turbine_flow = self.turbine_flow / cfs_to_cms      # m3/s tp cfs
+
+        if self.design_flow is not None:
+            self.design_flow = self.design_flow / cfs_to_cms        # m3/s tp cfs
+
+        if self.dataframe_output is not None:
+            self.dataframe_output['turbine_flow_cfs'] =  self.dataframe_output['turbine_flow_cfs'] / cfs_to_cms        # m3/s tp cfs
+
+        if self.head is not None:
+            self.head = self.head / ft_to_m     # m to ft 
+
+        if self.head_loss is not None:
+            self.head_loss = self.head_loss / ft_to_m       # m to ft
+
+        if self.penstock_design_headloss is not None:
+            self.penstock_design_headloss = self.penstock_design_headloss / ft_to_m       # m to ft
+
+        if self.hydropower_type != 'Hydrokinetic':
+            if self.net_head is not None:
+                self.net_head = self.net_head / ft_to_m #       m to ft
+    
+        if self.max_headloss_allowed is not None:
+            self.max_headloss_allowed = self.max_headloss_allowed / ft_to_m     # m to ft 
+
+        if self.penstock_length is not None:
+            self.penstock_length = self.penstock_length / ft_to_m       # m to ft 
+
+        if self.penstock_diameter is not None:
+            self.penstock_diameter = self.penstock_diameter / ft_to_m       # m to ft
+
+        if self.channel_average_velocity is not None:
+            self.channel_average_velocity = self.channel_average_velocity / ft_to_m       # m/s to ft/s
+
+        if self.hk_blade_diameter is not None:
+            self.hk_blade_diameter= self.hk_blade_diameter / ft_to_m       # m to ft
+
+        if self.hk_blade_heigth is not None:
+            self.hk_blade_heigth = self.hk_blade_heigth / ft_to_m       # m to ft
+
+        if self.runner_diameter is not None:
+            self.runner_diameter = self.runner_diameter /  ft_to_m       # m to ft
+
+# Hydropower calculation
+class Hydropower(ABC):
+
+    @abstractmethod
+    def hydropower_calculation(self, hp_params):
+        pass
+
+# Basic calculation
+class Basic(Hydropower):
+            
+    def hydropower_calculation(self, hp_params):
+
+        flow = hp_params.flow       # flow, m3/s
+        head = hp_params.head       # head, m
+        rated_power = hp_params.rated_power     # rated power, KW
+        system_efficiency = hp_params.system_efficiency     # system afficiency
+                
+        if len([i for i in [flow, head, rated_power] if i is None]) > 1:
+            raise ValueError('Missing inputs. Users must provide flow and head to compute power, flow and power' \
+                             ' to compute head, or power and head to compute flow')
+
+        # Overal system efficiency
+        if system_efficiency is not None:
+            n = system_efficiency
+        else: 
+            n = 0.85
+
+        # Compute head
+        if head is not None: 
+            if hp_params.head_loss is not None:
+                h = head - hp_params.head_loss
+            else:
+                h = head
         else:
-            rated_flow = flow_info[flow_column].max()
-        #print(maxflow)
-        maxflow= 0.028316846591999675 * (rated_flow) # cu.ft/sec to cu.m/sec conversion
-        #print(f'Max flow (cu.m/s): {maxflow}')
-        #flow_info[flow_column] = flow_info[flow_column].apply(lambda x: float(x))
-        flow_range = flow_info[flow_column] * (0.028316846591999675) # cu.ft/sec to cu.m/sec conversion
-        flow_range = flow_range.values
-        #print(f'Flow range: {flow_range}')
+            P = rated_power
+            h = P * 1000 / (n * g * rho * flow) # Net head, in m
+            hp_params.head = h      # update
 
-    elif (op == 'Generalized'):
-        if rated_flow is not None:
-            rated_flow = rated_flow
-            maxflow= 0.028316846591999675 * rated_flow # cu.ft/sec to cu.m/sec conversion
+        # Compute Flow 
+        if flow is None:
+           P = rated_power
+           flow = P  * 1000 / (n * g * rho * h)
+           hp_params.flow = flow      # update
+
+        # Compute hydropower
+        if rated_power is None:
+            P = n * g * rho * flow * h / 1000 # HP potential in kilowatts
+            hp_params.rated_power = P      # update
+
+        hp_params.penstock_design_headloss = None        # update - for using the same Unit function
+        hp_params.net_head = h        # update - for using the same Unit function
+     
+# Diversion - Run-of-river
+class Diversion(Hydropower):
+
+    def hydropower_calculation(self, hp_params):
+
+        head = hp_params.head
+        
+        # Select turbine type
+        if hp_params.turbine_type is None:
+            hp_params.turbine_type = turbine_type_selector(head)        # Turbine type
+
+        # Calculate design flow
+        if hp_params.design_flow is None:
+            PercentExceedance().designflow_calculator(hp_params)
+
+        # Add flow range for turbine evaluation if a sinlge flow value is given
+        FlowRange().flowrange_calculator(hp_params)
+
+        # Turbine parameters calculation by turbine type
+        if hp_params.turbine_type == 'Kaplan':
+                KaplanTurbine().turbine_calculator(hp_params)
+
+        elif hp_params.turbine_type == 'Francis':
+                FrancisTurbine().turbine_calculator(hp_params)
+        
+        elif hp_params.turbine_type == 'Propellor':
+                PropellorTurbine().turbine_calculator(hp_params)
+
+        elif hp_params.turbine_type == 'Pelton':
+                PeltonTurbine().turbine_calculator(hp_params)
+
+        elif hp_params.turbine_type == 'Turgo':
+                TurgoTurbine().turbine_calculator(hp_params)
+
+        elif hp_params.turbine_type == 'Francis':
+                CrossFlowTurbine().turbine_calculator(hp_params)
+
+        # Head loss calculation 
+        if hp_params.penstock_headloss_calculation: # If head loss in the penstock are calculated
+
+            if hp_params.penstock_length is None:
+                raise ValueError("Penstock length is required for head loss computations if" \
+                                 " penstock_headloss_calculation is True")
+            
+            if hp_params.penstock_headloss_method == None:
+                hp_params.penstock_headloss_method = 'Darcy-Weisbach'
+
+            if hp_params.penstock_headloss_method == 'Darcy-Weisbach': # Darcy-Weisbach
+                DarcyWeisbach().penstock_headloss_calculator(hp_params)       # head loss at design parameters
+                DarcyWeisbach().penstock_headloss_calculator_ts(hp_params)        # head loss for a range of flow values
+
+            elif hp_params.penstock_headloss_method == 'Hazen-Williams': # Hazen-Williams
+                HazenWilliamns().penstock_headloss_calculator(hp_params)       # head loss at design parameters
+                HazenWilliamns().penstock_headloss_calculator_ts(hp_params)        # head loss for a range of flow values
+
+        else:  
+            hp_params.head_loss = 0
+            hp_params.penstock_headloss_method = None        # penstock head losses are not calculated
+
+        # Generator efficiency
+        if hp_params.generator_efficiency is None:
+            hp_params.generator_efficiency = 0.98       # Default
         else:
-            raise ValueError('Provide maximum flow capacity')
-        flow_arr=np.linspace(0.05,1,20) # the values are %
-        flow_range= maxflow * flow_arr
+             hp_params.generator_efficiency =  hp_params.generator_efficiency / 100 # percent to proportion
+        
+        n = hp_params.turbine_efficiency * hp_params.generator_efficiency       # overal system efficiency
+        n_max = np.max(hp_params.turbine_efficiency) * hp_params.generator_efficiency      # maximum system efficiency
+        
+        if hp_params.penstock_design_headloss:        # if design head loss was calculated for penstock only
+            hd = hp_params.head - hp_params.penstock_design_headloss  # net hydraulic head at design flows
+
+        else:
+            hd = hp_params.head
+
+        h = hp_params.head - hp_params.head_loss        # net hydraulic head
+        Qd = hp_params.design_flow      # Design flow
+        Q = hp_params.turbine_flow      # Flow passing by the turbine
+
+        P = n_max * g * rho * Qd * hd / 1000        # HP potential in kilowatts for design flow
+        hp_params.rated_power = P       # update - Kw
+
+        hp_params.power = n * g * rho * Q * h / 1000        # HP potential in kilowatts
+        hp_params.net_head = hd        # update
+
+        hp_params.head = h        # update
+        
+class Hydrokinetic(Hydropower):
     
-    # Turbine selection
-    df1=df[(head > df.Start) & (head <= df.End)]
-    #print(df1)
-    #if (turb == 'Default'):
-        #print(df1)
-    #    turb_name = df1['Turbine'].to_string(index=False).strip()
-        #print(tur_name)
-    if turb is not None:
-        turb_name = turb
-    else:
-        turb_name = df1['Turbine'].to_string(index=False).strip()
-        #print("Override Performed")
-    # turbine constant variables
-    #print(df1['k2'])
-    k2= df1['k2'].tolist()[0]
-    # TODO: figure out what k1 and Rm mean
-    k1=0.41
-    Rm=4.5 # turbine manufacturer design coefficient
-    h_f = calculate_head_loss(system, flow_range, head)
-    if sys_effi is not None:
-        sys_effi = sys_effi
-    else:
-        sys_effi =0.98 # efficiency of the system (water to wire conversion)
-    #print(h_f)
-    turbine = TurbinePower(turb_name, flow_range, head, maxflow, h_f, k1, k2, sys_effi, Rm)
-    turbine.calculate_flow()
+    def hydropower_calculation(self, hp_params):
+        
+        # System efficiency
+        if hp_params.system_efficiency:         # if the user provides an efficiency value
+            n = hp_params.system_efficiency
+
+        else:       # If the efficiency is not provided, HG will caclulate the maximum HK potential 
+            n = hp_params.system_efficiency = 59        # Efficiency [percentage] - Betz Limit - Maximum 
+
+        n = n /100      # efficiency 
+
+        # Area of blades
+        if hp_params.hk_swept_area is None:     # If the user does not input swept area of blades
+            Hydrokinetic_Turbine().turbine_calculator(hp_params)        # calculate swept area of blades
+        
+        A = hp_params.hk_swept_area     # Swept Area of blades, m2
+        V = hp_params.channel_average_velocity      # cross sectional average velocity m/s
+
+        P = 0.5 * n * rho * A * V / 1000       # Power in KW
+        hp_params.rated_power = P       # update
+
+# Hydropower economic analysis: Cost
+class Cost(ABC):
     
-    return turbine
+    @abstractmethod
+    def cost_calculation(self, hp_params):
+        pass
 
-if __name__ == "__main__":
+# ORNL_HBCM methods obtained from: https://info.ornl.gov/sites/publications/files/Pub58666.pdf
+class ONRL_BaselineCostModeling_V2(Cost):
 
-    '''
-    1 ft = 0.3048m # Ft to m conversion
-    '''
+    def cost_calculation(self, hp_params):
 
-    df = pd.read_csv(os.path.join('.','data','turbine.csv'))
-    flow_info = pd.read_csv(os.path.join('.','data','rivermg_cb.csv'))
-    #head = 229.659
-    # Calculate the hydropower potential
-    turbine = calculate_potential(flow_info, rated_flow=None, rated_power=None, head_input=head, system='pipe', flow_column='discharge_cfs')
+        P = hp_params.rated_power / 1000       # rated power, mW
+        H = hp_params.net_head / ft_to_m        # net head, ft
 
-    revenue, const_cost, tot_mwh = aep_calculation(turbine, op, time_step_hr)
+        if hp_params.resource_category is None:
+            hp_params.resource_category = 'NewStream-reach'
 
-    print("\n Recommended Nameplate Capacity: %0.2f (MW)" %(turbine.turb_cap))
-    print("\n Annual Energy Generation: %0.2f (MWh)" %(tot_mwh))
-    print("\n Total Construction cost: $ %0.2f per_75million" %(const_cost))
-    print("\n Annual Revenue: $ %0.2f"%(revenue))
-    print("\n Head categorization: %s" %df1['Head'].to_string(index=False))
-    print("\n Suggested Tubine: %s" %(turb))
+        # icc = initial capital cost = f(H, P) in $2014. H in ft, P in MW
+        if hp_params.resource_category == 'NewStream-reach':
+            icc = 9605710 * 𝑃**0.977 * 𝐻**-0.126        # New Stream-reach Development
+           
+        if hp_params.resource_category == 'Non-PoweredDam':
+             icc = 11489245 * P**0.976 * 𝐻**-0.240        # Non-Powered Dam
 
+        if hp_params.resource_category == 'CanalConduit':
+            icc = 9297820 * 𝑃**0.810 * 𝐻**-0.10     # Canal / Conduit Project
+
+        if hp_params.resource_category == 'PSH_ExistingInfrastructure':
+            icc = 3008246 * 𝑃 * exp(-0.000460 * P)      # Pumped Storage Hydropower Projects - Existing Infrastructure
+
+        if hp_params.resource_category == 'PSH_Greenfield':
+            icc = 4882655 * 𝑃 * exp(-0.000776 * P)      #  Pumped Storage Hydropower Projects - Greenfield Sites
+
+        if hp_params.resource_category == 'UnitAddition':
+            icc = 4163746 * 𝑃**0.741        # Unit Addition Projects
+
+        if hp_params.resource_category == 'GeneratorRewind':
+            icc = 250147 * 𝑃**0.817     # Generator Rewind Projects
+        
+        icc = icc / 1000000     # icc, million $
+
+        # Annual Operation and Maintennance 
+        annual_om = 225417 * 𝑃**0.54 / 1000000 # Annual Operation Maintennance, million $
+
+        # ORNL_HBCM predicts higher costs for smaller plants, the authors sugges using the lesser between Annual OP&M and 2.5% of ICC 
+        if hp_params.resource_category != 'GeneratorRewind':
+            if annual_om > 0.025 * icc:
+                annual_om = 0.025 * icc
+
+        hp_params.icc = icc     # update. ICC, 2014 million dollar        
+        hp_params.annual_om = annual_om     # update, Annual O&M, 2014 million $
+
+# Hydropower economic analysis: evenue
+class Revenue(ABC):
+
+    @abstractmethod
+    def revenue_calculation(self, hp_params):
+        pass
+
+# Constant electricty price for single / multiple values of flow - not a time series
+class ConstantEletrictyPrice(Revenue):
+     
+     def revenue_calculation(self, hp_params):
+
+        mean_power = np.mean(hp_params.power)       # mean of the power provided for a time series of flow
+
+        if hp_params.capacity_factor:
+            annual_energy = hp_params.capacity_factor * mean_power * 365        # annual energy generated, killowatt day 
+            hp_params.n_operation_days = hp_params.capacity_factor * 365        # update  
+        
+        elif hp_params.n_operation_days:
+            if hp_params.n_operation_days > 365:
+                raise ValueError('The number of days in a year a plant operates cannot exceed 365')
+
+            annual_energy = hp_params.n_operation_days * mean_power / 365        # annual energy generatedkillowatt day
+            hp_params.capacity_factor = hp_params.n_operation_days * 100/ 365        # update
+        
+        else:
+             raise ValueError('The number of days a plant operates, or the capacity factor, are needed' \
+                             ' to compute annual energy generated and revenue')
+        
+        if  hp_params.electricity_sell_price is None:
+             hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+
+        hp_params.annual_energy_generated = annual_energy * 24      # units from Kw day to KWh
+        hp_params.annual_revenue =  hp_params.annual_energy_generated * hp_params.electricity_sell_price / 1000000       # annual revenue, M$
+
+# Constant electricty price for a pandas dataframe with a dateTime index. 
+class ConstantEletrictyPrice_pd(Revenue):
+
+    def revenue_calculation(self, hp_params, flow):
+        
+        if  hp_params.electricity_sell_price is None:
+            hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+
+        flow['power_kW'] = hp_params.power      # Power, kW
+        flow['turbine_flow_cfs'] = hp_params.turbine_flow     # Flow passing by the turbine, cfs
+        flow['efficiency'] = hp_params.turbine_efficiency     # efficiency 
+        hours = flow.index.to_series().diff().values / pd.Timedelta('1 hour')       # time difference in hours
+        flow['energy_kWh'] = flow['power_kW'] * hours       # energy = power * hours (kWh)
+
+        # Generate annual energy, mean efficiency, and flow.
+        flow_md = flow.groupby([flow.index.year]).agg(annual_turbinedvolume_ft3= ('turbine_flow_cfs', 'sum'),
+                                                      mean_annual_effienciency = ('efficiency', 'mean'),
+                                                      total_annual_energy_KWh = ('energy_kWh', 'sum'))
+        
+        # flow_md['total_annual_energy_MWh'] = flow_md['total_annual_energy_MWh'] / 1000
+        
+        flow_md['revenue_M$'] = flow_md['total_annual_energy_KWh'] * hp_params.electricity_sell_price / 1000000  
+        flow_md['capacity_factor'] = flow_md['total_annual_energy_KWh'] / (hp_params.rated_power * 8760)        # energy generater / max energy. 1 year = 8760 hours
+        flow_md.loc[flow_md['capacity_factor'] > 1, 'capacity_factor'] = 1
+
+        hp_params.dataframe_output = flow
+        hp_params.annual_dataframe_output = flow_md
+
+# Function to calculate hydropower potential - function users will call 
+def calculate_hp_potential(flow= None,
+                           head= None, 
+                           rated_power= None, 
+                           hydropower_type= 'Basic', 
+                           units= 'US',
+
+                           penstock_headloss_method= 'Darcy-Weisbach',
+                           design_flow= None, 
+                           system_efficiency = None,
+                           generator_efficiency= None,
+                           turbine_type= None,   
+                           head_loss= None, 
+
+                           penstock_headloss_calculation= False,
+                           penstock_length= None, 
+                           penstock_diameter= None, 
+                           penstock_material= None, 
+                           penstock_frictionfactor= None,
+
+                           pctime_runfull= None, 
+                           max_headloss_allowed= None,
+                           turbine_Rm= None,
+                           pelton_n_jets= None,
+                           flow_column= None,
+
+                           channel_average_velocity= None,
+                           hk_blade_diameter= None, 
+                           hk_blade_heigth= None, 
+                           hk_blade_type= None, 
+                           hk_swept_area= None,
+
+                           annual_caclulation = False,
+                           resource_category= None, 
+                           electricity_sell_price= None,
+                           cost_calculation_method= 'ORNL_HBCM',
+                           capacity_factor= None, 
+                           n_operation_days= None): 
+     
+    # Check if a pandas dataframe
+    flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
+    # flow_data = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
+
+    # initialize all instances: HydraulicDesign, Turbine, and Economic parameters.
+    hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head, #net_head= net_head,
+                                       penstock_length= penstock_length, penstock_diameter= penstock_diameter, 
+                                       penstock_material= penstock_material, 
+                                       head_loss= head_loss, 
+                                       penstock_frictionfactor= penstock_frictionfactor,
+                                       penstock_headloss_calculation= penstock_headloss_calculation,
+                                       max_headloss_allowed= max_headloss_allowed,
+                                       penstock_headloss_method = penstock_headloss_method,
+                                       channel_average_velocity= channel_average_velocity)
+
+    turb_pm = TurbineParameters(turbine_type= turbine_type, 
+                                flow= flow_data, design_flow= design_flow, flow_column = flow_column,
+                                head= head, 
+                                rated_power= rated_power,
+                                system_efficiency= system_efficiency,
+                                generator_efficiency= generator_efficiency,
+                                Rm= turbine_Rm, pctime_runfull= pctime_runfull, pelton_n_jets= pelton_n_jets,
+                                hk_blade_diameter= hk_blade_diameter, hk_blade_heigth= hk_blade_heigth, hk_blade_type= hk_blade_type, 
+                                hk_swept_area= hk_swept_area)        # Initialize
+    
+    cost_pm = EconomicParameters(resource_category= resource_category, 
+                                 electricity_sell_price= electricity_sell_price, 
+                                 capacity_factor= capacity_factor, n_operation_days= n_operation_days)
+    
+    all_params = merge_instances(hyd_pm, turb_pm, cost_pm)       # merge parameters into a single instance
+    all_params.hydropower_type = hydropower_type        # update
+
+    # units conversion - US to Si
+    if units == 'US':       
+        Units.us_to_si_conversion(all_params)       # convert imputs from US units to SI units
+    
+    # No hydropower calculation
+    if hydropower_type is None:
+        all_params.net_head = all_params.head       # update for cost calculation
+
+    # Basic hydropower calculation 
+    elif hydropower_type == 'Basic':
+        Basic().hydropower_calculation(all_params)
+
+    # Diversion projects
+    elif hydropower_type == 'Diversion':
+        Diversion().hydropower_calculation(all_params)
+    
+    elif hydropower_type == 'Hydrokinetic':
+        Hydrokinetic().hydropower_calculation(all_params)
+
+    # Cost calculation
+    if hydropower_type != 'Hydrokinetic':
+        if cost_calculation_method == 'ORNL_HBCM':
+            ONRL_BaselineCostModeling_V2().cost_calculation(all_params)
+
+    # Annual energy and revenue calculation
+    
+    # TODO: calculate pandas output when annual_calculation = False
+
+    if annual_caclulation:
+        if pandas_dataframe:        # If a pandas dataframe is used
+            ConstantEletrictyPrice_pd().revenue_calculation(all_params, flow= flow)     # calculate revenue when a time-indexed pd.dataframe is given.
+        
+        else:
+            ConstantEletrictyPrice().revenue_calculation(all_params)
+
+    # units conversion - SI to US
+    if units == 'US':
+        Units.si_to_us_conversion(all_params)       # convert imputs from US units to SI units
+
+    return all_params
+  
+# Examples are provided int the 'HydroGenerate_Workflow.ipynb' file.  
