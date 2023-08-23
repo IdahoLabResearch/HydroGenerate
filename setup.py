@@ -21,8 +21,8 @@ REQUIRED = [
 setup(
     name='HydroGenerate',
     # Read this as
-    #   - MAJOR VERSION 0
-    #   - MINOR VERSION 1
+    #   - MAJOR VERSION 1
+    #   - MINOR VERSION 0
     #   - MAINTENANCE VERSION 0
     version='0.1.0',
     description='',
