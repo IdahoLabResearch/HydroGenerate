@@ -1,4 +1,7 @@
-# HydroGenerate
+<img align="right" width = 300 src="docs/images/HG_horizontal.png" alt="HydroGenerate">
+
+# HydroGenerate <br>
+
 
 ## About
 

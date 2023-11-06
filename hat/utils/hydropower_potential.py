@@ -322,7 +322,7 @@ class Hydrokinetic(Hydropower):
         A = hp_params.hk_swept_area     # Swept Area of blades, m2
         V = hp_params.channel_average_velocity      # cross sectional average velocity m/s
 
-        P = 0.5 * n * rho * A * V / 1000       # Power in KW
+        P = 0.5 * n * rho * A * (V**3) / 1000       # Power in KW
         hp_params.rated_power = P       # update
 
 # Hydropower economic analysis: Cost
