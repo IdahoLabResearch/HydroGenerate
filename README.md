@@ -1,4 +1,5 @@
 # HydroGenerate
+<img src="docs/images/HG_horizontal.png" width="400">
 
 ## About
 
