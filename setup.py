@@ -24,12 +24,12 @@ setup(
     #   - MAJOR VERSION 1
     #   - MINOR VERSION 0
     #   - MAINTENANCE VERSION 0
-    version='0.1.0',
+    version='1.2.1',
     description='',
     long_description=long_description,
     url='https://github.com/IdahoLabResearch/HydroGenerate',
-    author='Bhaskar Mitra',
-    author_email='Bhaskar.Mitra@inl.gov',
+    author='Juan Gallego-Calderon',
+    author_email='juan.gallegocalderon@inl.gov',
     license='BSD 3-Clause License',
     install_requires=REQUIRED,
     packages=find_packages(),
