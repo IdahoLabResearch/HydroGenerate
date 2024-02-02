@@ -421,14 +421,15 @@ class ConstantEletrictyPrice_pd(Revenue):
         if  hp_params.electricity_sell_price is None:
             hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
 
-        flow['power_kW'] = hp_params.power      # Power, kW
-        flow['turbine_flow_cfs'] = hp_params.turbine_flow     # Flow passing by the turbine, cfs
-        flow['efficiency'] = hp_params.turbine_efficiency     # efficiency 
+        output = flow.copy()
+        output['power_kW'] = hp_params.power      # Power, kW
+        output['turbine_flow_cfs'] = hp_params.turbine_flow     # Flow passing by the turbine, cfs
+        output['efficiency'] = hp_params.turbine_efficiency     # efficiency 
         hours = flow.index.to_series().diff().values / pd.Timedelta('1 hour')       # time difference in hours
-        flow['energy_kWh'] = flow['power_kW'] * hours       # energy = power * hours (kWh)
+        output['energy_kWh'] = output['power_kW'] * hours       # energy = power * hours (kWh)
 
         # Generate annual energy, mean efficiency, and flow.
-        flow_md = flow.groupby([flow.index.year]).agg(annual_turbinedvolume_ft3= ('turbine_flow_cfs', 'sum'),
+        flow_md = output.groupby([output.index.year]).agg(annual_turbinedvolume_ft3= ('turbine_flow_cfs', 'sum'),
                                                       mean_annual_effienciency = ('efficiency', 'mean'),
                                                       total_annual_energy_KWh = ('energy_kWh', 'sum'))
         
@@ -438,7 +439,7 @@ class ConstantEletrictyPrice_pd(Revenue):
         flow_md['capacity_factor'] = flow_md['total_annual_energy_KWh'] / (hp_params.rated_power * 8760)        # energy generater / max energy. 1 year = 8760 hours
         flow_md.loc[flow_md['capacity_factor'] > 1, 'capacity_factor'] = 1
 
-        hp_params.dataframe_output = flow
+        hp_params.dataframe_output = output
         hp_params.annual_dataframe_output = flow_md
 
 # Function to calculate hydropower potential - function users will call 
