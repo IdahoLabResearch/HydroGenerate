@@ -479,7 +479,9 @@ def calculate_hp_potential(flow= None,
                            electricity_sell_price= None,
                            cost_calculation_method= 'ORNL_HBCM',
                            capacity_factor= None, 
-                           n_operation_days= None): 
+                           n_operation_days= None,
+                           
+                           min_flow = None): 
      
     # Check if a pandas dataframe
     flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
@@ -512,6 +514,7 @@ def calculate_hp_potential(flow= None,
     
     all_params = merge_instances(hyd_pm, turb_pm, cost_pm)       # merge parameters into a single instance
     all_params.hydropower_type = hydropower_type        # update
+    all_params.min_flow = min_flow        # update
 
     # units conversion - US to Si
     if units == 'US':       
