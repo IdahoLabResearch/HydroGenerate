@@ -356,7 +356,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -372,6 +374,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#giving-credit">Giving credit</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -383,33 +394,67 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="hydrogenerate-hydropower-potential-estimation">
 <h1>HydroGenerate: Hydropower Potential Estimation<a class="headerlink" href="#hydrogenerate-hydropower-potential-estimation" title="Permalink to this heading">#</a></h1>
-<p>HydroGenerate (HG) is an open-source python library that has the capability of estimating hydropower generation for different scenarios and technologies. There are three types of hydropower facilities: 1) impoundment, 2) diversion, 3) pumped storage ​(DOE, 2023)​. In addition, hydrokinetic technologies offer the possibility to generate electricity from the movement of water, without a dam or a diversion by using the kinetic energy of the flowing water. HG can assist impoundment, diversion, and hydrokinetic preliminary assessments.
-Check out the content pages bundled with this sample book to see more.</p>
+<p><strong>HydroGenerate</strong> is an open-source python library that has the estimates hydropower generation based on head height and flow rate either provided by the user or received from United States Geological Survey (USGS) water data services. The tool calculates the efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user.</p>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">#</a></h2>
+<p><strong>HydroGenerate</strong> can be installed in your local environment using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">HydroGenerate</span></code>. In its most basic usage, the user needs to provide one value of flow in cubic-ft-sec (cfs) and head (ft). The function <code class="docutils literal notranslate"><span class="pre">calculate_hp_potential</span></code> is the main interface for the hydropower potential calculation using different types of inputs (float, numpy array, and pandas dataframe), and several attributes. More advance usage can be found in the user guide.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local imports</span>
+<span class="kn">from</span> <span class="nn">HydroGenerate.hydropower_potential</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># 1.1) Calculate power from a given head and flow</span>
+<span class="n">flow</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># given flow, in cfs</span>
+<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># head, in ft</span>
+<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> 
+                            <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span> 
+                            <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hydropower potential is </span><span class="si">{}</span><span class="s2"> kW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>The results are returned in an object with multiple attributes. In the example above, <code class="docutils literal notranslate"><span class="pre">hp.power</span></code> gives the estimated potential for the given flow and head. If a time-series is provided, then a time-series of power will be available.</p>
+</section>
+<section id="giving-credit">
+<h2>Giving credit<a class="headerlink" href="#giving-credit" title="Permalink to this heading">#</a></h2>
+<p>HydroGenerate was built with support from the USDOE Office of Energy Efficiency and Renewable Energy (EERE). For more information please refer to the <a class="reference external" href="https://www.osti.gov/biblio/1829986">OSTI webpage</a>.</p>
+<p><strong>Authors</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bhaskar</span> <span class="n">Mitra</span>
+
+<span class="n">Juan</span> <span class="n">Gallego</span><span class="o">-</span><span class="n">Calderon</span>
+
+<span class="n">Shiloh</span> <span class="n">Elliott</span>
+
+<span class="n">Thomas</span> <span class="n">M</span><span class="o">.</span> <span class="n">Mosier</span>
+
+<span class="n">Camilo</span> <span class="n">J</span><span class="o">.</span> <span class="n">Bastidas</span> <span class="n">Pacheco</span>
+</pre></div>
+</div>
+<p><strong>Citation</strong></p>
+<p>If you are using our repository kindly use the following citation format.</p>
+<p><em>Bibtex</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+@misc{osti_1829986,
+title = {Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series, Version 3.6 or newer},
+author = {Mitra, Bhaskar and Gallego-Calderon, Juan F. and Elliott, Shiloh N and Mosier, Thomas M and Bastidas Pacheco, Camilo Jose and USDOE Office of Energy Efficiency and Renewable Energy},
+abstractNote = {Hydropower is one of the most mature forms of renewable energy generation. The United States (US) has almost 103 GW of installed, with 80 GW of conventional generation and 23 GW of pumped hydropower [1]. Moreover, the potential for future development on Non-Powered Dams is up to 10 GW. With the US setting its goals to become carbon neutral [2], more renewable energy in the form of hydropower needs to be integrated with the grid. Currently, there are no publicly available tool that can estimate the hydropower potential for existing hydropower dams or other non-powered dams. The HydroGenerate is an open-source python library that has the capability of estimating hydropower generation based on flow rate either provided by the user or received from United States Geological Survey (USGS) water data services. The tool calculates the efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user.},
+url = {https://www.osti.gov//servlets/purl/1829986},
+doi = {10.11578/dc.20211112.1},
+url = {https://www.osti.gov/biblio/1829986}, year = {2021},
+month = {10},
+note =
+}
+
+</pre></div>
+</div>
+</section>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-</ul>
 </div>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="hydrogenerate_intro.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hydrogenerate_api_call.html">Using the Water Services API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hydro_kinetics.html">Hydrokinetics</a></li>
-</ul>
 </div>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
-</ul>
 </div>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="hydropower_potential.html">Hydropower potential</a></li>
-</ul>
 </div>
 </section>
 
@@ -458,6 +503,21 @@ Check out the content pages bundled with this sample book to see more.</p>
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#giving-credit">Giving credit</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
