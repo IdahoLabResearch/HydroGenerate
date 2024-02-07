@@ -17,8 +17,8 @@ import pandas as pd
 from datetime import datetime
 import os
 from abc import ABC, abstractmethod
-from hat.hydraulic_processing import *
-from hat.turbine_calculation import *
+from HydroGenerate.hydraulic_processing import *
+from HydroGenerate.turbine_calculation import *
 from numbers import Number
 from math import exp
    
