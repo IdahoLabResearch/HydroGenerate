@@ -24,7 +24,7 @@ setup(
     #   - MAJOR VERSION 1
     #   - MINOR VERSION 0
     #   - MAINTENANCE VERSION 0
-    version='1.2.2',
+    version='1.2.3',
     description='',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
