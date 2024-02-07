@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "HydroGenerate"
+version = "1.2.2"
+dependencies = [
+  "requests",
+  "numpy",
+  "pandas",
+  "scipy",
+  "matplotlib",
+]
+requires-python = ">=3.8"
+authors = [
+  {name = "Juan Gallego-Calderon", email = "juan.gallegocalderon@inl.gov"},
+  {name = "Camilo Bastidas-Pacheco", email = "camilojose.bastidaspacheco@inl.gov"},
+  {name = "Soumyadeep Nag", email = "soumyadeep.nag@inl.gov"},
+  {name = "Bhaskar Mitra"},
+  {name = "Thomas Mosier", email= "thomas.mosier@inl.gov"},
+  {name = "Shiloh Elliot"}
+]
+maintainers = [
+  {name = "Juan Gallego-Calderon", email = "juan.gallegocalderon@inl.gov"},
+  {name = "Camilo Bastidas-Pacheco", email = "camilojose.bastidaspacheco@inl.gov"},
+]
+description = "HydroGenerate is an open-source python library that has the capability of estimating hydropower generation based on flow and head."
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+keywords = ["hydropower", "hydrokinetic", "potential"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
+
+[project.urls]
+Homepage = "https://idaholabresearch.github.io/HydroGenerate/"
+Documentation = "https://idaholabresearch.github.io/HydroGenerate/"
+Repository = "https://github.com/IdahoLabResearch/HydroGenerate"
+"Bug Tracker" = "https://github.com/IdahoLabResearch/HydroGenerate"

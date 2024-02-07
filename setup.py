@@ -11,11 +11,11 @@ with open(file="README.md", mode="r", encoding='utf-8') as readme_handle:
     long_description = readme_handle.read()
 
 REQUIRED = [
-    "requests>=2.26.0",
-    "numpy>=1.19.2",
-    "pandas>=1.1.5",
-    "scipy>=1.1.0",
-    "matplotlib>=2.1.0",
+    "requests",
+    "numpy",
+    "pandas",
+    "scipy",
+    "matplotlib",
 ]
 
 setup(
@@ -34,5 +34,5 @@ setup(
     license='BSD 3-Clause License',
     install_requires=REQUIRED,
     packages=find_packages(),
-    python_requires='>=3.6'
+    python_requires='>=3.8'
 )
