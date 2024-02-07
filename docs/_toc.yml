@@ -1,0 +1,24 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+
+parts:
+  - caption: Getting Started
+    chapters:
+    - file: installation
+
+  - caption: User Guide 
+    chapters:
+    - file: hydrogenerate_intro
+    - file: hydrogenerate_api_call
+    - file: hydro_kinetics
+
+  - caption: Developer Guide 
+    chapters:
+    - file: architecture
+
+  - caption: Theory
+    chapters:
+    - file: hydropower_potential
