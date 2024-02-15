@@ -130,9 +130,14 @@ class FrancisTurbine(Turbine):
 
         # Efficiencies at flows below and above peak efficiency flow
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
-        Q = turbine.flow
-        Q = np.where(Q > max_flow_turbine * Qd , Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+        #Q = turbine.flow
+        #Q = np.where(Q > max_flow_turbine * Qd , Qd, Q)        # Correct flows higher than 10% the design flow
+
+        #do we need to check here?
+        Q = turbine.turbine_flow #I changed this. Was turbine.design_flow
+
+        #turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+
         turbine.turbine_efficiency = [] # placeholder
         for i in range(len(Q)):
             if (Q[i] < Qp):        # flows below Qd
@@ -161,9 +166,13 @@ class KaplanTurbine(Turbine):
         ep = (0.905 - enq + ed) - 0.0305 + 0.005 * turbine.Rm      # Turbine peak efficiency (e_p)
         Qp = 0.75 * Qd      # Peak efficiency flow (Q_p)
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
-        Q = turbine.flow
-        Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+        #Q = turbine.flow
+        #Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
+
+        #do we need to check here?
+        Q = turbine.turbine_flow #I changed this. Was turbine.flow
+
+        #turbine.turbine_flow = Q        # flow passing by the turbine, cfs
         turbine.turbine_efficiency = (1 - 3.5 * ((Qp - Q) / Qp)**6) * ep     # Efficiency at flows above and below Qp
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies
         turbine.runner_diameter = d     # update
@@ -183,9 +192,13 @@ class PropellorTurbine(Turbine):
         ep = (0.905 - enq + ed) - 0.0305 + 0.005 * turbine.Rm      # Turbine peak efficiency (e_p)
         Qp = Qd      # Peak efficiency flow (Q_p)
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
-        Q = turbine.flow
-        Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+        #Q = turbine.flow
+        #Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
+
+        #do we need to check here?
+        Q = turbine.turbine_flow #I changed this. Was turbine.design_flow
+
+        #turbine.turbine_flow = Q        # flow passing by the turbine, cfs
         turbine.turbine_efficiency = (1 - 1.25 * ((Qp - Q) / Qp)**1.13) * ep     # Efficiency at flows above and below Qp
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency) # Correct negative efficiencies
         turbine.runner_diameter = d     # update
@@ -207,9 +220,11 @@ class PeltonTurbine(Turbine):
         ep = 0.864 * d**0.04      # Turbine peak efficiency
         Qp = (0.662 + 0.001 * j) * Qd # Peak efficiency flow
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
-        Q = turbine.flow
-        Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+        #Q = turbine.flow
+        #Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
+        #do we need to check here?
+        Q = turbine.turbine_flow #I changed this. Was turbine.design_flow
+        #turbine.turbine_flow = Q        # flow passing by the turbine, cfs
         turbine.turbine_efficiency = (1 - ((1.31 + 0.025*j) * (abs(Qp - Q) / (Qp))**(5.6 + 0.4*j))) * ep          # Efficiency at flows above and below peak efficiency flow (e_q)
         turbine.runner_diameter = d     # update
 
@@ -231,9 +246,11 @@ class CrossFlowTurbine(Turbine):
     def turbine_calculator(self, turbine):
         Qd = turbine.design_flow 
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
-        Q = turbine.flow    # flow range
-        Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+        #Q = turbine.flow    # flow range
+        #Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
+        #do we need to check here?
+        Q = turbine.turbine_flow #I changed this. Was turbine.design_flow
+        #turbine.turbine_flow = Q        # flow passing by the turbine, cfs
         turbine.turbine_efficiency = 0.79 - 0.15 *((Qd - Q) / Qd) - 1.37 * ((Qd - Q) / Q)**14     # Efficiency (e_q)
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies
 
