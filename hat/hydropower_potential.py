@@ -21,6 +21,8 @@ from hat.hydraulic_processing import *
 from hat.turbine_calculation import *
 from numbers import Number
 from math import exp
+
+from hat.utils.pre_processing import *
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
@@ -233,6 +235,9 @@ class Diversion(Hydropower):
 
         # Add flow range for turbine evaluation if a sinlge flow value is given
         FlowRange().flowrange_calculator(hp_params)
+
+        # Flow preprocessing
+        FlowPreProcessing().turbine_flow_checker(hp_params)
 
         # Turbine parameters calculation by turbine type
         if hp_params.turbine_type == 'Kaplan':
