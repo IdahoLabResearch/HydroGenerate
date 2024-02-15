@@ -22,7 +22,7 @@ from hat.turbine_calculation import *
 from numbers import Number
 from math import exp
 
-from hat.utils.pre_processing import *
+from hat.pre_processing import *
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
