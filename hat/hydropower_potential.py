@@ -424,7 +424,7 @@ class ConstantEletrictyPrice_pd(Revenue):
     def revenue_calculation(self, hp_params, flow):
         
         if  hp_params.electricity_sell_price is None:
-            hp_params.electricity_sell_price = 0.01236      # c/kWhr average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+            hp_params.electricity_sell_price = 0.01236      # $/kWhr average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
 
         output = flow.copy()
         output['power_kW'] = hp_params.power      # Power, kW
