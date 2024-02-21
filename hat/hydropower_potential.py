@@ -424,7 +424,7 @@ class ConstantEletrictyPrice_pd(Revenue):
     def revenue_calculation(self, hp_params, flow):
         
         if  hp_params.electricity_sell_price is None:
-            hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+            hp_params.electricity_sell_price = 0.01236      # c/kWhr average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
 
         output = flow.copy()
         output['power_kW'] = hp_params.power      # Power, kW
@@ -440,7 +440,7 @@ class ConstantEletrictyPrice_pd(Revenue):
         
         # flow_md['total_annual_energy_MWh'] = flow_md['total_annual_energy_MWh'] / 1000
         
-        flow_md['revenue_M$'] = flow_md['total_annual_energy_KWh'] * hp_params.electricity_sell_price / 1000000  
+        flow_md['revenue_M$'] = flow_md['total_annual_energy_KWh'] * hp_params.electricity_sell_price # / 1000000  Update
         flow_md['capacity_factor'] = flow_md['total_annual_energy_KWh'] / (hp_params.rated_power * 8760)        # energy generater / max energy. 1 year = 8760 hours
         flow_md.loc[flow_md['capacity_factor'] > 1, 'capacity_factor'] = 1
 
