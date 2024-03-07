@@ -22,12 +22,13 @@ bibtex_bibfiles:
 # Information about where the book exists on the web
 repository:
   url: https://github.com/IdahoLabResearch/HydroGenerate
-  path_to_book: docs
+  #path_to_book: docs
   branch: jugc-docs
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  favicon: HG_icon.ico
   baseurl: https://idaholabresearch.github.io/HydroGenerate/
   use_issues_button: true
   use_repository_button: true
