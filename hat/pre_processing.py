@@ -4,7 +4,7 @@ Copyright 2023, Battelle Energy Alliance, LLC
 
 """
 03-2023
-@author: Camilo J. Bastidas Pacheco, MITRB, J. Gallego-Calderon, Soumyadeep Nag
+@author: Soumyadeep Nag, Camilo J. Bastidas Pacheco, J. Gallego-Calderon
 
 This module calculates hydropower potential for diffrent type of hydropower installations
 """
