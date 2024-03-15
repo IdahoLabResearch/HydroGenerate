@@ -238,6 +238,7 @@ class Diversion(Hydropower):
 
         # Flow preprocessing
         FlowPreProcessing().turbine_flow_checker(hp_params)
+        FlowPreProcessing().annual_maintenance_constraint(hp_params)
 
         # Turbine parameters calculation by turbine type
         if hp_params.turbine_type == 'Kaplan':
