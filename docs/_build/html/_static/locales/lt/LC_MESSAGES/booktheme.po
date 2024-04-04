@@ -5,71 +5,71 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: vi\n"
+"Language: lt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Theme by the"
-msgstr "Chủ đề của"
+msgstr "Tema"
 
 msgid "Open an issue"
-msgstr "Mở một vấn đề"
+msgstr "Atidarykite problemą"
 
 msgid "Contents"
-msgstr "Nội dung"
+msgstr "Turinys"
 
 msgid "Download notebook file"
-msgstr "Tải xuống tệp sổ tay"
+msgstr "Atsisiųsti nešiojamojo kompiuterio failą"
 
 msgid "Sphinx Book Theme"
-msgstr "Chủ đề sách nhân sư"
+msgstr "Sfinkso knygos tema"
 
 msgid "Fullscreen mode"
-msgstr "Chế độ toàn màn hình"
+msgstr "Pilno ekrano režimas"
 
 msgid "Edit this page"
-msgstr "chỉnh sửa trang này"
+msgstr "Redaguoti šį puslapį"
 
 msgid "By"
-msgstr "Bởi"
+msgstr "Iki"
 
 msgid "Copyright"
-msgstr "Bản quyền"
+msgstr "Autorių teisės"
 
 msgid "Source repository"
-msgstr "Kho nguồn"
+msgstr "Šaltinio saugykla"
 
 msgid "previous page"
-msgstr "trang trước"
+msgstr "Ankstesnis puslapis"
 
 msgid "next page"
-msgstr "Trang tiếp theo"
+msgstr "Kitas puslapis"
 
 msgid "Toggle navigation"
-msgstr "Chuyển đổi điều hướng thành"
+msgstr "Perjungti naršymą"
 
 msgid "repository"
-msgstr "kho"
+msgstr "saugykla"
 
 msgid "suggest edit"
-msgstr "đề nghị chỉnh sửa"
+msgstr "pasiūlyti redaguoti"
 
 msgid "open issue"
-msgstr "vấn đề mở"
+msgstr "atviras klausimas"
 
 msgid "Launch"
-msgstr "Phóng"
+msgstr "Paleiskite"
 
 msgid "Print to PDF"
-msgstr "In sang PDF"
+msgstr "Spausdinti į PDF"
 
 msgid "By the"
-msgstr "Bằng"
+msgstr "Prie"
 
 msgid "Last updated on"
-msgstr "Cập nhật lần cuối vào"
+msgstr "Paskutinį kartą atnaujinta"
 
 msgid "Download source file"
-msgstr "Tải xuống tệp nguồn"
+msgstr "Atsisiųsti šaltinio failą"
 
 msgid "Download this page"
-msgstr "Tải xuống trang này"
+msgstr "Atsisiųskite šį puslapį"

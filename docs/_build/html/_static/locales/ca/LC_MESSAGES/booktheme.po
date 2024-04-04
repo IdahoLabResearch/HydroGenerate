@@ -5,71 +5,62 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Theme by the"
-msgstr "Motyw autorstwa"
+msgstr "Tema del"
 
 msgid "Open an issue"
-msgstr "Otwórz problem"
-
-msgid "Contents"
-msgstr "Zawartość"
+msgstr "Obriu un número"
 
 msgid "Download notebook file"
-msgstr "Pobierz plik notatnika"
+msgstr "Descarregar fitxer de quadern"
 
 msgid "Sphinx Book Theme"
-msgstr "Motyw książki Sphinx"
-
-msgid "Fullscreen mode"
-msgstr "Pełny ekran"
+msgstr "Tema del llibre Esfinx"
 
 msgid "Edit this page"
-msgstr "Edytuj tę strone"
+msgstr "Editeu aquesta pàgina"
 
 msgid "By"
-msgstr "Przez"
+msgstr "Per"
 
 msgid "Copyright"
-msgstr "prawa autorskie"
+msgstr "Copyright"
 
 msgid "Source repository"
-msgstr "Repozytorium źródłowe"
+msgstr "Dipòsit de fonts"
 
 msgid "previous page"
-msgstr "Poprzednia strona"
+msgstr "Pàgina anterior"
 
 msgid "next page"
-msgstr "Następna strona"
+msgstr "pàgina següent"
 
 msgid "Toggle navigation"
-msgstr "Przełącz nawigację"
-
-msgid "repository"
-msgstr "magazyn"
+msgstr "Commuta la navegació"
 
 msgid "suggest edit"
-msgstr "zaproponuj edycję"
+msgstr "suggerir edició"
 
 msgid "open issue"
-msgstr "otwarty problem"
+msgstr "número obert"
 
 msgid "Launch"
-msgstr "Uruchomić"
+msgstr "Llançament"
 
 msgid "Print to PDF"
-msgstr "Drukuj do PDF"
+msgstr "Imprimeix a PDF"
 
 msgid "By the"
-msgstr "Przez"
+msgstr "Per la"
 
 msgid "Last updated on"
-msgstr "Ostatnia aktualizacja"
+msgstr "Darrera actualització el"
 
 msgid "Download source file"
-msgstr "Pobierz plik źródłowy"
+msgstr "Baixeu el fitxer font"
 
 msgid "Download this page"
-msgstr "Pobierz tę stronę"
+msgstr "Descarregueu aquesta pàgina"

@@ -5,71 +5,71 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: vi\n"
+"Language: hr\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Theme by the"
-msgstr "Chủ đề của"
+msgstr "Tema autora"
 
 msgid "Open an issue"
-msgstr "Mở một vấn đề"
+msgstr "Otvorite izdanje"
 
 msgid "Contents"
-msgstr "Nội dung"
+msgstr "Sadržaj"
 
 msgid "Download notebook file"
-msgstr "Tải xuống tệp sổ tay"
+msgstr "Preuzmi datoteku bilježnice"
 
 msgid "Sphinx Book Theme"
-msgstr "Chủ đề sách nhân sư"
+msgstr "Tema knjige Sphinx"
 
 msgid "Fullscreen mode"
-msgstr "Chế độ toàn màn hình"
+msgstr "Način preko cijelog zaslona"
 
 msgid "Edit this page"
-msgstr "chỉnh sửa trang này"
+msgstr "Uredite ovu stranicu"
 
 msgid "By"
-msgstr "Bởi"
+msgstr "Po"
 
 msgid "Copyright"
-msgstr "Bản quyền"
+msgstr "Autorska prava"
 
 msgid "Source repository"
-msgstr "Kho nguồn"
+msgstr "Izvorno spremište"
 
 msgid "previous page"
-msgstr "trang trước"
+msgstr "Prethodna stranica"
 
 msgid "next page"
-msgstr "Trang tiếp theo"
+msgstr "sljedeća stranica"
 
 msgid "Toggle navigation"
-msgstr "Chuyển đổi điều hướng thành"
+msgstr "Uključi / isključi navigaciju"
 
 msgid "repository"
-msgstr "kho"
+msgstr "spremište"
 
 msgid "suggest edit"
-msgstr "đề nghị chỉnh sửa"
+msgstr "predloži uređivanje"
 
 msgid "open issue"
-msgstr "vấn đề mở"
+msgstr "otvoreno izdanje"
 
 msgid "Launch"
-msgstr "Phóng"
+msgstr "Pokrenite"
 
 msgid "Print to PDF"
-msgstr "In sang PDF"
+msgstr "Ispis u PDF"
 
 msgid "By the"
-msgstr "Bằng"
+msgstr "Od strane"
 
 msgid "Last updated on"
-msgstr "Cập nhật lần cuối vào"
+msgstr "Posljednje ažuriranje:"
 
 msgid "Download source file"
-msgstr "Tải xuống tệp nguồn"
+msgstr "Preuzmi izvornu datoteku"
 
 msgid "Download this page"
-msgstr "Tải xuống trang này"
+msgstr "Preuzmite ovu stranicu"

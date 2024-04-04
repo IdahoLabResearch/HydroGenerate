@@ -5,71 +5,62 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl\n"
+"Language: tl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Theme by the"
-msgstr "Motyw autorstwa"
+msgstr "Tema ng"
 
 msgid "Open an issue"
-msgstr "Otwórz problem"
-
-msgid "Contents"
-msgstr "Zawartość"
+msgstr "Magbukas ng isyu"
 
 msgid "Download notebook file"
-msgstr "Pobierz plik notatnika"
+msgstr "Mag-download ng file ng notebook"
 
 msgid "Sphinx Book Theme"
-msgstr "Motyw książki Sphinx"
-
-msgid "Fullscreen mode"
-msgstr "Pełny ekran"
+msgstr "Tema ng Sphinx Book"
 
 msgid "Edit this page"
-msgstr "Edytuj tę strone"
+msgstr "I-edit ang pahinang ito"
 
 msgid "By"
-msgstr "Przez"
+msgstr "Ni"
 
 msgid "Copyright"
-msgstr "prawa autorskie"
+msgstr "Copyright"
 
 msgid "Source repository"
-msgstr "Repozytorium źródłowe"
+msgstr "Pinagmulan ng imbakan"
 
 msgid "previous page"
-msgstr "Poprzednia strona"
+msgstr "Nakaraang pahina"
 
 msgid "next page"
-msgstr "Następna strona"
+msgstr "Susunod na pahina"
 
 msgid "Toggle navigation"
-msgstr "Przełącz nawigację"
-
-msgid "repository"
-msgstr "magazyn"
+msgstr "I-toggle ang pag-navigate"
 
 msgid "suggest edit"
-msgstr "zaproponuj edycję"
+msgstr "iminumungkahi i-edit"
 
 msgid "open issue"
-msgstr "otwarty problem"
+msgstr "bukas na isyu"
 
 msgid "Launch"
-msgstr "Uruchomić"
+msgstr "Ilunsad"
 
 msgid "Print to PDF"
-msgstr "Drukuj do PDF"
+msgstr "I-print sa PDF"
 
 msgid "By the"
-msgstr "Przez"
+msgstr "Sa pamamagitan ng"
 
 msgid "Last updated on"
-msgstr "Ostatnia aktualizacja"
+msgstr "Huling na-update noong"
 
 msgid "Download source file"
-msgstr "Pobierz plik źródłowy"
+msgstr "Mag-download ng file ng pinagmulan"
 
 msgid "Download this page"
-msgstr "Pobierz tę stronę"
+msgstr "I-download ang pahinang ito"

@@ -5,71 +5,71 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: vi\n"
+"Language: ja\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Theme by the"
-msgstr "Chủ đề của"
+msgstr "のテーマ"
 
 msgid "Open an issue"
-msgstr "Mở một vấn đề"
+msgstr "問題を報告"
 
 msgid "Contents"
-msgstr "Nội dung"
+msgstr "目次"
 
 msgid "Download notebook file"
-msgstr "Tải xuống tệp sổ tay"
+msgstr "ノートブックファイルをダウンロード"
 
 msgid "Sphinx Book Theme"
-msgstr "Chủ đề sách nhân sư"
+msgstr "スフィンクスの本のテーマ"
 
 msgid "Fullscreen mode"
-msgstr "Chế độ toàn màn hình"
+msgstr "全画面モード"
 
 msgid "Edit this page"
-msgstr "chỉnh sửa trang này"
+msgstr "このページを編集"
 
 msgid "By"
-msgstr "Bởi"
+msgstr "著者"
 
 msgid "Copyright"
-msgstr "Bản quyền"
+msgstr "Copyright"
 
 msgid "Source repository"
-msgstr "Kho nguồn"
+msgstr "ソースリポジトリ"
 
 msgid "previous page"
-msgstr "trang trước"
+msgstr "前のページ"
 
 msgid "next page"
-msgstr "Trang tiếp theo"
+msgstr "次のページ"
 
 msgid "Toggle navigation"
-msgstr "Chuyển đổi điều hướng thành"
+msgstr "ナビゲーションを切り替え"
 
 msgid "repository"
-msgstr "kho"
+msgstr "リポジトリ"
 
 msgid "suggest edit"
-msgstr "đề nghị chỉnh sửa"
+msgstr "編集を提案する"
 
 msgid "open issue"
-msgstr "vấn đề mở"
+msgstr "未解決の問題"
 
 msgid "Launch"
-msgstr "Phóng"
+msgstr "起動"
 
 msgid "Print to PDF"
-msgstr "In sang PDF"
+msgstr "PDFに印刷"
 
 msgid "By the"
-msgstr "Bằng"
+msgstr "によって"
 
 msgid "Last updated on"
-msgstr "Cập nhật lần cuối vào"
+msgstr "最終更新日"
 
 msgid "Download source file"
-msgstr "Tải xuống tệp nguồn"
+msgstr "ソースファイルをダウンロード"
 
 msgid "Download this page"
-msgstr "Tải xuống trang này"
+msgstr "このページをダウンロード"

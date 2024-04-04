@@ -5,71 +5,71 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: vi\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Theme by the"
-msgstr "Chủ đề của"
+msgstr "Tema por el"
 
 msgid "Open an issue"
-msgstr "Mở một vấn đề"
+msgstr "Abrir un problema"
 
 msgid "Contents"
-msgstr "Nội dung"
+msgstr "Contenido"
 
 msgid "Download notebook file"
-msgstr "Tải xuống tệp sổ tay"
+msgstr "Descargar archivo de cuaderno"
 
 msgid "Sphinx Book Theme"
-msgstr "Chủ đề sách nhân sư"
+msgstr "Tema del libro de la esfinge"
 
 msgid "Fullscreen mode"
-msgstr "Chế độ toàn màn hình"
+msgstr "Modo de pantalla completa"
 
 msgid "Edit this page"
-msgstr "chỉnh sửa trang này"
+msgstr "Edita esta página"
 
 msgid "By"
-msgstr "Bởi"
+msgstr "Por"
 
 msgid "Copyright"
-msgstr "Bản quyền"
+msgstr "Derechos de autor"
 
 msgid "Source repository"
-msgstr "Kho nguồn"
+msgstr "Repositorio de origen"
 
 msgid "previous page"
-msgstr "trang trước"
+msgstr "pagina anterior"
 
 msgid "next page"
-msgstr "Trang tiếp theo"
+msgstr "siguiente página"
 
 msgid "Toggle navigation"
-msgstr "Chuyển đổi điều hướng thành"
+msgstr "Navegación de palanca"
 
 msgid "repository"
-msgstr "kho"
+msgstr "repositorio"
 
 msgid "suggest edit"
-msgstr "đề nghị chỉnh sửa"
+msgstr "sugerir editar"
 
 msgid "open issue"
-msgstr "vấn đề mở"
+msgstr "Tema abierto"
 
 msgid "Launch"
-msgstr "Phóng"
+msgstr "Lanzamiento"
 
 msgid "Print to PDF"
-msgstr "In sang PDF"
+msgstr "Imprimir en PDF"
 
 msgid "By the"
-msgstr "Bằng"
+msgstr "Por el"
 
 msgid "Last updated on"
-msgstr "Cập nhật lần cuối vào"
+msgstr "Ultima actualización en"
 
 msgid "Download source file"
-msgstr "Tải xuống tệp nguồn"
+msgstr "Descargar archivo fuente"
 
 msgid "Download this page"
-msgstr "Tải xuống trang này"
+msgstr "Descarga esta pagina"
