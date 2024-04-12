@@ -8,6 +8,7 @@ parts:
   - caption: Getting Started
     chapters:
     - file: installation
+    - file: quick_start
 
   - caption: User Guide 
     chapters:

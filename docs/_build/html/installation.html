@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting started" href="hydrogenerate_intro.html" />
+    <link rel="next" title="Quick Start" href="quick_start.html" />
     <link rel="prev" title="HydroGenerate: Hydropower Potential Estimation" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -173,6 +173,7 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="nav bd-sidenav">
@@ -382,6 +383,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-basic-usage">For basic usage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
 </ul>
             </nav>
@@ -396,12 +398,16 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h1>
-<p><strong>HydroGenerate</strong> is offered as a python package. This means that the classes and utilities can be used anywhere in your system, without risks of making unwanted changes to the core code in the repo, issues with finsing the module in path, etc.</p>
+<p><strong>HydroGenerate</strong> is offered as a python package. This means that the classes and utilities can be used anywhere in your system, without risks of making unwanted changes to the core code in the repo, issues with finding the module in path, etc.</p>
+<section id="for-basic-usage">
+<h2>For basic usage<a class="headerlink" href="#for-basic-usage" title="Permalink to this heading">#</a></h2>
 <p><strong>HydroGenerate</strong> can be installed by downloading the source code from GitHub or via the PyPI package manager using pip.</p>
 <p>For those interested only in using the code, the simplest way to obtain it is with pip by using this command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">HydroGenerate</span>
 </pre></div>
 </div>
+<p>For a quick start guide, follow the steps in the <strong>Quick start</strong> page.</p>
+</section>
 <section id="for-developers">
 <h2>For developers<a class="headerlink" href="#for-developers" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
@@ -414,24 +420,31 @@ document.write(`
 <ol class="arabic simple" start="2">
 <li><p>It is recommended that a dedicated conda environment be created for developing/using this repo and prior to the installation below.</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">hat</span><span class="o">-</span><span class="n">env</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.6</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">hydro</span><span class="o">-</span><span class="n">gen</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.6</span>
 </pre></div>
 </div>
 <p>To activate the environment, execute the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">hat</span><span class="o">-</span><span class="n">env</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">hydro</span><span class="o">-</span><span class="n">gen</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>Install the package in your environment:</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">HydroGenerate</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
 <p><strong>Optional</strong></p>
 <ol class="arabic simple" start="4">
-<li><p>Install jupyter lab in your new environment</p></li>
+<li><p>Install jupyter lab in your new environment to run the examples provided in <code class="docutils literal notranslate"><span class="pre">./examples</span></code></p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">jupyterlab</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Install the package <code class="docutils literal notranslate"><span class="pre">dataretrieval</span></code> in your new environment to use streamflow data from a USGS stream gauge.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">dataretrieval</span>
 </pre></div>
 </div>
 </section>
@@ -477,11 +490,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="hydrogenerate_intro.html"
+       href="quick_start.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Getting started</p>
+        <p class="prev-next-title">Quick Start</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -500,6 +513,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-basic-usage">For basic usage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
 </ul>
   </nav></div>

@@ -172,6 +172,7 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="nav bd-sidenav">
@@ -381,7 +382,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#giving-credit">Giving credit</a></li>
 </ul>
             </nav>
@@ -396,40 +397,34 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="hydrogenerate-hydropower-potential-estimation">
 <h1>HydroGenerate: Hydropower Potential Estimation<a class="headerlink" href="#hydrogenerate-hydropower-potential-estimation" title="Permalink to this heading">#</a></h1>
-<p><strong>HydroGenerate</strong> is an open-source python library that has the estimates hydropower generation based on head height and flow rate either provided by the user or received from United States Geological Survey (USGS) water data services. The tool calculates the efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user.</p>
-<section id="quick-start">
-<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">#</a></h2>
-<p><strong>HydroGenerate</strong> can be installed in your local environment using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">HydroGenerate</span></code>. In its most basic usage, the user needs to provide one value of flow in cubic-ft-sec (cfs) and head (ft). The function <code class="docutils literal notranslate"><span class="pre">calculate_hp_potential</span></code> is the main interface for the hydropower potential calculation using different types of inputs (float, numpy array, and pandas dataframe), and several attributes. More advance usage can be found in the user guide.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local imports</span>
-<span class="kn">from</span> <span class="nn">HydroGenerate.hydropower_potential</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="c1"># 1.1) Calculate power from a given head and flow</span>
-<span class="n">flow</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># given flow, in cfs</span>
-<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># head, in ft</span>
-<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> 
-                            <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span> 
-                            <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hydropower potential is </span><span class="si">{}</span><span class="s2"> kW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
-</pre></div>
-</div>
-<p>The results are returned in an object with multiple attributes. In the example above, <code class="docutils literal notranslate"><span class="pre">hp.power</span></code> gives the estimated potential for the given flow and head. If a time-series is provided, then a time-series of power will be available.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p><strong>HydroGenerate</strong> is an open-source python library that estimates hydropower generation based on head height and flow rate for different types of hydropower:impoundment, diversion, and hydrokinetic. Additional features allow the user to retrieve instantaneous flow from United States Geological Survey (USGS) water data services stream gages where available. The tool calculates the turbine efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user. Some of the additional features are:</p>
+<ul class="simple">
+<li><p>In the power calculation, the net hydraulic head is conisidered. Where penstock dimameter is available, the user can select from several methods (see thr <strong>User Guide</strong> for more details). If the penstock diameter is not known, HG will calculate a diameter that will limit head losses to 10% (default) of the available head.</p></li>
+<li><p>For power extraction from kinetic energy, the available head is the velocity head.</p></li>
+<li><p>HydroGenerate uses a simplified configuration consisting of one penstock, turbine, and generator.</p></li>
+<li><p>The user can specify a set of flow constraints as a proxy of hydropower operation. Otherwise, the results are the <strong>maximum technical potential</strong>.</p></li>
+<li><p>When a flow-time series is available, HydroGenerate computes at every time-step, the generated power, capacity factor, and annual energy production (AEP).</p></li>
+<li><p>Using publicly available CAPEX and OPEX data for hydropower, HydroGenerate performs a “light” techno-economic analysis of turbine configuration based on the nameplate capacity. Furthermore, the LCOE is computed using the wholesale electricity price as an user input.</p></li>
+</ul>
 </section>
 <section id="giving-credit">
 <h2>Giving credit<a class="headerlink" href="#giving-credit" title="Permalink to this heading">#</a></h2>
 <p>HydroGenerate was built with support from the USDOE Office of Energy Efficiency and Renewable Energy (EERE). For more information please refer to the <a class="reference external" href="https://www.osti.gov/biblio/1829986">OSTI webpage</a>.</p>
 <p><strong>Authors</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bhaskar</span> <span class="n">Mitra</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Camilo</span> <span class="n">J</span><span class="o">.</span> <span class="n">Bastidas</span> <span class="n">Pacheco</span>
 
 <span class="n">Juan</span> <span class="n">Gallego</span><span class="o">-</span><span class="n">Calderon</span>
+
+<span class="n">Soumyadeep</span> <span class="n">Nag</span>
+
+<span class="n">Bhaskar</span> <span class="n">Mitra</span>
 
 <span class="n">Shiloh</span> <span class="n">Elliott</span>
 
 <span class="n">Thomas</span> <span class="n">M</span><span class="o">.</span> <span class="n">Mosier</span>
 
-<span class="n">Camilo</span> <span class="n">J</span><span class="o">.</span> <span class="n">Bastidas</span> <span class="n">Pacheco</span>
 </pre></div>
 </div>
 <p><strong>Citation</strong></p>
@@ -514,7 +509,7 @@ note =
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#giving-credit">Giving credit</a></li>
 </ul>
   </nav></div>
