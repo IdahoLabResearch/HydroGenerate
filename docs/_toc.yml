@@ -12,9 +12,11 @@ parts:
 
   - caption: User Guide 
     chapters:
-    - file: hydrogenerate_intro
-    - file: hydrogenerate_api_call
-    - file: hydro_kinetics
+    - file: 1_Introduction-Tutorial
+    - file: 2_Diversion
+    - file: 3_FlowOptions
+    - file: 4_Cost&Revenue
+    - file: 5_Hydrokinetics
 
   - caption: Developer Guide 
     chapters:
