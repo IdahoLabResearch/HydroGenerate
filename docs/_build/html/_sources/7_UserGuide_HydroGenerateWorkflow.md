@@ -29,11 +29,11 @@ General Computations Workflow
 ```
 
 ## Computations Workflow, methods, functions, and classes
-{numref}`DWorkflow` shows methods, functions, and classes avaliable in **_HydroGenerate_**.
+{numref}`DetWorkflow` shows methods, functions, and classes avaliable in **_HydroGenerate_**.
 
-```{figure} DetailedWorkflow.svg
+```{figure} DetailedWorkflow.SVG
 ---
-name: DWorkflow
+name: DetWorkflow
 ---
 Computations Workflow, methods, functions, and classes
 ```
