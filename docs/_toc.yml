@@ -12,11 +12,13 @@ parts:
 
   - caption: User Guide 
     chapters:
-    - file: 1_Introduction-Tutorial
-    - file: 2_Diversion
-    - file: 3_FlowOptions
-    - file: 4_Cost&Revenue
-    - file: 5_Hydrokinetics
+    - file: 1_UserGuide_Introduction-Tutorial
+    - file: 2_UserGuide_Diversion
+    - file: 3_UserGuide_FlowOptions
+    - file: 4_UserGuide_QueryingDataUSGS-NWIS
+    - file: 5_UserGuide_Cost&Revenue
+    - file: 6_UserGuide_Hydrokinetics
+    - file: 7_UserGuide_HydroGenerateWorkflow
 
   - caption: Developer Guide 
     chapters:
@@ -24,4 +26,7 @@ parts:
 
   - caption: Theory
     chapters:
-    - file: hydropower_potential
+    - file: 1_Theory_Hydropower
+    - file: 2_Theory_Design_Flow
+    - file: 3_Theory_Efficiency
+    - file: 4_Theory_Head_loss
