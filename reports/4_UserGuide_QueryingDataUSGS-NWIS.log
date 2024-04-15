@@ -1,0 +1,172 @@
+Traceback (most recent call last):
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\site-packages\jupyter_cache\executors\utils.py", line 56, in single_nb_execution
+    record_timing=False,
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\site-packages\nbclient\client.py", line 1093, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\asyncio\base_events.py", line 488, in run_until_complete
+    return future.result()
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\site-packages\nbclient\client.py", line 560, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\site-packages\nbclient\client.py", line 854, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "C:\Users\BASTC\Anaconda3\envs\hat-env\lib\site-packages\nbclient\client.py", line 756, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Set the parameters needed to retrieve data
+siteNumber = "10109000" # LOGAN RIVER ABOVE STATE DAM, NEAR LOGAN, UT
+parameterCode = "00060" # Discharge
+startDate = "2010-01-01"
+endDate = "2020-12-31"
+
+# Retrieve the data
+dailyStreamflow = nwis.get_dv(sites=siteNumber, parameterCd=parameterCode, start=startDate, end=endDate) 
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mgaierror[0m                                  Traceback (most recent call last)
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\connection.py[0m in [0;36m_new_conn[1;34m(self)[0m
+[0;32m    174[0m             conn = connection.create_connection(
+[1;32m--> 175[1;33m                 [1;33m([0m[0mself[0m[1;33m.[0m[0m_dns_host[0m[1;33m,[0m [0mself[0m[1;33m.[0m[0mport[0m[1;33m)[0m[1;33m,[0m [0mself[0m[1;33m.[0m[0mtimeout[0m[1;33m,[0m [1;33m**[0m[0mextra_kw[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    176[0m             )
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\util\connection.py[0m in [0;36mcreate_connection[1;34m(address, timeout, source_address, socket_options)[0m
+[0;32m     71[0m [1;33m[0m[0m
+[1;32m---> 72[1;33m     [1;32mfor[0m [0mres[0m [1;32min[0m [0msocket[0m[1;33m.[0m[0mgetaddrinfo[0m[1;33m([0m[0mhost[0m[1;33m,[0m [0mport[0m[1;33m,[0m [0mfamily[0m[1;33m,[0m [0msocket[0m[1;33m.[0m[0mSOCK_STREAM[0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m     73[0m         [0maf[0m[1;33m,[0m [0msocktype[0m[1;33m,[0m [0mproto[0m[1;33m,[0m [0mcanonname[0m[1;33m,[0m [0msa[0m [1;33m=[0m [0mres[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\socket.py[0m in [0;36mgetaddrinfo[1;34m(host, port, family, type, proto, flags)[0m
+[0;32m    744[0m     [0maddrlist[0m [1;33m=[0m [1;33m[[0m[1;33m][0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 745[1;33m     [1;32mfor[0m [0mres[0m [1;32min[0m [0m_socket[0m[1;33m.[0m[0mgetaddrinfo[0m[1;33m([0m[0mhost[0m[1;33m,[0m [0mport[0m[1;33m,[0m [0mfamily[0m[1;33m,[0m [0mtype[0m[1;33m,[0m [0mproto[0m[1;33m,[0m [0mflags[0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    746[0m         [0maf[0m[1;33m,[0m [0msocktype[0m[1;33m,[0m [0mproto[0m[1;33m,[0m [0mcanonname[0m[1;33m,[0m [0msa[0m [1;33m=[0m [0mres[0m[1;33m[0m[1;33m[0m[0m
+
+[1;31mgaierror[0m: [Errno 11002] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+[1;31mNewConnectionError[0m                        Traceback (most recent call last)
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\connectionpool.py[0m in [0;36murlopen[1;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, **response_kw)[0m
+[0;32m    709[0m                 [0mheaders[0m[1;33m=[0m[0mheaders[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 710[1;33m                 [0mchunked[0m[1;33m=[0m[0mchunked[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    711[0m             )
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\connectionpool.py[0m in [0;36m_make_request[1;34m(self, conn, method, url, timeout, chunked, **httplib_request_kw)[0m
+[0;32m    385[0m         [1;32mtry[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 386[1;33m             [0mself[0m[1;33m.[0m[0m_validate_conn[0m[1;33m([0m[0mconn[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    387[0m         [1;32mexcept[0m [1;33m([0m[0mSocketTimeout[0m[1;33m,[0m [0mBaseSSLError[0m[1;33m)[0m [1;32mas[0m [0me[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\connectionpool.py[0m in [0;36m_validate_conn[1;34m(self, conn)[0m
+[0;32m   1041[0m         [1;32mif[0m [1;32mnot[0m [0mgetattr[0m[1;33m([0m[0mconn[0m[1;33m,[0m [1;34m"sock"[0m[1;33m,[0m [1;32mNone[0m[1;33m)[0m[1;33m:[0m  [1;31m# AppEngine might not have  `.sock`[0m[1;33m[0m[1;33m[0m[0m
+[1;32m-> 1042[1;33m             [0mconn[0m[1;33m.[0m[0mconnect[0m[1;33m([0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m   1043[0m [1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\connection.py[0m in [0;36mconnect[1;34m(self)[0m
+[0;32m    357[0m         [1;31m# Add certificate verification[0m[1;33m[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 358[1;33m         [0mself[0m[1;33m.[0m[0msock[0m [1;33m=[0m [0mconn[0m [1;33m=[0m [0mself[0m[1;33m.[0m[0m_new_conn[0m[1;33m([0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    359[0m         [0mhostname[0m [1;33m=[0m [0mself[0m[1;33m.[0m[0mhost[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\connection.py[0m in [0;36m_new_conn[1;34m(self)[0m
+[0;32m    186[0m             raise NewConnectionError(
+[1;32m--> 187[1;33m                 [0mself[0m[1;33m,[0m [1;34m"Failed to establish a new connection: %s"[0m [1;33m%[0m [0me[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    188[0m             )
+
+[1;31mNewConnectionError[0m: <urllib3.connection.HTTPSConnection object at 0x000001517C6D9E80>: Failed to establish a new connection: [Errno 11002] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+[1;31mMaxRetryError[0m                             Traceback (most recent call last)
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\requests\adapters.py[0m in [0;36msend[1;34m(self, request, stream, timeout, verify, cert, proxies)[0m
+[0;32m    449[0m                     [0mretries[0m[1;33m=[0m[0mself[0m[1;33m.[0m[0mmax_retries[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 450[1;33m                     [0mtimeout[0m[1;33m=[0m[0mtimeout[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    451[0m                 )
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\connectionpool.py[0m in [0;36murlopen[1;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, **response_kw)[0m
+[0;32m    787[0m             retries = retries.increment(
+[1;32m--> 788[1;33m                 [0mmethod[0m[1;33m,[0m [0murl[0m[1;33m,[0m [0merror[0m[1;33m=[0m[0me[0m[1;33m,[0m [0m_pool[0m[1;33m=[0m[0mself[0m[1;33m,[0m [0m_stacktrace[0m[1;33m=[0m[0msys[0m[1;33m.[0m[0mexc_info[0m[1;33m([0m[1;33m)[0m[1;33m[[0m[1;36m2[0m[1;33m][0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    789[0m             )
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\urllib3\util\retry.py[0m in [0;36mincrement[1;34m(self, method, url, response, error, _pool, _stacktrace)[0m
+[0;32m    591[0m         [1;32mif[0m [0mnew_retry[0m[1;33m.[0m[0mis_exhausted[0m[1;33m([0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 592[1;33m             [1;32mraise[0m [0mMaxRetryError[0m[1;33m([0m[0m_pool[0m[1;33m,[0m [0murl[0m[1;33m,[0m [0merror[0m [1;32mor[0m [0mResponseError[0m[1;33m([0m[0mcause[0m[1;33m)[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    593[0m [1;33m[0m[0m
+
+[1;31mMaxRetryError[0m: HTTPSConnectionPool(host='waterservices.usgs.gov', port=443): Max retries exceeded with url: /nwis/dv?format=json&startDT=2010-01-01&endDT=2020-12-31&sites=10109000&parameterCd=00060 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001517C6D9E80>: Failed to establish a new connection: [Errno 11002] getaddrinfo failed',))
+
+During handling of the above exception, another exception occurred:
+
+[1;31mConnectionError[0m                           Traceback (most recent call last)
+[1;32m<ipython-input-4-74f312a0dc5f>[0m in [0;36m<module>[1;34m[0m
+[0;32m      6[0m [1;33m[0m[0m
+[0;32m      7[0m [1;31m# Retrieve the data[0m[1;33m[0m[1;33m[0m[1;33m[0m[0m
+[1;32m----> 8[1;33m [0mdailyStreamflow[0m [1;33m=[0m [0mnwis[0m[1;33m.[0m[0mget_dv[0m[1;33m([0m[0msites[0m[1;33m=[0m[0msiteNumber[0m[1;33m,[0m [0mparameterCd[0m[1;33m=[0m[0mparameterCode[0m[1;33m,[0m [0mstart[0m[1;33m=[0m[0mstartDate[0m[1;33m,[0m [0mend[0m[1;33m=[0m[0mendDate[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\dataretrieval\nwis.py[0m in [0;36mget_dv[1;34m(start, end, **kwargs)[0m
+[0;32m    312[0m     [0mstart[0m [1;33m=[0m [0mkwargs[0m[1;33m.[0m[0mpop[0m[1;33m([0m[1;34m'startDT'[0m[1;33m,[0m [0mstart[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m    313[0m     [0mend[0m [1;33m=[0m [0mkwargs[0m[1;33m.[0m[0mpop[0m[1;33m([0m[1;34m'endDT'[0m[1;33m,[0m [0mend[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 314[1;33m     [1;32mreturn[0m [0m_dv[0m[1;33m([0m[0mstartDT[0m[1;33m=[0m[0mstart[0m[1;33m,[0m [0mendDT[0m[1;33m=[0m[0mend[0m[1;33m,[0m [1;33m**[0m[0mkwargs[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    315[0m [1;33m[0m[0m
+[0;32m    316[0m [1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\dataretrieval\nwis.py[0m in [0;36m_dv[1;34m(**kwargs)[0m
+[0;32m    316[0m [1;33m[0m[0m
+[0;32m    317[0m [1;32mdef[0m [0m_dv[0m[1;33m([0m[1;33m**[0m[0mkwargs[0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 318[1;33m     [0mresponse[0m [1;33m=[0m [0mquery_waterservices[0m[1;33m([0m[1;34m'dv'[0m[1;33m,[0m [0mformat[0m[1;33m=[0m[1;34m'json'[0m[1;33m,[0m [1;33m**[0m[0mkwargs[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    319[0m     [0mdf[0m [1;33m=[0m [0m_read_json[0m[1;33m([0m[0mresponse[0m[1;33m.[0m[0mjson[0m[1;33m([0m[1;33m)[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m    320[0m [1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\dataretrieval\nwis.py[0m in [0;36mquery_waterservices[1;34m(service, **kwargs)[0m
+[0;32m    291[0m     [0murl[0m [1;33m=[0m [0mWATERSERVICE_URL[0m [1;33m+[0m [0mservice[0m[1;33m[0m[1;33m[0m[0m
+[0;32m    292[0m [1;33m[0m[0m
+[1;32m--> 293[1;33m     [1;32mreturn[0m [0mquery[0m[1;33m([0m[0murl[0m[1;33m,[0m [0mpayload[0m[1;33m=[0m[0mkwargs[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    294[0m [1;33m[0m[0m
+[0;32m    295[0m [1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\dataretrieval\utils.py[0m in [0;36mquery[1;34m(url, payload, delimiter)[0m
+[0;32m    140[0m     [1;31m#    payload[index] = (key, to_str(value))[0m[1;33m[0m[1;33m[0m[1;33m[0m[0m
+[0;32m    141[0m [1;33m[0m[0m
+[1;32m--> 142[1;33m     [0mresponse[0m [1;33m=[0m [0mrequests[0m[1;33m.[0m[0mget[0m[1;33m([0m[0murl[0m[1;33m,[0m [0mparams[0m[1;33m=[0m[0mpayload[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    143[0m [1;33m[0m[0m
+[0;32m    144[0m     [1;32mif[0m [0mresponse[0m[1;33m.[0m[0mstatus_code[0m [1;33m==[0m [1;36m400[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\requests\api.py[0m in [0;36mget[1;34m(url, params, **kwargs)[0m
+[0;32m     73[0m     """
+[0;32m     74[0m [1;33m[0m[0m
+[1;32m---> 75[1;33m     [1;32mreturn[0m [0mrequest[0m[1;33m([0m[1;34m'get'[0m[1;33m,[0m [0murl[0m[1;33m,[0m [0mparams[0m[1;33m=[0m[0mparams[0m[1;33m,[0m [1;33m**[0m[0mkwargs[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m     76[0m [1;33m[0m[0m
+[0;32m     77[0m [1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\requests\api.py[0m in [0;36mrequest[1;34m(method, url, **kwargs)[0m
+[0;32m     59[0m     [1;31m# cases, and look like a memory leak in others.[0m[1;33m[0m[1;33m[0m[1;33m[0m[0m
+[0;32m     60[0m     [1;32mwith[0m [0msessions[0m[1;33m.[0m[0mSession[0m[1;33m([0m[1;33m)[0m [1;32mas[0m [0msession[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m---> 61[1;33m         [1;32mreturn[0m [0msession[0m[1;33m.[0m[0mrequest[0m[1;33m([0m[0mmethod[0m[1;33m=[0m[0mmethod[0m[1;33m,[0m [0murl[0m[1;33m=[0m[0murl[0m[1;33m,[0m [1;33m**[0m[0mkwargs[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m     62[0m [1;33m[0m[0m
+[0;32m     63[0m [1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\requests\sessions.py[0m in [0;36mrequest[1;34m(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)[0m
+[0;32m    527[0m         }
+[0;32m    528[0m         [0msend_kwargs[0m[1;33m.[0m[0mupdate[0m[1;33m([0m[0msettings[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 529[1;33m         [0mresp[0m [1;33m=[0m [0mself[0m[1;33m.[0m[0msend[0m[1;33m([0m[0mprep[0m[1;33m,[0m [1;33m**[0m[0msend_kwargs[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    530[0m [1;33m[0m[0m
+[0;32m    531[0m         [1;32mreturn[0m [0mresp[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\requests\sessions.py[0m in [0;36msend[1;34m(self, request, **kwargs)[0m
+[0;32m    643[0m [1;33m[0m[0m
+[0;32m    644[0m         [1;31m# Send the request[0m[1;33m[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 645[1;33m         [0mr[0m [1;33m=[0m [0madapter[0m[1;33m.[0m[0msend[0m[1;33m([0m[0mrequest[0m[1;33m,[0m [1;33m**[0m[0mkwargs[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    646[0m [1;33m[0m[0m
+[0;32m    647[0m         [1;31m# Total elapsed time of the request (approximately)[0m[1;33m[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m~\Anaconda3\envs\hat-env\lib\site-packages\requests\adapters.py[0m in [0;36msend[1;34m(self, request, stream, timeout, verify, cert, proxies)[0m
+[0;32m    517[0m                 [1;32mraise[0m [0mSSLError[0m[1;33m([0m[0me[0m[1;33m,[0m [0mrequest[0m[1;33m=[0m[0mrequest[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m    518[0m [1;33m[0m[0m
+[1;32m--> 519[1;33m             [1;32mraise[0m [0mConnectionError[0m[1;33m([0m[0me[0m[1;33m,[0m [0mrequest[0m[1;33m=[0m[0mrequest[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m    520[0m [1;33m[0m[0m
+[0;32m    521[0m         [1;32mexcept[0m [0mClosedPoolError[0m [1;32mas[0m [0me[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+
+[1;31mConnectionError[0m: HTTPSConnectionPool(host='waterservices.usgs.gov', port=443): Max retries exceeded with url: /nwis/dv?format=json&startDT=2010-01-01&endDT=2020-12-31&sites=10109000&parameterCd=00060 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001517C6D9E80>: Failed to establish a new connection: [Errno 11002] getaddrinfo failed',))
+ConnectionError: HTTPSConnectionPool(host='waterservices.usgs.gov', port=443): Max retries exceeded with url: /nwis/dv?format=json&startDT=2010-01-01&endDT=2020-12-31&sites=10109000&parameterCd=00060 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001517C6D9E80>: Failed to establish a new connection: [Errno 11002] getaddrinfo failed',))
+
