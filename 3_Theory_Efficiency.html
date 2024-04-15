@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turbine Efficiency Calculation &#8212; HydroGenerate</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/3_Theory_Efficiency.html" />
+    <link rel="shortcut icon" href="_static/HG_icon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Head Loss Calculation" href="4_Theory_Head_loss.html" />
+    <link rel="prev" title="Design Flow Selection" href="2_Theory_Design_Flow.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/HG_horizontal.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">HydroGenerate</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index.html">
+   HydroGenerate: Hydropower Potential Estimation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quick_start.html">
+   Quick Start
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  User Guide
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1_UserGuide_Introduction-Tutorial.html">
+   Introduction to HydroGenerate - Tutorial
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_UserGuide_Diversion.html">
+   Diversion mode
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3_UserGuide_FlowOptions.html">
+   Flow Input Options
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4_UserGuide_QueryingDataUSGS-NWIS.html">
+   Querying data from the National Water Information System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="5_UserGuide_Cost%26Revenue.html">
+   Cost and Revenue calculations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="6_UserGuide_Hydrokinetics.html">
+   Hydrokinetics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="7_UserGuide_HydroGenerateWorkflow.html">
+   HydroGenerate Workflow
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Developer Guide
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="architecture.html">
+   Architecture
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Theory
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1_Theory_Hydropower.html">
+   Hydropower Calculation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_Theory_Design_Flow.html">
+   Design Flow Selection
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Turbine Efficiency Calculation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4_Theory_Head_loss.html">
+   Head Loss Calculation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/3_Theory_Efficiency.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/IdahoLabResearch/HydroGenerate"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2F3_Theory_Efficiency.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reaction-turbines-francis-kaplan-and-propellor">
+   Reaction turbines (Francis, Kaplan and Propellor).
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#francis-turbines">
+   Francis Turbines:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kaplan-and-propellor-turbines">
+   Kaplan and Propellor turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kaplan-turbines">
+   Kaplan turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#propellor-turbines">
+   Propellor turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pelton-turbines">
+   Pelton Turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#turgo-turbines">
+   Turgo Turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#crossflow-turbines">
+   Crossflow turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Turbine Efficiency Calculation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reaction-turbines-francis-kaplan-and-propellor">
+   Reaction turbines (Francis, Kaplan and Propellor).
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#francis-turbines">
+   Francis Turbines:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kaplan-and-propellor-turbines">
+   Kaplan and Propellor turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kaplan-turbines">
+   Kaplan turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#propellor-turbines">
+   Propellor turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pelton-turbines">
+   Pelton Turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#turgo-turbines">
+   Turgo Turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#crossflow-turbines">
+   Crossflow turbines
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="turbine-efficiency-calculation">
+<h1>Turbine Efficiency Calculation<a class="headerlink" href="#turbine-efficiency-calculation" title="Permalink to this headline">¶</a></h1>
+<p>The turbine efficiency calculation follows the same methodology and equations included in (CANMET, 2004). For further details on turbine efficiency, refer to CANMET, (2004). Turbine efficiency computations are conducted using the following equations:</p>
+<div class="section" id="reaction-turbines-francis-kaplan-and-propellor">
+<h2>Reaction turbines (Francis, Kaplan and Propellor).<a class="headerlink" href="#reaction-turbines-francis-kaplan-and-propellor" title="Permalink to this headline">¶</a></h2>
+<p>Turbine runner size (d)</p>
+<div class="math notranslate nohighlight">
+\[d=kQ_d^{0.473}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d\)</span> = runner diameter (m),</p></li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span> = 0.46 for d &lt; 1.8, or 0.41 for d ≥ 1.8 (dimensionless) and</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q_d\)</span> = Design flow (m^3/s).</p></li>
+</ul>
+<p>Specific speed (<span class="math notranslate nohighlight">\(n_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[n_q=kh^{-5}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n_q\)</span> = specific speed based on flow,</p></li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span> = 800 for Propeller and Kaplan turbines, 600 for Francis turbines and</p></li>
+<li><p><span class="math notranslate nohighlight">\(h\)</span> = rated head on turbine in m (gross head less maximum head loss).</p></li>
+</ul>
+</div>
+<div class="section" id="francis-turbines">
+<h2>Francis Turbines:<a class="headerlink" href="#francis-turbines" title="Permalink to this headline">¶</a></h2>
+<p>Specific speed adjustment to peak efficiency (<span class="math notranslate nohighlight">\(\land e_{nq}\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\land e_{nq}\ =\ \left(\frac{n_q-56}{256}\right)^2\]</div>
+<p>Runner size adjustment to peak efficiency (<span class="math notranslate nohighlight">\(\land e_d\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\land e_d\ \ =(0.081+\ \land e_{nq}\ )(1-0.789\ d^{-0.2})\ \ \]</div>
+<p>Turbine peak efficiency (<span class="math notranslate nohighlight">\(e_p\)</span>) is calculated using</p>
+<div class="math notranslate nohighlight">
+\[e_p=\left(0.919-\ \land e_{nq}+\ \land e_d\right)-0.0305+0.005\ R_m\ ,\]</div>
+<p>where:</p>
+<p><span class="math notranslate nohighlight">\(R_m\)</span> = turbine manufacture/design coefficient. (2.8 to 6.1; default = 4.5)</p>
+<p>Peak efficiency flow (<span class="math notranslate nohighlight">\(Q_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[Q_p=0.65\ Q_d\ n_q^{0.05}\]</div>
+<p>Efficiencies at flows below peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_q=\ \left\{1-\left[1.25\left(\frac{Q_p-Q}{Q_p}\right)^{3.94-0.0159\ n_q}\right]\right\}\ e_p\]</div>
+<p>Drop in efficiency at full load (<span class="math notranslate nohighlight">\(\land e_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\land e_p=0.0072\ n_q^{0.4}\]</div>
+<p>Efficiency at full load (<span class="math notranslate nohighlight">\(e_r\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_r=\left(1-\ \land e_p\right)\land e_p\]</div>
+<p>Efficiencies at flows above peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_q=\ e_p-\ \left[\left(\frac{Q-\ Q_p}{Q_d-Q_p}\right)^2\left(e_p-e_r\right)\right]\]</div>
+</div>
+<div class="section" id="kaplan-and-propellor-turbines">
+<h2>Kaplan and Propellor turbines<a class="headerlink" href="#kaplan-and-propellor-turbines" title="Permalink to this headline">¶</a></h2>
+<p>Specific speed adjustment to peak efficiency (<span class="math notranslate nohighlight">\(\land e_{nq}\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\land e_{nq}\ =\ \left(\frac{n_q-170}{700}\right)^2\]</div>
+<p>Runner size adjustment to peak efficiency (<span class="math notranslate nohighlight">\(\land e_d\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[\land e_d\ \ =(0.0095+\ \land e_{nq}\ )(1-0.789\ d^{-0.2})\ \ \]</div>
+<p>Turbine peak efficiency (<span class="math notranslate nohighlight">\(e_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_p=\left(0.905-\ \land e_{nq}+\ \land e_d\right)-0.0305+0.005{\ R}_m\ \]</div>
+</div>
+<div class="section" id="kaplan-turbines">
+<h2>Kaplan turbines<a class="headerlink" href="#kaplan-turbines" title="Permalink to this headline">¶</a></h2>
+<p>Peak efficiency flow (<span class="math notranslate nohighlight">\(Q_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[Q_p=0.75\ Q_d\ \]</div>
+<p>Efficiencies at flows above peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_q=\ \ \left[1-3.5\ \left(\frac{Q_p-Q}{Q_p}\right)^6\right]e_p\]</div>
+</div>
+<div class="section" id="propellor-turbines">
+<h2>Propellor turbines<a class="headerlink" href="#propellor-turbines" title="Permalink to this headline">¶</a></h2>
+<p>Peak efficiency flow (<span class="math notranslate nohighlight">\(Q_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[Q_p=Q_d\ \]</div>
+<p>Efficiencies at flows above peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_q=\ \ \left[1-1.25\ \left(\frac{Q_p-Q}{Q_p}\right)^{1.13}\right]e_p\]</div>
+</div>
+<div class="section" id="pelton-turbines">
+<h2>Pelton Turbines<a class="headerlink" href="#pelton-turbines" title="Permalink to this headline">¶</a></h2>
+<p>Rotational Speed (<span class="math notranslate nohighlight">\(n\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[n=31\ \left(h\ \frac{Q_d}{j}\right)^{0.5}\]</div>
+<p>Where:</p>
+<p><span class="math notranslate nohighlight">\(j\)</span> = number of jets (ranging from 1 to 6)</p>
+<p>Outside diameter of runner (<span class="math notranslate nohighlight">\(d\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[d=\frac{49.4\ h^{0.5}\ j^{0.02}}{n}\]</div>
+<p>Turbine peak efficiency (<span class="math notranslate nohighlight">\(e_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_p=0.864\ d^{0.04}\ \]</div>
+<p>Peak efficiency flow (<span class="math notranslate nohighlight">\(Q_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[Q_p=\ \left(0.662+0.001\ j\right)\ Q_d\ \]</div>
+<p>Efficiencies at flows above peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_q=\ \ \left[1-\ \left\{\left(1.31+0.025\ j\right)\ \left(\frac{Q_p-Q}{Q_p}\right)^{5.6+0.4\ j}\right\}\ \right]e_p\]</div>
+</div>
+<div class="section" id="turgo-turbines">
+<h2>Turgo Turbines<a class="headerlink" href="#turgo-turbines" title="Permalink to this headline">¶</a></h2>
+<p>Efficiencies at flows above peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_q=Pelton\ Turbines\ e_q-0.03\ \ \]</div>
+</div>
+<div class="section" id="crossflow-turbines">
+<h2>Crossflow turbines<a class="headerlink" href="#crossflow-turbines" title="Permalink to this headline">¶</a></h2>
+<p>Peak efficiency flow (<span class="math notranslate nohighlight">\(Q_p\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[Q_p=Q_d\ \]</div>
+<p>Efficiencies at flows above peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[e_q=\ \ 0.79-0.15\left(\frac{Q_d-Q}{Q_p}\right)-1.37\left(\frac{Q_d-Q}{Q_p}\right)^{14}\]</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>CANMET Energy Technology Center. (2004). Clean Energy Project Analysis: Retscreen Engineering &amp; Cases Textbook. <a class="reference external" href="https://www.ieahydro.org/media/1ccb8c33/RETScreen%C2%AE-Engineering-Cases-Textbook%E2%80%93-PDF.pdf">https://www.ieahydro.org/media/1ccb8c33/RETScreen®-Engineering-Cases-Textbook–-PDF.pdf</a></p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="2_Theory_Design_Flow.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Design Flow Selection</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="4_Theory_Head_loss.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Head Loss Calculation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Idaho National Laboratory<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
