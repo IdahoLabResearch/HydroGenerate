@@ -2,21 +2,19 @@
 
 1.	If less than three or less flow values are entered, HG will use the average flow to compute all turbine parameters following the procedure described in the Turbine Parameters Calculation section. A constant flow can be used to represent scenarios where a fixed flow is guaranteed during the entire operation of the power system, e.g., when a fixed water right will be used to generate hydropower. 
 2.	If a time series, containing at least 3 data points of flow is provided by the user, then a design flow can be calculated using the flow-duration curve. HG will build the flow-duration relationship (i.e., calculating the percent of time a flow value is exceeded) and users can select the percent exceedance desired (i.e., the percent of time the turbines will be flowing full). 
-3.	If the user has no initial information on the percent of exceedance needed for the estimation, HG will use a default of 30%, in the range of existing recommendations and applications (Alonso-Tristán et al., 2011; Barelli et al., 2013; CANMET Energy Technology Center, 2004; Gulliver & Arndt, 1991). A percent of exceedance of 30% means the turbine will be flowing full 70% of the time, and while this value is in range with multiple applications and recommendations, there are many factors that will impact the selection of a design flow, e.g., construction cost, purpose (base load or peak demand), off-grid versus grid tied, turbine efficiency curve. Users can vary the percent of exceedance and compare the outputs for each simulation to understand possible configurations for a specific site.
+3.	If the user has no initial information on the percent of exceedance needed for the estimation, HG will use a default of 30%, in the range of existing recommendations and applications (Alonso-Tristán et al., 2011; Barelli et al., 2013; CANMET Energy Technology Center, 2004; Gulliver & Arndt, 1991). {numref}`DesignFlow` shows how design flow is calculated when 'pctime_runfull = 30'. A percent of exceedance of 30% means the turbine will be flowing full 30% of the time, and while this value is in range with multiple applications and recommendations, there are many factors that will impact the selection of a design flow, e.g., construction cost, purpose (base load or peak demand), off-grid versus grid tied, turbine efficiency curve. Users can vary the percent of exceedance and compare the outputs for each simulation to understand possible configurations for a specific site.
 
 
-{numref}`DesignFlow` shows how design flow is calculated when 'pctime_runfull = 20'. 
-
-
-```{figure} GeneralWorkflow.SVG
+```{figure} DesignFlow.SVG
 ---
 name: DesignFlow
 ---
-General Computations Workflow
+Sample Flow-Duration plot using the data from the USGS NWIS example indluded in the [USER GUIDE section](UserGuide_4_QueryingDataUSGS-NWIS.md).
 ```
 
-
-
+```
+**Note**: Flow-duration plots depict specific flow-statistic values selected from flow-duration curves. The flow-duration curve is a cumulative frequency curve that shows the percent of values that specified discharges were equaled or less than (percentile), or the percent of values that specified discharges were equaled or exceeded (percent exceedance). Percent exceedance is 100 minus the percentile. Example: the 30th percent exceedance (the value that 30 percent of the flows are equal to or greater than) is the 70th percentile (the value that 70 percent of the flows are equal to or less than). While the flow-duration curve does not show the chronological sequence of flows, it is an important means of representing flow characteristics of a stream throughout the range of flow on a single curve. The flow-duration figure presented here represent the flow-duration curves of daily streamflow data for the [period downloaded](UserGuide_4_QueryingDataUSGS-NWIS.md). In the example, using the default ['pctime_runfull = 30' leads to a design flow of 200 cfs](UserGuide_4_QueryingDataUSGS-NWIS.md).
+```
 
 In cases where there are significant variations of flow throughout the year, selecting more than one turbine can be a more effective scenario, over selecting a single larger turbine that will operate full a smaller time of the year. In contrast, some turbine types can operate at relatively high efficiency for low flows (Yildiz & Vrugt, 2019), allowing the selection of a larger percent of exceedance (larger design flow) without compromising efficiency. Each configuration will have associated costs and specific details that need to be evaluated.
 

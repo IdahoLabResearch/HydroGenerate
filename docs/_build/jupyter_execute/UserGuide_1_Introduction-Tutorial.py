@@ -33,7 +33,7 @@ hp = calculate_hp_potential(flow= flow, head= head, rated_power= power)
 print("The hydropower potential is {} kW".format(round(hp.rated_power, 0)))
 
 
-# For a full list of the inputs and output parameters, go to [Input and Output parameters](link here)
+# For a full list of the inputs and output parameters, go to [Inputs / Outputs - General Workflow](UserGuide_7_HydroGenerateWorkflow.md)
 
 # ## Calculate head from a given head and flow
 
