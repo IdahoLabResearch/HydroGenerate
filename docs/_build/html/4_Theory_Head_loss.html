@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Head Loss Calculation &#8212; HydroGenerate</title>
+    <title>Head Loss Estimation</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -87,8 +87,6 @@
       <img src="_static/HG_horizontal.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">HydroGenerate</h1>
-      
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
@@ -97,8 +95,8 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="index.html">
-   HydroGenerate: Hydropower Potential Estimation
+  <a class="reference internal" href="HydroGenerate_Introduction.html">
+   HydroGenerate
   </a>
  </li>
 </ul>
@@ -109,13 +107,8 @@
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="installation.html">
+  <a class="reference internal" href="1_GettingStarted_Installation.html">
    Installation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="quick_start.html">
-   Quick Start
   </a>
  </li>
 </ul>
@@ -168,8 +161,13 @@
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="architecture.html">
+  <a class="reference internal" href="1_DeveloperGuide_Architecture.html">
    Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_DeveloperGuide_MethodsFunctions.html">
+   HydroGenerate Workflow
   </a>
  </li>
 </ul>
@@ -181,12 +179,12 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="1_Theory_Hydropower.html">
-   Hydropower Calculation
+   Hydropower Estimation
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="2_Theory_Design_Flow.html">
-   Design Flow Selection
+   Design Flow Estimation
   </a>
  </li>
  <li class="toctree-l1">
@@ -196,7 +194,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Head Loss Calculation
+   Head Loss Estimation
   </a>
  </li>
 </ul>
@@ -286,17 +284,24 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-darcy-weisbach-head-loss-calculation">
-   A. Darcy-Weisbach head loss calculation
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Head Loss Estimation
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-darcy-weisbach-head-loss-calculation">
+     A. Darcy-Weisbach head loss calculation
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-hazen-williams-head-loss-calculation">
+     B. Hazen-Williams head loss calculation
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#b-hazen-williams-head-loss-calculation">
-   B. Hazen-Williams head loss calculation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -311,7 +316,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Head Loss Calculation</h1>
+                <h1>Head Loss Estimation</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -321,17 +326,24 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-darcy-weisbach-head-loss-calculation">
-   A. Darcy-Weisbach head loss calculation
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Head Loss Estimation
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-darcy-weisbach-head-loss-calculation">
+     A. Darcy-Weisbach head loss calculation
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-hazen-williams-head-loss-calculation">
+     B. Hazen-Williams head loss calculation
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#b-hazen-williams-head-loss-calculation">
-   B. Hazen-Williams head loss calculation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
+ <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -345,8 +357,8 @@
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="head-loss-calculation">
-<h1>Head Loss Calculation<a class="headerlink" href="#head-loss-calculation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="head-loss-estimation">
+<h1>Head Loss Estimation<a class="headerlink" href="#head-loss-estimation" title="Permalink to this headline">¶</a></h1>
 <p>The net hydraulic head is computed as the available head minus head losses:</p>
 <div class="math notranslate nohighlight">
 \[H = H_e - h_l\]</div>
@@ -356,7 +368,7 @@
 <li><p><span class="math notranslate nohighlight">\(H_e\)</span> is the available head (m) and</p></li>
 <li><p><span class="math notranslate nohighlight">\(h_l\)</span> is the head loss (m).</p></li>
 </ul>
-<p>HG includes the following options for head loss calculations:</p>
+<p><span class="math notranslate nohighlight">\(h_l\)</span> is computed to account for friction losses only, or <span class="math notranslate nohighlight">\(h_l = h_f\)</span> (other losses are more minor and hence are not included). HG includes the following options for head loss calculations:</p>
 <ol class="simple">
 <li><p>Head losses in the penstock, using the Darcy-Weisbach equation (default) as explained below, or the Hazen-Williams equation (if selected by the user). The required input for this calculation is the penstock length. Users can also select penstock material, with steel being the default if none is provided.</p></li>
 <li><p>If the penstock diameter is not known, HG will calculate a diameter that will limit head losses to 10% (default) of the available head. Users can change the penstock diameter, or the maximum percent of head loss allowed to calculate a different penstock diameter. Head losses will decrease with larger diameters while costs will increase. HG provides the flexibility to evaluate different scenarios.</p></li>
@@ -419,10 +431,10 @@
 <li><p><span class="math notranslate nohighlight">\(D\)</span> = internal diameter of the pipe (m).</p></li>
 </ul>
 </div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p>U.S. Environmental Protection Agency. (2020). EPANET 2.2 User Manual. <a class="reference external" href="https://epanet22.readthedocs.io/en/latest/index.html">https://epanet22.readthedocs.io/en/latest/index.html</a></p>
 </div>
+<div class="section" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<p>U.S. Environmental Protection Agency. (2020). EPANET 2.2 User Manual. <a class="reference external" href="https://epanet22.readthedocs.io/en/latest/index.html">https://epanet22.readthedocs.io/en/latest/index.html</a></p>
 </div>
 
     <script type="text/x-thebe-config">
