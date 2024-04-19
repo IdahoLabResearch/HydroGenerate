@@ -1,0 +1,672 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diversion Mode</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/UserGuide_2_Diversion.html" />
+    <link rel="shortcut icon" href="_static/HG_icon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Flow Input Options" href="UserGuide_3_FlowOptions.html" />
+    <link rel="prev" title="Introduction - Tutorial" href="UserGuide_1_Introduction-Tutorial.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/HG_horizontal.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="HydroGenerate_Introduction.html">
+   HydroGenerate
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="GettingStarted_1_Installation.html">
+   Installation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  User Guide
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_1_Introduction-Tutorial.html">
+   Introduction - Tutorial
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Diversion Mode
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_3_FlowOptions.html">
+   Flow Input Options
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html">
+   Querying data from the USGS National Water Information System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">
+   Cost and Revenue Calculations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_6_Hydrokinetics.html">
+   Hydrokinetics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">
+   Inputs / Outputs - General Workflow
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Developer Guide
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="DeveloperGuide_1_Architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">
+   Methods, Functions, Classes, and Input Handling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Theory
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_1_Hydropower.html">
+   Hydropower Estimation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_2_Design_Flow.html">
+   Design Flow Estimation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_3_Efficiency.html">
+   Turbine Efficiency Calculation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_4_Head_loss.html">
+   Head Loss Estimation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_5_CostOM.html">
+   Cost, O&amp;M, and Revenue Calculation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/UserGuide_2_Diversion.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/IdahoLabResearch/HydroGenerate"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FUserGuide_2_Diversion.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/IdahoLabResearch/HydroGenerate/jugc-docs?urlpath=tree/UserGuide_2_Diversion.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#head-power-and-length-of-penstock-are-known-flow-is-a-single-value">
+   Head, power, and length of penstock are known. Flow is a single value.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploring-additional-options">
+   Exploring additional options:
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Diversion Mode</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#head-power-and-length-of-penstock-are-known-flow-is-a-single-value">
+   Head, power, and length of penstock are known. Flow is a single value.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploring-additional-options">
+   Exploring additional options:
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="diversion-mode">
+<h1>Diversion Mode<a class="headerlink" href="#diversion-mode" title="Permalink to this headline">¶</a></h1>
+<p>Using <strong><em>hydropower_type = Diversion</em></strong> allows computing hydropower potential for a <em>diversion</em> or <em>run-of-river</em> project.</p>
+<p>A <em>diversion</em>, sometimes called a <em>run-of-river</em> facility, channels a portion of a river through a canal and/or a penstock to utilize the natural decline of the river bed elevation to produce energy. A penstock is a closed conduit that channels the flow of water to turbines with water flow regulated by gates, valves, and turbines. A diversion may not require the use of a dam. Check <a class="reference external" href="https://www.energy.gov/eere/water/types-hydropower-plants#:%7E:text=There%20are%20three%20types%20of,renewable%20energy%20to%20the%20grid.">DOE - Types of Hydropower Plant</a> for additional information.</p>
+<p>In diversion projects, HydroGenerate focuses on calculating hydropower under different configurations.</p>
+<p>In this calculation, the flow given is assumed to be the flow aaliable for hydropower generation, i.e., no reservoir storage operation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">HydroGenerate.hydropower_potential</span> <span class="kn">import</span> <span class="n">calculate_hp_potential</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="head-power-and-length-of-penstock-are-known-flow-is-a-single-value">
+<h2>Head, power, and length of penstock are known. Flow is a single value.<a class="headerlink" href="#head-power-and-length-of-penstock-are-known-flow-is-a-single-value" title="Permalink to this headline">¶</a></h2>
+<p>In this scenario <em>HydroGenerate</em> will select a turbine, compute efficiency for the given flow and values within 0.6 to 1.2 the given flow, penstock diameter (assuming steel if no material is given), head loss for all flows, rater power, power a given range of flow.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="mi">5000</span> <span class="c1"># cfs</span>
+<span class="n">head</span> <span class="o">=</span> <span class="mi">330</span> <span class="c1"># ft</span>
+<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">400</span> <span class="c1"># ft</span>
+<span class="n">hp_type</span> <span class="o">=</span> <span class="s1">&#39;Diversion&#39;</span>
+
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span>
+                            <span class="n">penstock_headloss_calculation</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                            <span class="c1"># penstock_headloss_method= &#39;Hazen-Williams&#39;,</span>
+                            <span class="n">units</span><span class="o">=</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
+                            <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
+                            <span class="c1"># penstock_diameter= 15,</span>
+                            <span class="n">max_headloss_allowed</span><span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Explore output</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design flow (cfs):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">design_flow</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine type:&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">turbine_type</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (MW):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Net head (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">net_head</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Generator Efficiency:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">generator_efficiency</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head Loss method:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_headloss_method</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Flow range evaluated (cfs):&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">flow</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine Efficiency for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">turbine_efficiency</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power (Kw) for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">power</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 5000.0
+Turbine type: Francis
+Rated Power (MW): 116.74
+Net head (ft): 298.06
+Generator Efficiency: 0.98
+Head Loss method: Darcy-Weisbach
+Penstock length (ft): 400.0
+Penstock diameter (ft): 11.84
+Runner diameter (ft): 14.0
+
+Flow range evaluated (cfs): [2500.  2647.1 2794.1 2941.2 3088.2 3235.3 3382.4 3529.4 3676.5 3823.5
+ 3970.6 4117.6 4264.7 4411.8 4558.8 4705.9 4852.9 5000. ]
+Turbine Efficiency for the given flow range: [0.867 0.887 0.902 0.915 0.925 0.932 0.938 0.941 0.943 0.944 0.944 0.944
+ 0.944 0.944 0.943 0.943 0.943 0.943]
+Power (Kw) for the given flow range: [ 57943.8  62522.7  66959.4  71235.5  75338.2  79260.6  83001.7  86566.9
+  89968.8  93227.9  96375.4  99438.2 102444.2 105393.8 108284.9 111115.8
+ 113884.6 116589.4]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exploring-additional-options">
+<h2>Exploring additional options:<a class="headerlink" href="#exploring-additional-options" title="Permalink to this headline">¶</a></h2>
+<p><em>HydroGenerate</em> includes two functions for head loss calculation: 1) <em>Darcy-Weisbach</em> (default) 2) <em>Hazen-Williams</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using Hazen-Williams for head loss calculation.</span>
+
+<span class="n">flow</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># cfs</span>
+<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># ft</span>
+<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># ft</span>
+<span class="n">hp_type</span> <span class="o">=</span> <span class="s1">&#39;Diversion&#39;</span>
+<span class="n">headloss_method</span><span class="o">=</span> <span class="s2">&quot;Hazen-Williams&quot;</span>
+
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span>
+                            <span class="n">penstock_headloss_calculation</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                           <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
+                           <span class="n">penstock_headloss_method</span><span class="o">=</span> <span class="n">headloss_method</span><span class="p">)</span>
+
+
+
+<span class="c1"># Explore output</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design flow (cfs):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">design_flow</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head_loss at design flow (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_design_headloss</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine type:&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">turbine_type</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (Kw):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Net head (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">net_head</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Generator Efficiency:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">generator_efficiency</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head Loss method:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_headloss_method</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Flow range evaluated (cfs):&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">flow</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine Efficiency for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">turbine_efficiency</span> <span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power (kW) for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">power</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 8000.0
+Head_loss at design flow (ft): 2.0
+Turbine type: Kaplan
+Rated Power (Kw): 10885.57
+Net head (ft): 18.0
+Generator Efficiency: 0.98
+Head Loss method: Hazen-Williams
+Penstock length (ft): 50.0
+Penstock diameter (ft): 12.24
+Runner diameter (ft): 17.49
+
+Flow range evaluated (cfs): [4000.  4235.3 4470.6 4705.9 4941.2 5176.5 5411.8 5647.1 5882.4 6117.6
+ 6352.9 6588.2 6823.5 7058.8 7294.1 7529.4 7764.7 8000. ]
+Turbine Efficiency for the given flow range: [0.907 0.909 0.91  0.911 0.911 0.911 0.911 0.911 0.911 0.911 0.911 0.911
+ 0.911 0.911 0.911 0.91  0.909 0.907]
+Power (kW) for the given flow range: [ 5851.8  6192.   6522.7  6846.   7163.7  7476.6  7785.2  8089.8  8390.2
+  8686.4  8978.2  9265.4  9547.8  9824.7 10094.9 10356.2 10604.5 10833.3]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Exploring additional options:</span>
+<span class="c1"># Using Hazen-Williams for head loss calculation and a concrete penstock</span>
+<span class="c1">#  Selecting a diffrent material for the penstock</span>
+
+<span class="n">flow</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># cfs</span>
+<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># ft</span>
+<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># ft</span>
+<span class="n">hp_type</span> <span class="o">=</span> <span class="s1">&#39;Diversion&#39;</span>
+<span class="n">headloss_method</span><span class="o">=</span> <span class="s2">&quot;Hazen-Williams&quot;</span>
+<span class="n">penstock_material</span> <span class="o">=</span> <span class="s1">&#39;Concrete&#39;</span>
+
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span>
+                           <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
+                           <span class="n">penstock_headloss_calculation</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                           <span class="n">penstock_headloss_method</span><span class="o">=</span> <span class="n">headloss_method</span><span class="p">,</span> <span class="n">penstock_material</span><span class="o">=</span> <span class="n">penstock_material</span><span class="p">)</span>
+
+<span class="c1"># Explore output</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design flow (cfs):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">design_flow</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head_loss at design flow (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_design_headloss</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine type:&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">turbine_type</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (Kw):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Net head (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">net_head</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Generator Efficiency:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">generator_efficiency</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head Loss method:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_headloss_method</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Flow range evaluated (cfs):&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">flow</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine Efficiency for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">turbine_efficiency</span> <span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power (kW) for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">power</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 8000.0
+Head_loss at design flow (ft): 2.0
+Turbine type: Kaplan
+Rated Power (Kw): 10885.57
+Net head (ft): 18.0
+Generator Efficiency: 0.98
+Head Loss method: Hazen-Williams
+Penstock length (ft): 50.0
+Penstock diameter (ft): 12.76
+Runner diameter (ft): 17.49
+
+Flow range evaluated (cfs): [4000.  4235.3 4470.6 4705.9 4941.2 5176.5 5411.8 5647.1 5882.4 6117.6
+ 6352.9 6588.2 6823.5 7058.8 7294.1 7529.4 7764.7 8000. ]
+Turbine Efficiency for the given flow range: [0.907 0.909 0.91  0.911 0.911 0.911 0.911 0.911 0.911 0.911 0.911 0.911
+ 0.911 0.911 0.911 0.91  0.909 0.907]
+Power (kW) for the given flow range: [ 5851.8  6192.   6522.7  6846.   7163.7  7476.6  7785.2  8089.8  8390.2
+  8686.4  8978.2  9265.4  9547.8  9824.7 10094.9 10356.2 10604.5 10833.3]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Exploring additional options:</span>
+<span class="c1">#  Using Hazen-Williams for head loss calculation and using a diffrent C value</span>
+<span class="c1"># Note: editing hydraulic_processing.py allows adding materials that can be called by name.</span>
+
+<span class="n">flow</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># cfs</span>
+<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># ft</span>
+<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># ft</span>
+<span class="n">hp_type</span> <span class="o">=</span> <span class="s1">&#39;Diversion&#39;</span>
+<span class="n">headloss_method</span><span class="o">=</span> <span class="s2">&quot;Hazen-Williams&quot;</span>
+<span class="n">C</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># Hazen_williamns C</span>
+
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span>
+                           <span class="n">penstock_headloss_calculation</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                           <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
+                           <span class="n">penstock_headloss_method</span><span class="o">=</span> <span class="n">headloss_method</span><span class="p">,</span> <span class="n">penstock_frictionfactor</span><span class="o">=</span> <span class="n">C</span><span class="p">)</span>
+
+<span class="c1"># Explore output</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design flow (cfs):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">design_flow</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head_loss at design flow (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_design_headloss</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine type:&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">turbine_type</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (Kw):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Net head (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">net_head</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Generator Efficiency:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">generator_efficiency</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head Loss method:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_headloss_method</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Flow range evaluated (cfs):&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">flow</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine Efficiency for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">turbine_efficiency</span> <span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power (kW) for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">power</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 8000.0
+Head_loss at design flow (ft): 2.0
+Turbine type: Kaplan
+Rated Power (Kw): 10885.57
+Net head (ft): 18.0
+Generator Efficiency: 0.98
+Head Loss method: Hazen-Williams
+Penstock length (ft): 50.0
+Penstock diameter (ft): 14.1
+Runner diameter (ft): 17.49
+
+Flow range evaluated (cfs): [4000.  4235.3 4470.6 4705.9 4941.2 5176.5 5411.8 5647.1 5882.4 6117.6
+ 6352.9 6588.2 6823.5 7058.8 7294.1 7529.4 7764.7 8000. ]
+Turbine Efficiency for the given flow range: [0.907 0.909 0.91  0.911 0.911 0.911 0.911 0.911 0.911 0.911 0.911 0.911
+ 0.911 0.911 0.911 0.91  0.909 0.907]
+Power (kW) for the given flow range: [ 5851.8  6192.   6522.7  6846.   7163.7  7476.6  7785.2  8089.8  8390.2
+  8686.4  8978.2  9265.4  9547.8  9824.7 10094.9 10356.2 10604.5 10833.3]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="UserGuide_1_Introduction-Tutorial.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction - Tutorial</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="UserGuide_3_FlowOptions.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Flow Input Options</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Idaho National Laboratory<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

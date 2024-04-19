@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index</title>
+    <title>Architecture</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -45,10 +45,19 @@
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/genindex.html" />
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/DeveloperGuide_1_Architecture.html" />
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
-    <link rel="index" title="Index" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Methods, Functions, Classes, and Input Handling" href="DeveloperGuide_2_MethodsFunctions.html" />
+    <link rel="prev" title="Inputs / Outputs - General Workflow" href="UserGuide_7_HydroGenerateWorkflow.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -149,9 +158,9 @@
   Developer Guide
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="DeveloperGuide_1_Architecture.html">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Architecture
   </a>
  </li>
@@ -225,6 +234,23 @@
             </button>
             
             
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/DeveloperGuide_1_Architecture.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
             <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -236,7 +262,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2Fgenindex.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FDeveloperGuide_1_Architecture.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -264,7 +290,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1></h1>
+                <h1>Architecture</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -275,19 +301,53 @@
             
               <div>
                 
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
+  <div class="tex2jax_ignore mathjax_ignore section" id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<p>HydroGenerate is currently implemented as three separate Python scripts: turbine_calculation.py, hydropower_potential.py, and hydraulic_processing.py. turbine_calculation.py handles turbine efficiency calculations for different turbine types and the calculation of design flow by percent exceedance. hydraulic_processing.py handles head losses calculation in the penstock by Darcy-Weisbach or Hazen Williams. The scripts use classes and functions for different implementation.</p>
+<p>The code is modular, and several steps were followed to facilitate the process of integrating functionality. Classes are single-function, small, and simple to facilitate overview of the code. Abstract Base Classes (ABC) are used to group methods that belong to the same category, e.g., calculation of efficiency of different turbine types. All turbine efficiency calculations belong to the same abstract class and use a method that is inherited from the ABC class. ABC classes facilitate the addition of new methods, e.g., the efficiency of a new turbine. The efficiency of a new turbine can be included in the code without modifying any of the existing turbines, minimizing the opportunity for errors while keeping all turbine efficiency methods under the same class. This facilitates code reuse and modularity by enforcing consistency. All turbine types in HydroGenerate must implement the method turbine_calculator. The same principle is followed by all other abstract classes. In some instances, an ABC is defined, and a single class is implemented. This reflects the intention to add additional methods. For example, the class Cost contains a single model (described in the documentation) but the addition of others models as they become available is anticipated.</p>
+<p>New features, functionalities, or additional work should not affect an existing feature. While it is likely that new features utilizing additional variables will require modifying the variable definitions for existing classes, this should not impact the already implemented methods or functions. The existing code in HydroGenerate contains extensive comments along all code files that document what the variables being used are, what chunk of codes are doing, and why (when needed) certain implementations were used. New code added to HydroGenerate should follow a similar approach.</p>
+<p>Currently, users can access all functionalities by using a single function (hydropower_potential). Future development could maintain interactions via a single function, however, adding more user executable functions is not discouraged.</p>
 </div>
 
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="UserGuide_7_HydroGenerateWorkflow.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Inputs / Outputs - General Workflow</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="DeveloperGuide_2_MethodsFunctions.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Methods, Functions, Classes, and Input Handling</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             
         </div>

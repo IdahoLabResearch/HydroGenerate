@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Flow Estimation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/Theory_2_Design_Flow.html" />
+    <link rel="shortcut icon" href="_static/HG_icon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Turbine Efficiency Calculation" href="Theory_3_Efficiency.html" />
+    <link rel="prev" title="Hydropower Estimation" href="Theory_1_Hydropower.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/HG_horizontal.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="HydroGenerate_Introduction.html">
+   HydroGenerate
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="GettingStarted_1_Installation.html">
+   Installation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  User Guide
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_1_Introduction-Tutorial.html">
+   Introduction - Tutorial
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_2_Diversion.html">
+   Diversion Mode
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_3_FlowOptions.html">
+   Flow Input Options
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html">
+   Querying data from the USGS National Water Information System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">
+   Cost and Revenue Calculations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_6_Hydrokinetics.html">
+   Hydrokinetics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">
+   Inputs / Outputs - General Workflow
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Developer Guide
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="DeveloperGuide_1_Architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">
+   Methods, Functions, Classes, and Input Handling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Theory
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_1_Hydropower.html">
+   Hydropower Estimation
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Design Flow Estimation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_3_Efficiency.html">
+   Turbine Efficiency Calculation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_4_Head_loss.html">
+   Head Loss Estimation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Theory_5_CostOM.html">
+   Cost, O&amp;M, and Revenue Calculation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Theory_2_Design_Flow.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/IdahoLabResearch/HydroGenerate"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FTheory_2_Design_Flow.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Design Flow Estimation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Design Flow Estimation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Design Flow Estimation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="design-flow-estimation">
+<h1>Design Flow Estimation<a class="headerlink" href="#design-flow-estimation" title="Permalink to this headline">¶</a></h1>
+<ol class="simple">
+<li><p>If less than three or less flow values are entered, HG will use the average flow to compute all turbine parameters following the procedure described in the Turbine Parameters Calculation section. A constant flow can be used to represent scenarios where a fixed flow is guaranteed during the entire operation of the power system, e.g., when a fixed water right will be used to generate hydropower.</p></li>
+<li><p>If a time series, containing at least 3 data points of flow is provided by the user, then a design flow can be calculated using the flow-duration curve. HG will build the flow-duration relationship (i.e., calculating the percent of time a flow value is exceeded) and users can select the percent exceedance desired (i.e., the percent of time the turbines will be flowing full).</p></li>
+<li><p>If the user has no initial information on the percent of exceedance needed for the estimation, HG will use a default of 30%, in the range of existing recommendations and applications (Alonso-Tristán et al., 2011; Barelli et al., 2013; CANMET Energy Technology Center, 2004; Gulliver &amp; Arndt, 1991). <a class="reference internal" href="#designflow"><span class="std std-numref">Fig. 4</span></a> shows how design flow is calculated when ‘pctime_runfull = 30’. A percent of exceedance of 30% means the turbine will be flowing full 30% of the time, and while this value is in range with multiple applications and recommendations, there are many factors that will impact the selection of a design flow, e.g., construction cost, purpose (base load or peak demand), off-grid versus grid tied, turbine efficiency curve. Users can vary the percent of exceedance and compare the outputs for each simulation to understand possible configurations for a specific site.</p></li>
+</ol>
+<div class="figure align-default" id="designflow">
+<img alt="_images/DesignFlow.SVG" src="_images/DesignFlow.SVG" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Sample Flow-Duration plot using the data from the USGS NWIS example indluded in the <a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html"><span class="doc std std-doc">USER GUIDE section</span></a>.</span><a class="headerlink" href="#designflow" title="Permalink to this image">¶</a></p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">**</span><span class="n">Note</span><span class="o">**</span><span class="p">:</span> <span class="n">Flow</span><span class="o">-</span><span class="n">duration</span> <span class="n">plots</span> <span class="n">depict</span> <span class="n">specific</span> <span class="n">flow</span><span class="o">-</span><span class="n">statistic</span> <span class="n">values</span> <span class="n">selected</span> <span class="kn">from</span> <span class="nn">flow</span><span class="o">-</span><span class="n">duration</span> <span class="n">curves</span><span class="o">.</span> <span class="n">The</span> <span class="n">flow</span><span class="o">-</span><span class="n">duration</span> <span class="n">curve</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">cumulative</span> <span class="n">frequency</span> <span class="n">curve</span> <span class="n">that</span> <span class="n">shows</span> <span class="n">the</span> <span class="n">percent</span> <span class="n">of</span> <span class="n">values</span> <span class="n">that</span> <span class="n">specified</span> <span class="n">discharges</span> <span class="n">were</span> <span class="n">equaled</span> <span class="ow">or</span> <span class="n">less</span> <span class="n">than</span> <span class="p">(</span><span class="n">percentile</span><span class="p">),</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">percent</span> <span class="n">of</span> <span class="n">values</span> <span class="n">that</span> <span class="n">specified</span> <span class="n">discharges</span> <span class="n">were</span> <span class="n">equaled</span> <span class="ow">or</span> <span class="n">exceeded</span> <span class="p">(</span><span class="n">percent</span> <span class="n">exceedance</span><span class="p">)</span><span class="o">.</span> <span class="n">Percent</span> <span class="n">exceedance</span> <span class="ow">is</span> <span class="mi">100</span> <span class="n">minus</span> <span class="n">the</span> <span class="n">percentile</span><span class="o">.</span> <span class="n">Example</span><span class="p">:</span> <span class="n">the</span> <span class="mi">30</span><span class="n">th</span> <span class="n">percent</span> <span class="n">exceedance</span> <span class="p">(</span><span class="n">the</span> <span class="n">value</span> <span class="n">that</span> <span class="mi">30</span> <span class="n">percent</span> <span class="n">of</span> <span class="n">the</span> <span class="n">flows</span> <span class="n">are</span> <span class="n">equal</span> <span class="n">to</span> <span class="ow">or</span> <span class="n">greater</span> <span class="n">than</span><span class="p">)</span> <span class="ow">is</span> <span class="n">the</span> <span class="mi">70</span><span class="n">th</span> <span class="n">percentile</span> <span class="p">(</span><span class="n">the</span> <span class="n">value</span> <span class="n">that</span> <span class="mi">70</span> <span class="n">percent</span> <span class="n">of</span> <span class="n">the</span> <span class="n">flows</span> <span class="n">are</span> <span class="n">equal</span> <span class="n">to</span> <span class="ow">or</span> <span class="n">less</span> <span class="n">than</span><span class="p">)</span><span class="o">.</span> <span class="n">While</span> <span class="n">the</span> <span class="n">flow</span><span class="o">-</span><span class="n">duration</span> <span class="n">curve</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">show</span> <span class="n">the</span> <span class="n">chronological</span> <span class="n">sequence</span> <span class="n">of</span> <span class="n">flows</span><span class="p">,</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">an</span> <span class="n">important</span> <span class="n">means</span> <span class="n">of</span> <span class="n">representing</span> <span class="n">flow</span> <span class="n">characteristics</span> <span class="n">of</span> <span class="n">a</span> <span class="n">stream</span> <span class="n">throughout</span> <span class="n">the</span> <span class="nb">range</span> <span class="n">of</span> <span class="n">flow</span> <span class="n">on</span> <span class="n">a</span> <span class="n">single</span> <span class="n">curve</span><span class="o">.</span> <span class="n">The</span> <span class="n">flow</span><span class="o">-</span><span class="n">duration</span> <span class="n">figure</span> <span class="n">presented</span> <span class="n">here</span> <span class="n">represent</span> <span class="n">the</span> <span class="n">flow</span><span class="o">-</span><span class="n">duration</span> <span class="n">curves</span> <span class="n">of</span> <span class="n">daily</span> <span class="n">streamflow</span> <span class="n">data</span> <span class="k">for</span> <span class="n">the</span> <span class="p">[</span><span class="n">period</span> <span class="n">downloaded</span><span class="p">](</span><span class="n">UserGuide_4_QueryingDataUSGS</span><span class="o">-</span><span class="n">NWIS</span><span class="o">.</span><span class="n">md</span><span class="p">)</span><span class="o">.</span> <span class="n">In</span> <span class="n">the</span> <span class="n">example</span><span class="p">,</span> <span class="n">using</span> <span class="n">the</span> <span class="n">default</span> <span class="p">[</span><span class="s1">&#39;pctime_runfull = 30&#39;</span> <span class="n">leads</span> <span class="n">to</span> <span class="n">a</span> <span class="n">design</span> <span class="n">flow</span> <span class="n">of</span> <span class="mi">200</span> <span class="n">cfs</span><span class="p">](</span><span class="n">UserGuide_4_QueryingDataUSGS</span><span class="o">-</span><span class="n">NWIS</span><span class="o">.</span><span class="n">md</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>In cases where there are significant variations of flow throughout the year, selecting more than one turbine can be a more effective scenario, over selecting a single larger turbine that will operate full a smaller time of the year. In contrast, some turbine types can operate at relatively high efficiency for low flows (Yildiz &amp; Vrugt, 2019), allowing the selection of a larger percent of exceedance (larger design flow) without compromising efficiency. Each configuration will have associated costs and specific details that need to be evaluated.</p>
+<p>Note: It is recommended, under ideal conditions, to include 10 years of flow record at a site to capture existing hydrological variability and obtain a more realistic power estimation (Hadjerioua et al., 2012). Also, it is important to simulate the response of the system during wet and dry years. In HG, users can select a design flow and input a time-series of flow to evaluate the system’s response for the data entered.</p>
+</div>
+<div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<p>Alonso-Tristán, C., González-Peña, D., Díez-Mediavilla, M., Rodríguez-Amigo, M., &amp; García-Calderón, T. (2011). Small hydropower plants in Spain: A case study. Renewable and Sustainable Energy Reviews, 15(6), 2729–2735. <a class="reference external" href="https://doi.org/10.1016/j.rser.2011.03.029">https://doi.org/10.1016/j.rser.2011.03.029</a></p>
+<p>Barelli, L., Liucci, L., Ottaviano, A., &amp; Valigi, D. (2013). Mini-hydro: A design approach in case of torrential rivers. Energy, 58, 695–706. <a class="reference external" href="https://doi.org/10.1016/j.energy.2013.06.038">https://doi.org/10.1016/j.energy.2013.06.038</a></p>
+<p>CANMET Energy Technology Center. (2004). Clean Energy Project Analysis: Retscreen Engineering &amp; Cases Textbook. <a class="reference external" href="https://www.ieahydro.org/media/1ccb8c33/RETScreen%C2%AE-Engineering-Cases-Textbook%E2%80%93-PDF.pdf">https://www.ieahydro.org/media/1ccb8c33/RETScreen®-Engineering-Cases-Textbook–-PDF.pdf</a></p>
+<p>Gulliver, John S.; Arndt, Roger E.A.. (1991). Hydropower Engineering Handbook. McGraw-Hill, Inc.. Retrieved from the University of Minnesota Digital Conservancy, <a class="reference external" href="https://hdl.handle.net/11299/195476">https://hdl.handle.net/11299/195476</a>.</p>
+<p>Yildiz, V., &amp; Vrugt, J. A. (2019). A toolbox for the optimal design of run-of-river hydropower plants. Environmental Modelling &amp; Software, 111, 134–152. <a class="reference external" href="https://doi.org/10.1016/j.envsoft.2018.08.018">https://doi.org/10.1016/j.envsoft.2018.08.018</a></p>
+<p>Hadjerioua, Boualem, Wei, Yaxing, and Kao, Shih-Chieh. An Assessment of Energy Potential at Non-Powered Dams in the United States. United States: N. p., 2012. Web. <a class="reference external" href="https://doi.org/10.2172/1039957">https://doi.org/10.2172/1039957</a></p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Theory_1_Hydropower.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Hydropower Estimation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Theory_3_Efficiency.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Turbine Efficiency Calculation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Idaho National Laboratory<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
