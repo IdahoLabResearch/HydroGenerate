@@ -45,6 +45,8 @@
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -107,6 +109,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="GettingStarted_1_Installation.html">
    Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GettingStarted_2_QuickStart.html">
+   Quick Start
   </a>
  </li>
 </ul>
@@ -287,24 +294,29 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Cost, O&amp;M, and Revenue Calculation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-and-o-m">
+   Cost and O&amp;M
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cost-and-o-m">
-     Cost and O&amp;M
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initial-capital-cost-icc">
+     Initial Capital Cost (ICC)
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#revenue">
-     Revenue
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#operation-and-maintennance-o-m">
+     Operation and Maintennance (O&amp;M)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#revenue">
+   Revenue
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -329,24 +341,29 @@
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Cost, O&amp;M, and Revenue Calculation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cost-and-o-m">
+   Cost and O&amp;M
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cost-and-o-m">
-     Cost and O&amp;M
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initial-capital-cost-icc">
+     Initial Capital Cost (ICC)
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#revenue">
-     Revenue
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#operation-and-maintennance-o-m">
+     Operation and Maintennance (O&amp;M)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#revenue">
+   Revenue
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -360,20 +377,73 @@
             
               <div>
                 
-  <div class="section" id="cost-o-m-and-revenue-calculation">
+  <div class="tex2jax_ignore mathjax_ignore section" id="cost-o-m-and-revenue-calculation">
 <h1>Cost, O&amp;M, and Revenue Calculation<a class="headerlink" href="#cost-o-m-and-revenue-calculation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="cost-and-o-m">
 <h2>Cost and O&amp;M<a class="headerlink" href="#cost-and-o-m" title="Permalink to this headline">¶</a></h2>
 <p>Cost and O&amp;M are calculated using the <em>Hydropower Baseline Cost Modeling, Version 2</em> models (ORNL, 2015).</p>
+<div class="section" id="initial-capital-cost-icc">
+<h3>Initial Capital Cost (ICC)<a class="headerlink" href="#initial-capital-cost-icc" title="Permalink to this headline">¶</a></h3>
+<p>Cost for hydropower project is calcualted using the following equations (ORNL, 2015):</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>#</p></th>
+<th class="text-align:center head"><p>Resource Category (HG)</p></th>
+<th class="text-align:center head"><p>Cost Model Equation *</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>1</p></td>
+<td class="text-align:center"><p>‘Non-PoweredDam’</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(ICC = 11,489,245 P^{0.976} H^{-0.240}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2</p></td>
+<td class="text-align:center"><p>‘NewStream-reach’</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(ICC = 9,605,245 P^{0.977} H^{-0.126}\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>3</p></td>
+<td class="text-align:center"><p>‘CanalConduit’</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(ICC = 9,297,820 P^{0.810} H^{-0.102}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>4</p></td>
+<td class="text-align:center"><p>‘PSH_ExistingInfrastructure’</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(ICC = 3,008,246 P e^{-0.000460P}\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>5</p></td>
+<td class="text-align:center"><p>‘PSH_Greenfield’</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(ICC = 8,882,655 P e^{-0.000776P}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>6</p></td>
+<td class="text-align:center"><p>‘UnitAddition’</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(ICC = 4,163,746 P^{0.741}\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>7</p></td>
+<td class="text-align:center"><p>‘GeneratorRewind’</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(ICC = 250,147 P^{0.817}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>ICC in 2014$; P in MW; H in ft.</p></li>
+</ul>
+<p>Taken from ORNL, (2015).</p>
+</div>
+<div class="section" id="operation-and-maintennance-o-m">
+<h3>Operation and Maintennance (O&amp;M)<a class="headerlink" href="#operation-and-maintennance-o-m" title="Permalink to this headline">¶</a></h3>
+<p>O&amp;M costs are calcualted using the following equation:</p>
+<div class="math notranslate nohighlight">
+\[Annual O\&amp;M (2014\$) = 225,417 P^{0.547}\]</div>
+<p>The <em>Hydropower Baseline Cost Modeling, Version 2</em> report (ORNL, 2015) recommends using the lesser of 2.5% of ICC or the result of the equation above. This recommendation is implemented in HG.</p>
+</div>
 </div>
 <div class="section" id="revenue">
 <h2>Revenue<a class="headerlink" href="#revenue" title="Permalink to this headline">¶</a></h2>
-<p>Revenue is computed assuming a unique electricty price. The default is 0.0582 $/kW, whicg is the eeigthe average wholesale electricity price in 2023 <a class="reference external" href="https://www.eia.gov/electricity/wholesale/">https://www.eia.gov/electricity/wholesale/</a></p>
-</div>
+<p>Revenue is computed assuming a unique electricty price. The default is 0.0582 $/kW, which is the average wholesale electricity price in 2023 <a class="reference external" href="https://www.eia.gov/electricity/wholesale/">https://www.eia.gov/electricity/wholesale/</a></p>
 </div>
 <div class="section" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p>Oak Ridge Natiional Laboratory, 2015. Hydropower Baseline Cost Modeling, Version 2. <a class="reference external" href="https://info.ornl.gov/sites/publications/files/Pub58666.pdf">https://info.ornl.gov/sites/publications/files/Pub58666.pdf</a></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
