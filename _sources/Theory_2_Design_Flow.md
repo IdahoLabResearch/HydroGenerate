@@ -29,7 +29,7 @@ In cases where there are significant variations of flow throughout the year, sel
 
 Note: It is recommended, under ideal conditions, to include 10 years of flow record at a site to capture existing hydrological variability and obtain a more realistic power estimation (Hadjerioua et al., 2012). Also, it is important to simulate the response of the system during wet and dry years. In HG, users can select a design flow and input a time-series of flow to evaluate the system’s response for the data entered.
 
-## Reference 
+## References 
 Alonso-Tristán, C., González-Peña, D., Díez-Mediavilla, M., Rodríguez-Amigo, M., & García-Calderón, T. (2011). Small hydropower plants in Spain: A case study. Renewable and Sustainable Energy Reviews, 15(6), 2729–2735. https://doi.org/10.1016/j.rser.2011.03.029 
 
 Barelli, L., Liucci, L., Ottaviano, A., & Valigi, D. (2013). Mini-hydro: A design approach in case of torrential rivers. Energy, 58, 695–706. https://doi.org/10.1016/j.energy.2013.06.038 
