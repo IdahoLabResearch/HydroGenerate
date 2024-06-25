@@ -282,7 +282,7 @@ class Diversion(Hydropower):
              hp_params.generator_efficiency =  hp_params.generator_efficiency / 100 # percent to proportion
         
         n = hp_params.turbine_efficiency * hp_params.generator_efficiency       # overal system efficiency
-        n_max = np.max(hp_params.turbine_efficiency) * hp_params.generator_efficiency      # maximum system efficiency
+        n_max = np.nanmax(hp_params.turbine_efficiency) * hp_params.generator_efficiency      # maximum system efficiency
         
         if hp_params.penstock_design_headloss:        # if design head loss was calculated for penstock only
             hd = hp_params.head - hp_params.penstock_design_headloss  # net hydraulic head at design flows
