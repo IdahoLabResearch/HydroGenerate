@@ -302,6 +302,7 @@ class PercentExceedance(DesignFlow):
 
         else:
             pc_e = np.linspace(100, 1, 100)     # sequence from 100 to 1.
+            flow = flow[~np.isnan(flow)] # remove nan values
             flow_percentiles = np.percentile(flow, q = np.linspace(1, 100, 100))        # percentiles to compute, 1:100
             flowduration_curve = {'Flow': flow_percentiles, 'Percent_Exceedance':pc_e}      # Flow duration curve
             design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe])     # flow for the selected percent of excedante
