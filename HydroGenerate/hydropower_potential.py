@@ -280,6 +280,11 @@ class Diversion(Hydropower):
             hp_params.generator_efficiency = 0.98       # Default
         else:
              hp_params.generator_efficiency =  hp_params.generator_efficiency / 100 # percent to proportion
+
+        # remove negatives and > 1 from turbine effiency
+        hp_params.turbine_efficiency = np.where(hp_params.turbine_efficiency < 0, 0, hp_params.turbine_efficiency) # remove negatives
+        hp_params.turbine_efficiency = np.where(hp_params.turbine_efficiency > 1, 1, hp_params.turbine_efficiency) # remove > 1
+
         
         n = hp_params.turbine_efficiency * hp_params.generator_efficiency       # overal system efficiency
         n_max = np.nanmax(hp_params.turbine_efficiency) * hp_params.generator_efficiency      # maximum system efficiency
@@ -424,7 +429,13 @@ class ConstantEletrictyPrice_pd(Revenue):
         output = flow.copy()
         output['power_kW'] = hp_params.power      # Power, kW
         output['turbine_flow_cfs'] = hp_params.turbine_flow     # Flow passing by the turbine, cfs
+
+        # remove negatives and > 1 from turbine effiency
+        hp_params.turbine_efficiency = np.where(hp_params.turbine_efficiency < 0, 0, hp_params.turbine_efficiency) # remove negatives
+        hp_params.turbine_efficiency = np.where(hp_params.turbine_efficiency > 1, 1, hp_params.turbine_efficiency) # remove > 1
+        
         output['efficiency'] = hp_params.turbine_efficiency     # efficiency 
+
         hours = flow.index.to_series().diff().values / pd.Timedelta('1 hour')       # time difference in hours
         output['energy_kWh'] = output['power_kW'] * hours       # energy = power * hours (kWh)
 
