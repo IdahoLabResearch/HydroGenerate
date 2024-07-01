@@ -97,6 +97,9 @@ class Units:
         if self.design_flow is not None:
             self.design_flow = self.design_flow * cfs_to_cms        # cfs to m3/s
 
+        if self.min_flow is not None:
+            self.min_flow = self.min_flow * cfs_to_cms        # cfs to m3/s
+
         if self.head is not None:
             self.head = self.head * ft_to_m     # ft to m
 
@@ -237,9 +240,12 @@ class Diversion(Hydropower):
         FlowRange().flowrange_calculator(hp_params)
 
         # Flow preprocessing
-        FlowPreProcessing().turbine_flow_checker(hp_params)
-        FlowPreProcessing().annual_maintenance_constraint(hp_params)
+        
+        if hp_params.pandas_dataframe:
+            FlowPreProcessing().annual_maintenance_constraint(hp_params)
 
+        FlowPreProcessing().turbine_flow_checker(hp_params)
+        
         # Turbine parameters calculation by turbine type
         if hp_params.turbine_type == 'Kaplan':
                 KaplanTurbine().turbine_calculator(hp_params)
@@ -420,7 +426,7 @@ class ConstantEletrictyPrice(Revenue):
         hp_params.annual_revenue =  hp_params.annual_energy_generated * hp_params.electricity_sell_price / 1000000       # annual revenue, M$
 
 # Constant electricty price for a pandas dataframe with a dateTime index. 
-class ConstantEletrictyPrice_pd(Revenue):
+class ConstantEletrictyPrice_pd(Revenue):    
 
     def revenue_calculation(self, hp_params, flow):
         
@@ -431,7 +437,7 @@ class ConstantEletrictyPrice_pd(Revenue):
         output['power_kW'] = hp_params.power      # Power, kW
         output['turbine_flow_cfs'] = hp_params.turbine_flow     # Flow passing by the turbine, cfs
         output['efficiency'] = hp_params.turbine_efficiency     # efficiency 
-        hours = flow.index.to_series().diff().values / pd.Timedelta('1 hour')       # time difference in hours
+        hours = flow.index.to_series().diff().values / pd.Timedelta('1 hour')       # time difference in hours   
         output['energy_kWh'] = output['power_kW'] * hours       # energy = power * hours (kWh)
 
         # Generate annual energy, mean efficiency, and flow.
@@ -521,6 +527,8 @@ def calculate_hp_potential(flow= None,
     all_params = merge_instances(hyd_pm, turb_pm, cost_pm)       # merge parameters into a single instance
     all_params.hydropower_type = hydropower_type        # update
     all_params.min_flow = min_flow        # update
+    all_params.original_flow = flow        # update
+    all_params.pandas_dataframe = pandas_dataframe #update
 
     # units conversion - US to Si
     if units == 'US':       
