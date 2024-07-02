@@ -87,7 +87,6 @@ class FlowPreProcessing():
         else:
              min_flow = .1*design_flow         
              flow_obj.turbine_flow = np.where(flow < min_flow, 0, flow)
-             #print('Soumyadeep was here')
         
         flow = flow_obj.turbine_flow 
 
