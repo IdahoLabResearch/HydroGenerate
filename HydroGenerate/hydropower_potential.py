@@ -397,20 +397,19 @@ class ConstantEletrictyPrice(Revenue):
 
         mean_power = np.mean(hp_params.power)       # mean of the power provided for a time series of flow
 
+        if hp_params.n_operation_days is None:
+            hp_params.n_operation_days = 365
+
         if hp_params.capacity_factor:
             annual_energy = hp_params.capacity_factor * mean_power * 365        # annual energy generated, killowatt day 
             hp_params.n_operation_days = hp_params.capacity_factor * 365        # update  
         
-        elif hp_params.n_operation_days:
+        else:
             if hp_params.n_operation_days > 365:
                 raise ValueError('The number of days in a year a plant operates cannot exceed 365')
 
-            annual_energy = hp_params.n_operation_days * mean_power / 365        # annual energy generatedkillowatt day
+            annual_energy = hp_params.n_operation_days * mean_power        # annual energy generatedkillowatt day
             hp_params.capacity_factor = hp_params.n_operation_days * 100/ 365        # update
-        
-        else:
-             raise ValueError('The number of days a plant operates, or the capacity factor, are needed' \
-                             ' to compute annual energy generated and revenue')
         
         if  hp_params.electricity_sell_price is None:
              hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
