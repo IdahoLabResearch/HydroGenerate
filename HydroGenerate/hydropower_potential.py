@@ -17,10 +17,12 @@ import pandas as pd
 from datetime import datetime
 import os
 from abc import ABC, abstractmethod
-from HydroGenerate.hydraulic_processing import *
-from HydroGenerate.turbine_calculation import *
 from numbers import Number
 from math import exp
+from HydroGenerate.hydraulic_processing import *
+from HydroGenerate.turbine_calculation import *
+from HydroGenerate.Flow_preprocessing import *
+
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
@@ -95,6 +97,9 @@ class Units:
         if self.design_flow is not None:
             self.design_flow = self.design_flow * cfs_to_cms        # cfs to m3/s
 
+        if self.min_turbine_flow is not None:
+            self.min_turbine_flow = self.min_turbine_flow * cfs_to_cms        # cfs to m3/s
+
         if self.head is not None:
             self.head = self.head * ft_to_m     # ft to m
 
@@ -126,6 +131,9 @@ class Units:
 
         if self.design_flow is not None:
             self.design_flow = self.design_flow / cfs_to_cms        # m3/s tp cfs
+
+        if self.min_turbine_flow is not None:
+            self.min_turbine_flow = self.min_turbine_flow / cfs_to_cms        # cfs to m3/s
 
         if self.dataframe_output is not None:
             self.dataframe_output['turbine_flow_cfs'] =  self.dataframe_output['turbine_flow_cfs'] / cfs_to_cms        # m3/s tp cfs
@@ -234,6 +242,21 @@ class Diversion(Hydropower):
         # Add flow range for turbine evaluation if a sinlge flow value is given
         FlowRange().flowrange_calculator(hp_params)
 
+        # Set max flow to the design flow
+        FlowPreProcessing().max_turbineflow_checker(hp_params)
+
+        # set minimum flow passing throught the turbine
+        if hp_params.min_flow_check: # if flag is True
+            FlowPreProcessing().min_turbineflow_checker(hp_params)
+
+        # Run major maintenance and annual maintenance
+        if hp_params.pandas_dataframe: 
+            if hp_params.major_maintenance_flag:            # Major
+                FlowPreProcessing().major_maintenance_implementer(hp_params)
+
+            if hp_params.annual_maintenance_flag:           # Annual
+                FlowPreProcessing().annual_maintenance_implementer(hp_params)
+     
         # Turbine parameters calculation by turbine type
         if hp_params.turbine_type == 'Kaplan':
                 KaplanTurbine().turbine_calculator(hp_params)
@@ -489,7 +512,13 @@ def calculate_hp_potential(flow= None,
                            electricity_sell_price= None,
                            cost_calculation_method= 'ORNL_HBCM',
                            capacity_factor= None, 
-                           n_operation_days= None): 
+                           n_operation_days= None,
+                           
+                           min_turbine_flow = None,
+                           min_flow_percent = None, 
+                           annual_maintenance_flag = False,
+                           major_maintenance_flag = False,
+                           min_flow_check = True): 
      
     # Check if a pandas dataframe
     flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
@@ -520,8 +549,16 @@ def calculate_hp_potential(flow= None,
                                  electricity_sell_price= electricity_sell_price, 
                                  capacity_factor= capacity_factor, n_operation_days= n_operation_days)
     
-    all_params = merge_instances(hyd_pm, turb_pm, cost_pm)       # merge parameters into a single instance
+    flow_preproc_pm = FlowPreProcessingParameters(min_turbine_flow = min_turbine_flow, min_flow_percent = min_flow_percent, 
+                                         annual_maintenance_flag = annual_maintenance_flag, major_maintenance_flag = major_maintenance_flag,
+                                         min_flow_check = min_flow_check)
+    
+    all_params = merge_instances(hyd_pm, turb_pm, cost_pm, flow_preproc_pm)       # merge parameters into a single instance
+    
+    all_params.pandas_dataframe = pandas_dataframe          # update 
     all_params.hydropower_type = hydropower_type        # update
+    if pandas_dataframe:
+        all_params.datetime_index = flow.index        # Obtain index from flow data for annual calculation
 
     # units conversion - US to Si
     if units == 'US':       
