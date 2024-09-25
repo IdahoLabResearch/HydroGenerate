@@ -28,7 +28,7 @@ class FlowPreProcessingParameters:
         self.min_flow_percent = min_flow_percent      # Set minimum flow by using a percent of design flow, deault is 10  (%, 1-100)
         self.annual_maintenance_flag = annual_maintenance_flag        # Boolean to include annual maintenance or not
         self.major_maintenance_flag = major_maintenance_flag      # Boolean to include major maintenance or not
-        self.min_flow_check = min_flow_check        # maximum head loss allowed (%, 1-100)
+        self.min_flow_check = min_flow_check        # Boolean to include minimum flow check
 
 
 
