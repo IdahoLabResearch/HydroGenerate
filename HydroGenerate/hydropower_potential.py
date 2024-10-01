@@ -19,9 +19,14 @@ import os
 from abc import ABC, abstractmethod
 from numbers import Number
 from math import exp
-from HydroGenerate.hydraulic_processing import *
-from HydroGenerate.turbine_calculation import *
-from HydroGenerate.Flow_preprocessing import *
+
+# from HydroGenerate.hydraulic_processing import *
+# from HydroGenerate.turbine_calculation import *
+# from HydroGenerate.flow_preprocessing import *
+
+from hydraulic_processing import *
+from turbine_calculation import *
+from flow_preprocessing import *
 
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
@@ -33,6 +38,7 @@ g = 9.81 # acceleration of gravity (m/s^2)
 cfs_to_cms = 0.0283168 # 1 cubic feet per second to cubic meter per second
 ft_to_m = 0.3048 # 1 feet to meters
 nu = 0.0000011223 # Kinematic viscosity of water (m2/s) at 60F (~15.6C) - prevalent stream water temperature 
+wholesale_elecprice_2023 = 0.0582       # Weigthed average wholesale electricity price in 2023 ($/kWh): https://www.eia.gov/electricity/wholesale/
 
 # Economic Parameters
 class EconomicParameters:
@@ -97,8 +103,8 @@ class Units:
         if self.design_flow is not None:
             self.design_flow = self.design_flow * cfs_to_cms        # cfs to m3/s
 
-        if self.min_turbine_flow is not None:
-            self.min_turbine_flow = self.min_turbine_flow * cfs_to_cms        # cfs to m3/s
+        if self.minimum_turbineflow is not None:
+            self.minimum_turbineflow = self.minimum_turbineflow * cfs_to_cms        # cfs to m3/s
 
         if self.head is not None:
             self.head = self.head * ft_to_m     # ft to m
@@ -132,8 +138,8 @@ class Units:
         if self.design_flow is not None:
             self.design_flow = self.design_flow / cfs_to_cms        # m3/s tp cfs
 
-        if self.min_turbine_flow is not None:
-            self.min_turbine_flow = self.min_turbine_flow / cfs_to_cms        # cfs to m3/s
+        if self.minimum_turbineflow is not None:
+            self.minimum_turbineflow = self.minimum_turbineflow / cfs_to_cms        # cfs to m3/s
 
         if self.dataframe_output is not None:
             self.dataframe_output['turbine_flow_cfs'] =  self.dataframe_output['turbine_flow_cfs'] / cfs_to_cms        # m3/s tp cfs
@@ -229,25 +235,20 @@ class Diversion(Hydropower):
 
     def hydropower_calculation(self, hp_params):
 
-        head = hp_params.head
-        
-        # Select turbine type
-        if hp_params.turbine_type is None:
-            hp_params.turbine_type = turbine_type_selector(head)        # Turbine type
-
-        # Calculate design flow
+         # Calculate design flow
         if hp_params.design_flow is None:
             PercentExceedance().designflow_calculator(hp_params)
+
+        # Select turbine type
+        if hp_params.turbine_type is None:
+            turbine_type_selector(hp_params)        # Turbine type
 
         # Add flow range for turbine evaluation if a sinlge flow value is given
         FlowRange().flowrange_calculator(hp_params)
 
-        # Set max flow to the design flow
-        FlowPreProcessing().max_turbineflow_checker(hp_params)
-
-        # set minimum flow passing throught the turbine
-        if hp_params.min_flow_check: # if flag is True
-            FlowPreProcessing().min_turbineflow_checker(hp_params)
+        # Set max flow to the design flow and minimum flow passing throught the turbine
+        FlowPreProcessing().max_turbineflow_checker(hp_params)      # max flow check
+        FlowPreProcessing().min_turbineflow_checker(hp_params)      # min flow check
 
         # Run major maintenance and annual maintenance
         if hp_params.pandas_dataframe: 
@@ -263,9 +264,6 @@ class Diversion(Hydropower):
 
         elif hp_params.turbine_type == 'Francis':
                 FrancisTurbine().turbine_calculator(hp_params)
-        
-        elif hp_params.turbine_type == 'Propellor':
-                PropellorTurbine().turbine_calculator(hp_params)
 
         elif hp_params.turbine_type == 'Pelton':
                 PeltonTurbine().turbine_calculator(hp_params)
@@ -273,8 +271,11 @@ class Diversion(Hydropower):
         elif hp_params.turbine_type == 'Turgo':
                 TurgoTurbine().turbine_calculator(hp_params)
 
-        elif hp_params.turbine_type == 'Francis':
+        elif hp_params.turbine_type == 'Crossflow':
                 CrossFlowTurbine().turbine_calculator(hp_params)
+            
+        elif hp_params.turbine_type == 'Propeller':
+                PropellerTurbine().turbine_calculator(hp_params)
 
         # Head loss calculation 
         if hp_params.penstock_headloss_calculation: # If head loss in the penstock are calculated
@@ -435,7 +436,7 @@ class ConstantEletrictyPrice(Revenue):
             hp_params.capacity_factor = hp_params.n_operation_days * 100/ 365        # update
         
         if  hp_params.electricity_sell_price is None:
-             hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+             hp_params.electricity_sell_price = wholesale_elecprice_2023       # electricity sell price, defined above
 
         hp_params.annual_energy_generated = annual_energy * 24      # units from Kw day to KWh
         hp_params.annual_revenue =  hp_params.annual_energy_generated * hp_params.electricity_sell_price / 1000000       # annual revenue, M$
@@ -446,7 +447,7 @@ class ConstantEletrictyPrice_pd(Revenue):
     def revenue_calculation(self, hp_params, flow):
         
         if  hp_params.electricity_sell_price is None:
-            hp_params.electricity_sell_price = 0.01110       # average retail U.S. electricity price in 2021. https://www.eia.gov/electricity/state/
+            hp_params.electricity_sell_price = wholesale_elecprice_2023       # electricity sell price, defined above
 
         output = flow.copy()
         output['power_kW'] = hp_params.power      # Power, kW
@@ -514,15 +515,13 @@ def calculate_hp_potential(flow= None,
                            capacity_factor= None, 
                            n_operation_days= None,
                            
-                           min_turbine_flow = None,
-                           min_flow_percent = None, 
+                           minimum_turbineflow = None,
+                           minimum_turbineflow_percent = None, 
                            annual_maintenance_flag = False,
-                           major_maintenance_flag = False,
-                           min_flow_check = True): 
-     
+                           major_maintenance_flag = False): 
+
     # Check if a pandas dataframe
     flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
-    # flow_data = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
 
     # initialize all instances: HydraulicDesign, Turbine, and Economic parameters.
     hyd_pm = HydraulicDesignParameters(flow= flow_data, design_flow= design_flow, head= head, #net_head= net_head,
@@ -549,9 +548,8 @@ def calculate_hp_potential(flow= None,
                                  electricity_sell_price= electricity_sell_price, 
                                  capacity_factor= capacity_factor, n_operation_days= n_operation_days)
     
-    flow_preproc_pm = FlowPreProcessingParameters(min_turbine_flow = min_turbine_flow, min_flow_percent = min_flow_percent, 
-                                         annual_maintenance_flag = annual_maintenance_flag, major_maintenance_flag = major_maintenance_flag,
-                                         min_flow_check = min_flow_check)
+    flow_preproc_pm = FlowPreProcessingParameters(minimum_turbineflow = minimum_turbineflow, minimum_turbineflow_percent = minimum_turbineflow_percent, 
+                                         annual_maintenance_flag = annual_maintenance_flag, major_maintenance_flag = major_maintenance_flag)
     
     all_params = merge_instances(hyd_pm, turb_pm, cost_pm, flow_preproc_pm)       # merge parameters into a single instance
     
@@ -601,4 +599,4 @@ def calculate_hp_potential(flow= None,
 
     return all_params
   
-# Examples are provided int the 'HydroGenerate_Workflow.ipynb' file.  
+# Examples are provided in the 'HydroGenerate_Workflow.ipynb' file.  

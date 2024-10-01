@@ -13,6 +13,10 @@ import numpy as np
 import pandas as pd
 from abc import ABC, abstractmethod
 from numbers import Number
+import math
+from shapely.geometry import Point
+from shapely.geometry import Polygon
+import matplotlib.pyplot as plt
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
@@ -61,21 +65,95 @@ class TurbineParameters:
         self.dataframe_output = None    # placeholder for pandas dataframe output
         self.runner_diameter = None    # placeholder for the runner diameter   
     
-def turbine_type_selector(head):
+def turbine_type_selector(hp_params):
 
-    '''
-    Place holder to define the turbine type from the size of head
-    '''
-    turb_data = {'Head':['Very low head','Low head','Medium head','High head',
-                'Very high head','Very high head'],
-                'Start':[0.5,10,60,150,350,2000],
-                'End':[10,60,150,350,2000,5000],
-                'Turbine':['Kaplan','Kaplan','Francis','Francis','Pelton','Pelton'],
-                'k2':[800,800,600,600,0,0]}
+    # inputs
+    head = hp_params.head           # head, m
+    design_flow = hp_params.design_flow         # flow, m3/s
+
+    # define polygons of influence for every turbine type
+    polygon_pelton = Polygon([(1, 50), (1, 1000), (20, 1000), (60, 500), (50, 400),(1, 50)])
+    polygon_turgo = Polygon([(1, 50), (1, 260), (10, 50),(1, 50)])
+    polygon_francis = Polygon([(1, 50), (5, 10), (200, 10), (900, 15), (900,80), (100, 700), (6,700),(1, 50)])
+    polygon_kaplan = Polygon([(1,1), (1, 20), (9,80), (175,80), (1000,15), (60,1),(1,1)])
+    polygon_crossflow = Polygon([(1,4), (1, 100), (10,10), (10, 4),(1,4)])
+ 
+    # define polygons centroids
+    centroid_pelton = polygon_pelton.centroid
+    centroid_turgo = polygon_turgo.centroid
+    centroid_francis = polygon_francis.centroid
+    centroid_crossflow = polygon_crossflow.centroid
+    centroid_kaplan = polygon_kaplan.centroid
+
+    # Point with head, design_flow
+    point = Point(design_flow, head)        # point - [flow, head] - [m3/s, m]
+
+
+    # empty lists to store outputs
+    turbines_list = []
+    centroids_list = []
+
+                    # 'Turbine':['Kaplan','Kaplan'],
+
+    # find which polygon contains the point and distance between the point and centroid of that polygon
+
+    # Kaplan
+    if polygon_kaplan.contains(point):
+        turbines_list.append('Kaplan')
+        centroids_list.append(math.sqrt((point.x - centroid_kaplan.x)**2 + (point.y - centroid_kaplan.y)**2))
+
+    # Francis
+    if polygon_francis.contains(point):
+        turbines_list.append('Francis')
+        centroids_list.append(math.sqrt((point.x - centroid_francis.x)**2 + (point.y - centroid_francis.y)**2))
+
+    # Pelton
+    if polygon_pelton.contains(point):
+        turbines_list.append('Pelton')
+        centroids_list.append(math.sqrt((point.x - centroid_pelton.x)**2 + (point.y - centroid_pelton.y)**2))
+
+    # Turgo 
+    if polygon_turgo.contains(point):
+        turbines_list.append('Turgo')
+        centroids_list.append(math.sqrt((point.x - centroid_turgo.x)**2 + (point.y - centroid_turgo.y)**2))
     
-    df = pd.DataFrame.from_dict(turb_data)
-    df1 = df[(head > df.Start) & (head <= df.End)] # Select turbine type based on head
-    return df1['Turbine'].to_string(index=False).strip()
+    # Crossflow    
+    if polygon_crossflow.contains(point):
+        turbines_list.append('Crossflow')
+        centroids_list.append(math.sqrt((point.x - centroid_crossflow.x)**2 + (point.y - centroid_crossflow.y)**2))
+
+    # Case when there are no turbines in range
+    if not turbines_list:       # the head and flow are in in range for any turbine
+        raise ValueError('Head or flow paramters are out of range for all turbine types supported in HydroGenerate')       
+    else:
+        turbines_dict = dict(zip(turbines_list, centroids_list))            # create a dictionary with all turbine responsed
+        hp_params.turbine_type = min(turbines_dict, key=turbines_dict.get)
+        hp_params.turbine_type_dict = turbines_dict
+
+        # create figure showing
+        xpoints = np.array([design_flow])
+        ypoints = np.array([head]) 
+
+        x,y = polygon_pelton.exterior.xy
+        plt.ioff()
+        fig = plt.figure(figsize=(8, 6))
+        plt.loglog(x, y,label = 'pelton')
+        x,y = polygon_turgo.exterior.xy
+        plt.loglog(x, y,label = 'turgo')
+        x,y = polygon_francis.exterior.xy
+        plt.loglog(x, y,label = 'francis')
+        x,y = polygon_crossflow.exterior.xy
+        plt.loglog(x, y,label = 'crossflow')
+        x,y = polygon_kaplan.exterior.xy
+        plt.loglog(x, y,label = 'kaplan')
+        plt.xlim([1, 1000])
+        plt.ylim([1, 1000])
+        plt.xlabel('Flow (m^3/s)')
+        plt.ylabel('Head (m)')
+        plt.legend()
+        plt.plot(xpoints, ypoints,'o')
+        plt.legend(loc='upper right')
+        hp_params.turbinetype_figure = fig
 
 # Flow range calculation
 class FlowRange():
@@ -130,9 +208,7 @@ class FrancisTurbine(Turbine):
 
         # Efficiencies at flows below and above peak efficiency flow
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
-        Q = turbine.turbine_flow
-        # Q = np.where(Q > max_flow_turbine * Qd , Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+        Q = turbine.turbine_flow # turbine flow
         turbine.turbine_efficiency = [] # placeholder
         for i in range(len(Q)):
             if (Q[i] < Qp):        # flows below Qd
@@ -162,13 +238,11 @@ class KaplanTurbine(Turbine):
         Qp = 0.75 * Qd      # Peak efficiency flow (Q_p)
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.turbine_flow
-        # Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
         turbine.turbine_efficiency = (1 - 3.5 * ((Qp - Q) / Qp)**6) * ep     # Efficiency at flows above and below Qp
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies
         turbine.runner_diameter = d     # update
 
-class PropellorTurbine(Turbine):
+class PropellerTurbine(Turbine):
     '''
     Propellor turbine calculation
     '''
@@ -184,8 +258,6 @@ class PropellorTurbine(Turbine):
         Qp = Qd      # Peak efficiency flow (Q_p)
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.turbine_flow
-        # Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
         turbine.turbine_efficiency = (1 - 1.25 * ((Qp - Q) / Qp)**1.13) * ep     # Efficiency at flows above and below Qp
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency) # Correct negative efficiencies
         turbine.runner_diameter = d     # update
@@ -207,9 +279,7 @@ class PeltonTurbine(Turbine):
         ep = 0.864 * d**0.04      # Turbine peak efficiency
         Qp = (0.662 + 0.001 * j) * Qd # Peak efficiency flow
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
-        turbine.turbine_flow
-        # Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
+        Q = turbine.turbine_flow
         turbine.turbine_efficiency = (1 - ((1.31 + 0.025*j) * (abs(Qp - Q) / (Qp))**(5.6 + 0.4*j))) * ep          # Efficiency at flows above and below peak efficiency flow (e_q)
         turbine.runner_diameter = d     # update
 
@@ -232,8 +302,6 @@ class CrossFlowTurbine(Turbine):
         Qd = turbine.design_flow 
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.turbine_flow
-        # Q = np.where(Q > max_flow_turbine * Qd, Qd, Q)        # Correct flows higher than 10% the design flow
-        turbine.turbine_flow = Q        # flow passing by the turbine, cfs
         turbine.turbine_efficiency = 0.79 - 0.15 *((Qd - Q) / Qd) - 1.37 * ((Qd - Q) / Q)**14     # Efficiency (e_q)
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies
 

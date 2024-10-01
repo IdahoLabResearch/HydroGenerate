@@ -16,25 +16,21 @@ from datetime import datetime
 
 # Hydraulic design parameters
 class FlowPreProcessingParameters:
-    def __init__(self, min_turbine_flow, min_flow_percent,       # Flow parameters
-                 annual_maintenance_flag, major_maintenance_flag, 
-                 min_flow_check): 
+    def __init__(self, minimum_turbineflow, minimum_turbineflow_percent,       # Flow parameters
+                 annual_maintenance_flag, major_maintenance_flag): 
         '''
 #         This class initializes Flow preprocessing parameters needed for multiple calculations 
 #         Parameter descriptions are provided below:
 #         '''         
 # Inputs
-        self.min_turbine_flow = min_turbine_flow        # minimum flow through the turbine (m3/s)     
-        self.min_flow_percent = min_flow_percent      # Set minimum flow by using a percent of design flow, deault is 10  (%, 1-100)
+        self.minimum_turbineflow = minimum_turbineflow        # minimum flow through the turbine (m3/s)     
+        self.minimum_turbineflow_percent = minimum_turbineflow_percent      # Set minimum flow by using a percent of design flow, deault is 10  (%, 1-100)
         self.annual_maintenance_flag = annual_maintenance_flag        # Boolean to include annual maintenance or not
         self.major_maintenance_flag = major_maintenance_flag      # Boolean to include major maintenance or not
-        self.min_flow_check = min_flow_check        # Boolean to include minimum flow check
 
 
 
 class FlowPreProcessing():
-
-
 
     # Function that sets max turbine flow to the design flow
     def max_turbineflow_checker(self, flow_obj):
@@ -43,29 +39,24 @@ class FlowPreProcessing():
         design_flow = flow_obj.design_flow
         flow_obj.turbine_flow = np.where(flow > design_flow, design_flow, flow)         # turbine_flow is created here as this code is always active and runs 1st. flow is < design flow
 
-
-
     # Function that sets min turbine flow to the design flow
     def min_turbineflow_checker(self, flow_obj):
         flow = flow_obj.turbine_flow # this is a numpy array        
         design_flow = flow_obj.design_flow
 
-        # check if the user introduced a min flow value
-        
-        if flow_obj.min_turbine_flow is not None:
-            min_flow = flow_obj.min_turbine_flow
+        # check if the user entered a min flow value
+        if flow_obj.minimum_turbineflow is not None:
+            min_flow = flow_obj.minimum_turbineflow
         else:
-            if flow_obj.min_flow_percent is not None:         # Check if a user entered min flow percentage if not, use 10% as default
-                min_flow_percent =  flow_obj.min_flow_percent
+            if flow_obj.minimum_turbineflow_percent is not None:         # Check if a user entered min flow percentage if not, use 10% as default
+                min_flow_percent =  flow_obj.minimum_turbineflow_percent
             else:
                 min_flow_percent = 10           # Default   
      
             min_flow = (min_flow_percent / 100) * design_flow           # Compute minimum flow that passes through the turbine
-            flow_obj.min_turbine_flow = min_flow            # update
+            flow_obj.minimum_turbineflow = min_flow            # update
 
         flow_obj.turbine_flow = np.where(flow < min_flow, 0, flow)          # replace flows less than min flow with 0
-
-
 
     def annual_maintenance_implementer(self, flow_obj):
         # Function to set annual maintennace - i.e., make the flow 0 for a week a year
@@ -93,7 +84,7 @@ class FlowPreProcessing():
         dates_maint = []        # maintenance dates
         for d in start_days:
             # for day in range(7):
-            dates_maint.append(pd.date_range(d, periods= 7).date)           # generate 14 days for each year
+            dates_maint.append(pd.date_range(d, periods= 7).date)           # generate 7 days for each year
             #  dates_maint.append((sd + datetime.timedelta(days=day)).strftime("%Y-%m-%d"))
 
         dates_maint = np.concatenate(dates_maint, axis= 0)      # generate single array
@@ -101,8 +92,6 @@ class FlowPreProcessing():
         flow.loc[flow.date.isin(dates_maint), 'flow_cms'] = 0           # replace flow in minimum weeks with 0
 
         flow_obj.turbine_flow = flow['flow_cms'].to_numpy()         # update
-
-
 
     # Function that schedules the major maintennace
     def major_maintenance_implementer(self, flow_obj):
