@@ -4,7 +4,7 @@ Copyright 2023, Battelle Energy Alliance, LLC
 
 """
 03-2023
-@authors: MITRB, J. Gallego-Calderon, Camilo J. Bastidas Pacheco
+@authors: Camilo J. Bastidas Pacheco, J. Gallego-Calderon, Soumyadeep Nag, MITRB
 
 This module handles turbine selection and efficiency calculation
 """
