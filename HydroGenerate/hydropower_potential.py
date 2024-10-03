@@ -20,13 +20,9 @@ from abc import ABC, abstractmethod
 from numbers import Number
 from math import exp
 
-# from HydroGenerate.hydraulic_processing import *
-# from HydroGenerate.turbine_calculation import *
-# from HydroGenerate.flow_preprocessing import *
-
-from hydraulic_processing import *
-from turbine_calculation import *
-from flow_preprocessing import *
+from HydroGenerate.hydraulic_processing import *
+from HydroGenerate.turbine_calculation import *
+from HydroGenerate.flow_preprocessing import *
 
    
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
