@@ -16,6 +16,7 @@ REQUIRED = [
     "pandas",
     "scipy",
     "matplotlib",
+    "shapely"
 ]
 
 setup(
@@ -24,7 +25,7 @@ setup(
     #   - MAJOR VERSION 1
     #   - MINOR VERSION 0
     #   - MAINTENANCE VERSION 0
-    version='1.2.6',
+    version='1.3.0',
     description='',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

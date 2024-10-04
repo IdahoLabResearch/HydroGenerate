@@ -13,6 +13,18 @@ For more information please refer to the [OSTI webpage](https://www.osti.gov/bib
 
 **HydroGenerate** is offered as a python package. This means that the classes and utilities can be used anywhere in your system, without risks of making unwanted changes to the core code in the repo, issues with finsing the module in path, etc.
 
+### For Basic Usage
+
+**HydroGenerate** can be installed by downloading the source code from GitHub or via the PyPI package manager using pip.
+
+For those interested only in using the code, the simplest way to obtain it is with pip by using this command:
+
+```
+pip install HydroGenerate
+```
+
+### For developers
+
 1. Clone the repo:
 
 ```
@@ -47,15 +59,17 @@ conda install -c conda-forge jupyterlab
 
 **Authors**
 ```
-Bhaskar Mitra
-
 Juan Gallego-Calderon
+
+Camilo J. Bastidas Pacheco
+
+Soumyadeep Nag
+
+Bhaskar Mitra
 
 Shiloh Elliott
 
 Thomas M. Mosier
-
-Camilo J. Bastidas Pacheco
 ```
 
 **Citation**
