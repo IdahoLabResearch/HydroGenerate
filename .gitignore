@@ -1,7 +1,10 @@
 .DS_Store
+**/__pycache__/
+*.pyc
+__pycache__
 HydroGenerate.egg-info/
-hat/__pycache__/*
-hat/__pycache__/*
-hat/__pycache__/*
-hat/__pycache__/*
-hat/utils/__pycache__/*
+HydroGenerate/__pycache__/*
+HydroGenerate/__pycache__/*
+HydroGenerate/__pycache__/*
+HydroGenerate/__pycache__/*
+HydroGenerate/utils/__pycache__/*
