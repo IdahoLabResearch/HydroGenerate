@@ -2,15 +2,9 @@
 
 name: Test HydroGenerate
 
-on:
-  push:
-    branches: 
-      - main
-      - jugc-pytest
-  pull_request:
-    branches: 
-      - main
-      - jugc-pytest
+on: [push, pull_request]
+  branches:
+    - jugc-pytest
 
 jobs:
   build:
