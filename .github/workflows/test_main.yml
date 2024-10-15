@@ -28,5 +28,8 @@ jobs:
           pip install -r .github/workflows/requirements.txt
 
       - name: Test with pytest
-        run: python -B -m pytest
+        run: |
+          cd test    
+          python -B -m pytest
+          cd ..
 
