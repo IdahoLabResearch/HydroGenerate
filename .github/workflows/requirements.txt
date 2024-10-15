@@ -4,6 +4,4 @@ requests
 pandas
 shapely
 datetime
-numbers
-abc
 matplotlib
