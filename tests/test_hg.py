@@ -9,3 +9,4 @@ def test_calculate_potential():
     hp = calculate_hp_potential(flow= flow, head= head, rated_power= power, system_efficiency= 0.7)
 
     assert round(hp.rated_power, 0) == 9483
+

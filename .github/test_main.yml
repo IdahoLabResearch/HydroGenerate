@@ -1,0 +1,23 @@
+# This workflow will run tests to ensure HydroGenerate is working
+
+name: Test HydroGenerate
+
+on:
+  push:
+    branches: 
+      - main
+      - jugc-pytest
+  pull_request:
+    branches: 
+      - main
+      - jugc-pytest
+
+jobs:
+  update:
+    name: Update Channel API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run test
+      run: python -B -m pytest
