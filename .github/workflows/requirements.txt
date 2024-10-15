@@ -3,3 +3,8 @@ numpy
 requests
 pandas
 shapely
+matplotlib
+datetime
+math 
+numbers
+abc
