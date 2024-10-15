@@ -14,10 +14,14 @@ on:
 
 jobs:
   update:
-    name: Update Channel API
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+        cache: pip
+
+      - name: Install requirements
+        run: pip install -r hat_env.yml
 
       - name: Run test
         run: python -B -m pytest
