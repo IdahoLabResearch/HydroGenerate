@@ -20,4 +20,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run test
-      run: python -B -m pytest
+        run: python -B -m pytest
