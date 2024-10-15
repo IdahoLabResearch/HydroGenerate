@@ -31,14 +31,16 @@ def test_diversion_calculate_potential():
     head = 20 # ft
     power = None
     penstock_length = 50 # ft
-    hp_type = 'Diversion'
-    headloss_method= "Hazen-Williams"
+    hp_type = 'Diversion' 
 
     hp = calculate_hp_potential(flow= flow, rated_power= power, head= head,
+                                pctime_runfull = 30,
                                 penstock_headloss_calculation= True,
+                                design_flow= None,
+                                electricity_sell_price = 0.05,
+                                resource_category= 'CanalConduit',
                                 hydropower_type= hp_type, penstock_length= penstock_length,
-                                penstock_headloss_method= headloss_method)
-    
+                                flow_column= 'discharge_cfs', annual_caclulation= True)
     assert round(hp.rated_power, 0) == 4505
 
 
