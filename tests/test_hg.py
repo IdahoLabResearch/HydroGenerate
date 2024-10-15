@@ -1,5 +1,6 @@
 from HydroGenerate.utils.api_call import *
 from HydroGenerate.hydropower_potential import *
+import pytest
 
 def test_calculate_potential():
     flow = 8000 # given flow, in cfs
