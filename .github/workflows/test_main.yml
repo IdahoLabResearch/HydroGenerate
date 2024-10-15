@@ -20,8 +20,8 @@ jobs:
         python-version: 3.8
         cache: pip
 
-      - name: Install requirements
-        run: pip install -r hat_env.yml
+    - name: Install requirements
+      run: pip install -r hat_env.yml
 
-      - name: Run test
-        run: python -B -m pytest
+    - name: Run test
+      run: python -B -m pytest
