@@ -27,6 +27,6 @@ jobs:
         run: |
           pip install -r .github/workflows/requirements.txt
 
-      - name: Test with pytest and report coverage
+      - name: Test with pytest
         run: python -B -m pytest
 
