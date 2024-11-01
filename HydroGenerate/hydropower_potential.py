@@ -11,8 +11,8 @@ This module calculates hydropower potential for diffrent type of hydropower inst
 
 import numpy as np
 import math
-from numpy.core.fromnumeric import mean
-from numpy.lib.function_base import median
+# from numpy.core.fromnumeric import mean
+# from numpy.lib.function_base import median
 import pandas as pd
 from datetime import datetime
 import os
@@ -23,8 +23,8 @@ from math import exp
 from HydroGenerate.hydraulic_processing import *
 from HydroGenerate.turbine_calculation import *
 from HydroGenerate.flow_preprocessing import *
+from HydroGenerate.summary_results import *
 
-   
 # TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
 # TODO: validate that the method implemented is correct. Juan to cross-check the equations
 
@@ -255,22 +255,30 @@ class Diversion(Hydropower):
                 FlowPreProcessing().annual_maintenance_implementer(hp_params)
      
         # Turbine parameters calculation by turbine type
-        if hp_params.turbine_type == 'Kaplan':
+        turbine_type = hp_params.turbine_type.upper()
+
+        # Check if a turbine type is acceped by HG
+        tt_list = ['KAPLAN', 'FRANCIS', 'PELTON', 'TURGO','CROSSFLOW', 'PROPELLER']
+        
+        if turbine_type not in tt_list:
+            raise ValueError('The following turbine types are currently supported in HydroGenerate', tt_list)
+        
+        if turbine_type == 'KAPLAN':
                 KaplanTurbine().turbine_calculator(hp_params)
 
-        elif hp_params.turbine_type == 'Francis':
+        elif turbine_type == 'FRANCIS':
                 FrancisTurbine().turbine_calculator(hp_params)
 
-        elif hp_params.turbine_type == 'Pelton':
+        elif turbine_type == 'PELTON':
                 PeltonTurbine().turbine_calculator(hp_params)
 
-        elif hp_params.turbine_type == 'Turgo':
+        elif turbine_type == 'TURGO':
                 TurgoTurbine().turbine_calculator(hp_params)
 
-        elif hp_params.turbine_type == 'Crossflow':
+        elif turbine_type == 'CROSSFLOW':
                 CrossFlowTurbine().turbine_calculator(hp_params)
             
-        elif hp_params.turbine_type == 'Propeller':
+        elif turbine_type == 'PROPELLER':
                 PropellerTurbine().turbine_calculator(hp_params)
 
         # Head loss calculation 
@@ -281,13 +289,21 @@ class Diversion(Hydropower):
                                  " penstock_headloss_calculation is True")
             
             if hp_params.penstock_headloss_method == None:
-                hp_params.penstock_headloss_method = 'Darcy-Weisbach'
+                hp_params.penstock_headloss_method = 'DARCY-WEISBACH'
 
-            if hp_params.penstock_headloss_method == 'Darcy-Weisbach': # Darcy-Weisbach
+            hl_method = hp_params.penstock_headloss_method.upper()
+
+            # Check if a turbine type is acceped by HG
+            hl_list = ['DARCY-WEISBACH', 'HAZEN-WILLIAMS']
+        
+            if hl_method not in hl_list:
+                raise ValueError('The following head loss methods are currently supported in HydroGenerate', hl_list)
+
+            if hl_method == 'DARCY-WEISBACH': # Darcy-Weisbach
                 DarcyWeisbach().penstock_headloss_calculator(hp_params)       # head loss at design parameters
                 DarcyWeisbach().penstock_headloss_calculator_ts(hp_params)        # head loss for a range of flow values
 
-            elif hp_params.penstock_headloss_method == 'Hazen-Williams': # Hazen-Williams
+            elif hl_method == 'HAZEN-WILLIAMS': # Hazen-Williams
                 HazenWilliamns().penstock_headloss_calculator(hp_params)       # head loss at design parameters
                 HazenWilliamns().penstock_headloss_calculator_ts(hp_params)        # head loss for a range of flow values
 
@@ -366,28 +382,39 @@ class ONRL_BaselineCostModeling_V2(Cost):
         H = hp_params.net_head / ft_to_m        # net head, ft
 
         if hp_params.resource_category is None:
-            hp_params.resource_category = 'NewStream-reach'
+            hp_params.resource_category = 'NEWSTREAM-REACH'
+
+        res_category = hp_params.resource_category.upper()
+
+        rc_list = ['NEWSTREAM-REACH', 'NON-POWEREDDAM', 'NPD', 'CANALCONDUIT','PSH_ EXISTINGINFRAESTRUCTURE',
+                    'PSH_GREENFIELD', 'UNITADDITION', 'GENERATORREWIND']
+        
+        if res_category not in rc_list:
+            raise ValueError('The resource category must be in the following list', rc_list)
 
         # icc = initial capital cost = f(H, P) in $2014. H in ft, P in MW
-        if hp_params.resource_category == 'NewStream-reach':
+        if hp_params.resource_category == 'NEWSTREAM-REACH':
             icc = 9605710 * 𝑃**0.977 * 𝐻**-0.126        # New Stream-reach Development
            
-        if hp_params.resource_category == 'Non-PoweredDam':
+        if res_category == 'NON-POWEREDDAM':
              icc = 11489245 * P**0.976 * 𝐻**-0.240        # Non-Powered Dam
 
-        if hp_params.resource_category == 'CanalConduit':
+        if res_category == 'NPD':
+             icc = 11489245 * P**0.976 * 𝐻**-0.240        # Non-Powered Dam
+
+        if res_category == 'CANALCONDUIT':
             icc = 9297820 * 𝑃**0.810 * 𝐻**-0.10     # Canal / Conduit Project
 
-        if hp_params.resource_category == 'PSH_ExistingInfrastructure':
+        if res_category == 'PSH_ EXISTINGINFRAESTRUCTURE':
             icc = 3008246 * 𝑃 * exp(-0.000460 * P)      # Pumped Storage Hydropower Projects - Existing Infrastructure
 
-        if hp_params.resource_category == 'PSH_Greenfield':
+        if res_category == 'PSH_GREENFIELD':
             icc = 4882655 * 𝑃 * exp(-0.000776 * P)      #  Pumped Storage Hydropower Projects - Greenfield Sites
 
-        if hp_params.resource_category == 'UnitAddition':
+        if res_category == 'UNITADDITION':
             icc = 4163746 * 𝑃**0.741        # Unit Addition Projects
 
-        if hp_params.resource_category == 'GeneratorRewind':
+        if res_category == 'GENERATORREWIND':
             icc = 250147 * 𝑃**0.817     # Generator Rewind Projects
         
         icc = icc / 1000000     # icc, million $
@@ -396,7 +423,7 @@ class ONRL_BaselineCostModeling_V2(Cost):
         annual_om = 225417 * 𝑃**0.54 / 1000000 # Annual Operation Maintennance, million $
 
         # ORNL_HBCM predicts higher costs for smaller plants, the authors sugges using the lesser between Annual OP&M and 2.5% of ICC 
-        if hp_params.resource_category != 'GeneratorRewind':
+        if res_category != 'GENERATORREWIND':
             if annual_om > 0.025 * icc:
                 annual_om = 0.025 * icc
 
@@ -476,7 +503,7 @@ class ConstantEletrictyPrice_pd(Revenue):
 def calculate_hp_potential(flow= None,
                            head= None, 
                            rated_power= None, 
-                           hydropower_type= 'Basic', 
+                           hydropower_type= 'BASIC', 
                            units= 'US',
 
                            penstock_headloss_method= 'Darcy-Weisbach',
@@ -551,32 +578,49 @@ def calculate_hp_potential(flow= None,
     
     all_params.pandas_dataframe = pandas_dataframe          # update 
     all_params.hydropower_type = hydropower_type        # update
+    all_params.units = units
+
     if pandas_dataframe:
         all_params.datetime_index = flow.index        # Obtain index from flow data for annual calculation
+
+    # check if units are in list
+    if units not in ['SI', 'US']:
+        raise ValueError('Units can only be \"US\" or \"SI\", see HydroGenerate for additional information')
+
 
     # units conversion - US to Si
     if units == 'US':       
         Units.us_to_si_conversion(all_params)       # convert imputs from US units to SI units
     
+    # Check if hydropower type is valid
+    hpt_list = [None, 'BASIC', 'DIVERSION', 'HYDROKINETIC']
+
+    if hydropower_type not in hpt_list:
+        raise ValueError('Hydropower type can only be:', hpt_list)
+
     # No hydropower calculation
     if hydropower_type is None:
         all_params.net_head = all_params.head       # update for cost calculation
 
     # Basic hydropower calculation 
-    elif hydropower_type == 'Basic':
+    elif hydropower_type.upper() == 'BASIC':
         Basic().hydropower_calculation(all_params)
 
     # Diversion projects
-    elif hydropower_type == 'Diversion':
+    elif hydropower_type.upper() == 'DIVERSION':
         Diversion().hydropower_calculation(all_params)
     
-    elif hydropower_type == 'Hydrokinetic':
+    elif hydropower_type.upper() == 'HYDROKINETIC':
         Hydrokinetic().hydropower_calculation(all_params)
 
     # Cost calculation
-    if hydropower_type != 'Hydrokinetic':
+    if hydropower_type is None:
         if cost_calculation_method == 'ORNL_HBCM':
-            ONRL_BaselineCostModeling_V2().cost_calculation(all_params)
+                ONRL_BaselineCostModeling_V2().cost_calculation(all_params)
+
+    elif hydropower_type.upper() != 'HYDROKINETIC':
+            if cost_calculation_method == 'ORNL_HBCM':
+                ONRL_BaselineCostModeling_V2().cost_calculation(all_params)
 
     # Annual energy and revenue calculation
     
