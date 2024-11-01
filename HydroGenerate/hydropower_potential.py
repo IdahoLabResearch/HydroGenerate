@@ -593,14 +593,14 @@ def calculate_hp_potential(flow= None,
         Units.us_to_si_conversion(all_params)       # convert imputs from US units to SI units
     
     # Check if hydropower type is valid
-    hpt_list = [None, 'BASIC', 'DIVERSION', 'HYDROKINETIC']
-
-    if hydropower_type not in hpt_list:
-        raise ValueError('Hydropower type can only be:', hpt_list)
+    hpt_list = ['BASIC', 'DIVERSION', 'HYDROKINETIC']
 
     # No hydropower calculation
     if hydropower_type is None:
-        all_params.net_head = all_params.head       # update for cost calculation
+        all_params.net_head = all_params.head       # update for cost calculation.
+
+    elif hydropower_type.upper() not in hpt_list:
+            raise ValueError('Hydropower type can only be:', hpt_list)
 
     # Basic hydropower calculation 
     elif hydropower_type.upper() == 'BASIC':
