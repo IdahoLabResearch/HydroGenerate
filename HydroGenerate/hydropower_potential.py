@@ -25,9 +25,6 @@ from HydroGenerate.turbine_calculation import *
 from HydroGenerate.flow_preprocessing import *
 from HydroGenerate.summary_results import *
 
-# TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
-# TODO: validate that the method implemented is correct. Juan to cross-check the equations
-
 # Constant definition / unit conversion
 rho = 1000 # water density in Kg/m^3
 g = 9.81 # acceleration of gravity (m/s^2)
@@ -600,7 +597,7 @@ def calculate_hp_potential(flow= None,
         all_params.net_head = all_params.head       # update for cost calculation.
 
     elif hydropower_type.upper() not in hpt_list:
-            raise ValueError('Hydropower type can only be:', hpt_list)
+        raise ValueError('Hydropower type can only be:', hpt_list)
 
     # Basic hydropower calculation 
     elif hydropower_type.upper() == 'BASIC':

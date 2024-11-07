@@ -20,41 +20,109 @@ from shapely.geometry import Polygon
 cfs_to_cms = 0.0283168 # 1 cubic feet per second to cubic meter per second
 ft_to_m = 0.3048 # 1 feet to meters
 
+# function to plot turbine efficiency and power generation as a function of flow
+def flow_efficiency_power_plot(x) :
+    # extract dataframe output, order and subset wanted values
+    if x.pandas_dataframe:
+        df = x.dataframe_output
+        df_plot = df[['turbine_flow_cfs','efficiency','power_kW']].drop_duplicates('turbine_flow_cfs')
+        df_plot = df_plot.sort_values(by='turbine_flow_cfs')
+        df_plot.reset_index(drop=True, inplace=True)
+
+        fig, ax1 = plt.subplots(figsize=(8, 5))
+
+        color_plot = 'tab:red'
+        ax1.set_xlabel('Flow')
+        ax1.set_ylabel('Turbine Efficiency', color=color_plot)
+        ax1.plot(df_plot['efficiency'], label="Turbine Efficiency", color=color_plot)
+        ax1.tick_params(axis='y', labelcolor=color_plot)
+
+        ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+        color_plot2 = 'tab:blue'
+        ax2.set_ylabel('Power (kW)', color=color_plot2)  # we already handled the x-label with ax1
+        ax2.plot(df_plot['power_kW'],'b-', label="Power")
+        ax2.tick_params(axis='y', labelcolor=color_plot2)
+        ax1.grid(True, axis='both', color='k',linestyle='--',alpha=0.4)
+        plt.title("Flow (cfs) versus Turbine Efficiency and Power (kW)")
+        fig.tight_layout()  
+        plt.close()
+        return fig
+    
+    else:
+        print('Plotting turbine efficiency annd power requires flow time series data '\
+              'provided as pandas dataframe')
+
+def flow_efficiency_plot(x) :
+    # extract dataframe output, order and subset wanted values
+    if x.pandas_dataframe:
+        df = x.dataframe_output
+        df_plot = df[['turbine_flow_cfs','efficiency','power_kW']].drop_duplicates('turbine_flow_cfs')
+        df_plot = df_plot.sort_values(by='turbine_flow_cfs')
+        df_plot.reset_index(drop=True, inplace=True)
+
+        fig, ax = plt.subplots(figsize=(8, 5))
+        color_plot = 'tab:red'
+        ax.set_xlabel('Flow')
+        ax.set_ylabel('Turbine Efficiency', color=color_plot)
+        ax.plot(df_plot['efficiency'], label="Turbine Efficiency", color=color_plot)
+        ax.tick_params(axis='y', labelcolor=color_plot)
+
+        ax.grid(True, axis='both', color='k',linestyle='--',alpha=0.4)
+        plt.title("Flow (cfs) versus Turbine Efficiency")
+        fig.tight_layout()  
+        plt.close()
+        return fig
+
+    else:        
+        print('Plotting turbine efficiency requires flow time series data '\
+              'provided as pandas dataframe')
+
 # function to plot the flow duration curve
 def flow_duration_curve_plot(x):
 
-    df = x.flowduration_curve.copy()
+    # if x.flowduration_curve:
+    try:
+        df = x.flowduration_curve.copy()
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    
-    ax.set_xlabel('% of time river discharge is exceeded')
+        fig, ax = plt.subplots(figsize=(8, 5))
+        
+        ax.set_xlabel('% of time river discharge is exceeded')
 
-    if x.units == 'US':
-        ax.set_ylabel('River discharge (ft^3/s)')
-        df.Flow = df.Flow / cfs_to_cms
-    else:
-        ax.set_ylabel('River discharge (m^3/s)')
+        if x.units == 'US':
+            ax.set_ylabel('River discharge (ft^3/s)')
+            df.Flow = df.Flow / cfs_to_cms
+        else:
+            ax.set_ylabel('River discharge (m^3/s)')
+        
+        ax.plot(df['Percent_Exceedance'], df['Flow'], label="Flow duration curve", linewidth=2)
+        ax.tick_params(axis='y')
+        # Plot horizontal and vertical line with values
+        d_flow = x.design_flow
+        pcrf = x.pctime_runfull
+        plt.xlim([0, 100])
+        plt.ylim([0, df.Flow.max() * 1.05])
+        ax.hlines(y = d_flow, xmin = 0, xmax = pcrf, color='r', linestyle=':')
+        ax.vlines(x = pcrf, ymin = 0, ymax = d_flow, color='r', linestyle=':')
+        ax.plot(pcrf, d_flow, 'ro', markersize = 10, label = 'Design flow')
+        plt.legend()
+        plt.close()
+        return fig
     
-    ax.plot(df['Percent_Exceedance'], df['Flow'], label="Flow duration curve", linewidth=2)
-    ax.tick_params(axis='y')
-    # Plot horizontal and vertical line with values
-    d_flow = x.design_flow
-    pcrf = x.pctime_runfull
-    plt.xlim([0, 100])
-    plt.ylim([0, df.Flow.max() * 1.05])
-    ax.hlines(y = d_flow, xmin = 0, xmax = pcrf, color='r', linestyle=':')
-    ax.vlines(x = pcrf, ymin = 0, ymax = d_flow, color='r', linestyle=':')
-    ax.plot(pcrf, d_flow, 'ro', markersize = 10, label = 'Design flow')
-    plt.legend()
-    plt.close()
-    return fig
+    # else:
+    except AttributeError:
+        print('Plotting the flow duration curve requires flow time series data '\
+              'provided as pandas dataframe')
 
 # function to plot turbine selection figure
 def turbine_type_plot(x):
 
  # inputs
     head = x.net_head           # head, m
-    design_flow = x.design_flow         # flow, m3/s
+    
+    if x.design_flow:
+        design_flow = x.design_flow         # flow, m3/s
+    else:
+        design_flow = x.flow
 
     if x.units == 'US':
         head = head * ft_to_m
@@ -93,36 +161,6 @@ def turbine_type_plot(x):
     plt.close()
 
     return fig
-
-
-# function to plot flow duration curve
-def flow_duration_curve_plot(x):
-
-    df = x.flowduration_curve.copy()
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.set_xlabel('% of time river discharge is exceeded')
-
-    if x.units == 'US':
-        ax.set_ylabel('River discharge (ft^3/s)')
-        df.Flow = df.Flow / cfs_to_cms
-    else:
-        ax.set_ylabel('River discharge (m^3/s)')
-    
-    ax.plot(df['Percent_Exceedance'], df['Flow'], label="Turbine Efficiency", linewidth=2)
-    ax.tick_params(axis='y')
-    # Plot horizontal and vertical line with values
-    d_flow = x.design_flow
-    pcrf = x.pctime_runfull
-    plt.xlim([0, 100])
-    plt.ylim([0, df.Flow.max() * 1.05])
-    ax.hlines(y = d_flow, xmin = 0, xmax = pcrf, color='r', linestyle=':')
-    ax.vlines(x = pcrf, ymin = 0, ymax = d_flow, color='r', linestyle=':')
-    ax.plot(pcrf, d_flow, 'ro', markersize = 10)
-    plt.close()
-
-    return fig
-
 
 # function that generates a monhtly figure given a dataframe and a column name
 def monthly_figure_plot(df, var_fig):
