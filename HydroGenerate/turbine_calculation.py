@@ -130,32 +130,6 @@ def turbine_type_selector(hp_params):
         hp_params.turbine_type = min(turbines_dict, key=turbines_dict.get)
         hp_params.turbine_type_dict = turbines_dict
 
-        # create figure showing
-        xpoints = np.array([design_flow])
-        ypoints = np.array([head]) 
-
-        x,y = polygon_pelton.exterior.xy
-        plt.ioff()
-        turbine_type_fig = plt.figure(figsize=(7, 5))
-        plt.loglog(x, y,label = 'Pelton')
-        x,y = polygon_turgo.exterior.xy
-        plt.loglog(x, y,label = 'Turgo')
-        x,y = polygon_francis.exterior.xy
-        plt.loglog(x, y,label = 'Francis')
-        x,y = polygon_crossflow.exterior.xy
-        plt.loglog(x, y,label = 'Crossflow')
-        x,y = polygon_kaplan.exterior.xy
-        plt.loglog(x, y,label = 'Kaplan')
-        plt.xlim([1, 1000])
-        plt.ylim([1, 1000])
-        plt.xlabel('Flow (m^3/s)')
-        plt.ylabel('Head (m)')
-        plt.plot(xpoints, ypoints,'o', label='Site characteristics')
-        plt.legend()
-        plt.legend(loc='upper right')
-        hp_params.turbinetype_figure = turbine_type_fig
-        plt.close(turbine_type_fig)
-
 # Flow range calculation
 class FlowRange():
 

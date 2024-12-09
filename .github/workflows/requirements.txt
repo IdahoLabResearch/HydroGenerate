@@ -1,0 +1,7 @@
+pytest
+numpy
+requests
+pandas
+shapely
+datetime
+matplotlib

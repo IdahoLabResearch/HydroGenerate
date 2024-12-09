@@ -1,0 +1,34 @@
+# This workflow will run tests to ensure HydroGenerate is working
+
+name: Test HydroGenerate
+
+on:
+  push:
+    branches: 
+      - main
+
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      
+      - name: Install dependencies
+        run: |
+          pip install -r .github/workflows/requirements.txt
+
+      - name: Test with pytest
+        run: |
+          cd tests    
+          python -B -m pytest
+          cd ..
+

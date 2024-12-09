@@ -163,4 +163,5 @@ dependencies:
   - zipp=3.4.0=py_0
   - zlib=1.2.11=h1de35cc_3
   - zstd=1.4.5=h41d2c2f_0
+  - pytest
 prefix: /opt/anaconda3/envs/hat_env
