@@ -1,4 +1,21 @@
-# Turbine Efficiency Calculation
+# Turbine Selection & Efficiency Calculation
+
+
+## Turbine Selection 
+
+Turbine selection for a particular site is performed based on the design flow and the hydraulic head. {numref}`TurbineSelection` shows the turbine selection graph (Gulliver & Arndt, 1991). The figure shows multiple overlapping regions. When a site is located in a overlapping region, the distance from the point to the centroid of each figure are calculated and the turbine type with the smallest centroid distance is is selected for computation. Turbine types can be manually entered by users and, when more than one turbine type is suitable, than information is stored in the output. A python package called "Shapely" (Gillies et al., 2024) is imported to perform the area selection, centroid and distance to centroids calculations. 
+
+{numref}`TurbineSelection` shows the turbine selection graph (Gulliver & Arndt, 1991).
+```{figure} Turbine_Selection.SVG
+---
+name: TurbineSelection
+---
+Graph used for turbine selection. Flow and head and included in this figure and a turbine is selected based on the areas of influence
+```
+
+
+
+## Turbine Efficiency Calculation
 
 The turbine efficiency calculation follows the same methodology and equations included in (CANMET, 2004). For further details on turbine efficiency, refer to CANMET, (2004). Turbine efficiency computations are conducted using the following equations:
 
@@ -14,7 +31,7 @@ where:
 
 Specific speed ($n_q$)
 
-$$n_q=kh^{-5}$$
+$$n_q=kh^{-0.5}$$
 
 where: 
 * $n_q$ = specific speed based on flow,
@@ -45,7 +62,7 @@ $$Q_p=0.65\ Q_d\ n_q^{0.05}$$
 
 Efficiencies at flows below peak efficiency flow ($e_q$)
 
-$$e_q=\ \left\{1-\left[1.25\left(\frac{Q_p-Q}{Q_p}\right)^{3.94-0.0159\ n_q}\right]\right\}\ e_p$$
+$$e_q=\ \left\{1-\left[1.25\left(\frac{Q_p-Q}{Q_p}\right)^{3.94-0.0195\ n_q}\right]\right\}\ e_p$$
 
 Drop in efficiency at full load ($\land e_p$)
 
@@ -53,7 +70,7 @@ $$\land e_p=0.0072\ n_q^{0.4}$$
 
 Efficiency at full load ($e_r$)
 
-$$e_r=\left(1-\ \land e_p\right)\land e_p$$
+$$e_r=\left(1-\ \land e_p\right) e_p$$
 
 Efficiencies at flows above peak efficiency flow ($e_q$)
 
@@ -66,7 +83,7 @@ $$\land e_{nq}\ =\ \left(\frac{n_q-170}{700}\right)^2$$
 
 Runner size adjustment to peak efficiency ($\land e_d$)
 
-$$\land e_d\ \ =(0.0095+\ \land e_{nq}\ )(1-0.789\ d^{-0.2})\ \ $$
+$$\land e_d\ \ =(0.095+\ \land e_{nq}\ )(1-0.789\ d^{-0.2})\ \ $$
 
 Turbine peak efficiency ($e_p$)
 
@@ -133,3 +150,6 @@ $$e_q=\ \ 0.79-0.15\left(\frac{Q_d-Q}{Q_p}\right)-1.37\left(\frac{Q_d-Q}{Q_p}\ri
 ## References
 CANMET Energy Technology Center. (2004). Clean Energy Project Analysis: Retscreen Engineering & Cases Textbook. https://www.ieahydro.org/media/1ccb8c33/RETScreen%C2%AE-Engineering-Cases-Textbook%E2%80%93-PDF.pdf 
 
+Gulliver, John S.; Arndt, Roger E.A.. (1991). Hydropower Engineering Handbook. McGraw-Hill, Inc.. Retrieved from the University of Minnesota Digital Conservancy, https://hdl.handle.net/11299/195476.
+
+Gillies, S., van der Wel, C., Van den Bossche, J., Taves, M. W., Arnott, J., Ward, B. C., & others. (2024). Shapely (Version 2.0.6) [Computer software]. https://doi.org/10.5281/zenodo.5597138

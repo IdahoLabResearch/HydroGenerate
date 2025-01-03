@@ -50,7 +50,11 @@ General Computations Workflow
 |	30	|	cost_calculation_method	|	Method for selecting between cost calculation methods	|	String	|	ORNL_HBCM	|		|		|	-	|	-	|
 |	31	|	capacity_factor	|	Hydropower plant capacity factor	|	Numeric	|	0 - 1	|	-	|	-	|	-	|	-	|
 |	32	|	n_operation_days	|	Number of days a year a hydroelectric plant operates	|	Numerical	|	1 - 365	|	no	|	Annual energy generated / Revenue	|	-	|	-	|
-
+|	33	|	min_flow_check	|	Method for allowing users to turn on/off minimum flow check	|	Boolean	|	-	|	no	|	Minimum flow through the turbine	|	-	|	-	|
+|	34	|	min_turbine_flow	|	Minimum flow rate passigin through the turbine |	Numerical	|	-	|	no	|	Power calculation	|	cfs	|	m3/s	|
+|	35	|	min_flow_percent	|	Minimum flow rate passigin through the turbine as a percentage of design flow | -   |   -   |	no	|	Power calculation	|	-	|
+|	36	|	annual_maintenance_flag	|	Method for allowing users to turn on/off annual maintenance	|	Boolean	|	-	|	no	|	Power calculation	|	-	|	-	|
+|	36	|	major_maintenance_flag	|	Method for allowing users to turn on/off major maintenance	|	Boolean	|	-	|	no	|	Power calculation	|	-	|	-	|
 * DL: dimensionless.
 
 
@@ -100,7 +104,12 @@ General Computations Workflow
 |	37	|	system_efficiency	|	Total efficiency of the system. Total efficiency = turbine efficieincy * generator efficiency	|	Numerical / Percent	|	1 - 100	|		DL*		|
 |	38	|	turbine_efficiency	|	Efficiency of the turbine for different flow values	|	Numerical / Percent	|	1 - 100	|		DL		|
 |	39	|	turbine_flow	|	Flow that passed through the turbine	|	Series	|	-	|	cfs	|	m3/s	|
-|	40	|	turbine_type_o	|	Type of turbine used in the system.	|	String	|	Kaplan, Francis, Propellor, Pelton, Turgo, Crossflow	|	-	|	-	|
+|	40	|	turbine_type_o	|	Type of turbine used in the system	|	String	|	Kaplan, Francis, Propellor, Pelton, Turgo, Crossflow	|	-	|	-	|
+|	41	|	turbine_type_dict	|	All turbines suitable for a site, when more than 1	|	String	|	Kaplan, Francis, Propellor, Pelton, Turgo, Crossflow	|	-	|	-	|
+
+
+
+turbine_type_dict
 
 
 * DL: dimensionless. 

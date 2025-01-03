@@ -1,405 +1,428 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
     <title>Hydropower Estimation</title>
-    
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Theory_1_Hydropower';</script>
     <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/Theory_1_Hydropower.html" />
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Design Flow Estimation" href="Theory_2_Design_Flow.html" />
     <link rel="prev" title="Methods, Functions, Classes, and Input Handling" href="DeveloperGuide_2_MethodsFunctions.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="HydroGenerate_Introduction.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="_static/HG_horizontal.png" class="logo" alt="logo">
-      
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="HydroGenerate_Introduction.html">
-   HydroGenerate
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Getting Started
- </span>
-</p>
+    
+    
+    <img src="_static/HG_horizontal.png" class="logo__image only-light" alt=" - Home"/>
+    <script>document.write(`<img src="_static/HG_horizontal.png" class="logo__image only-dark" alt=" - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="HydroGenerate_Introduction.html">
+                    HydroGenerate
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="GettingStarted_1_Installation.html">
-   Installation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="GettingStarted_2_QuickStart.html">
-   Quick Start
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted_1_Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted_2_QuickStart.html">Quick Start</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  User Guide
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="UserGuide_1_Introduction-Tutorial.html">
-   Introduction - Tutorial
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="UserGuide_2_Diversion.html">
-   Diversion Mode
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="UserGuide_3_FlowOptions.html">
-   Flow Input Options
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html">
-   Querying data from the USGS National Water Information System
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">
-   Cost and Revenue Calculations
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="UserGuide_6_Hydrokinetics.html">
-   Hydrokinetics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">
-   Inputs / Outputs - General Workflow
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Developer Guide
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="DeveloperGuide_1_Architecture.html">
-   Architecture
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">
-   Methods, Functions, Classes, and Input Handling
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Theory
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Hydropower Estimation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Theory_2_Design_Flow.html">
-   Design Flow Estimation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Theory_3_Efficiency.html">
-   Turbine Efficiency Calculation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Theory_4_Head_loss.html">
-   Head Loss Estimation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Theory_5_CostOM.html">
-   Cost, O&amp;M, and Revenue Calculation
-  </a>
- </li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hydropower Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Theory_3_Efficiency.html">Turbine Selection &amp; Efficiency Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
+
+
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Theory_1_Hydropower.md"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+</nav></div>
     </div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-            <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/IdahoLabResearch/HydroGenerate"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FTheory_1_Hydropower.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+      </div>
+      
+      <main id="main-content" class="bd-main">
         
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-</div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+<div class="article-header-buttons">
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-        </div>
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Hydropower Estimation
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hg-workflow">
-     HG Workflow
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#basic-hydropower-calculation">
-     Basic hydropower calculation:
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#diversion">
-     Diversion
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computation-steps">
-     Computation Steps:
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hydrokinetics">
-     Hydrokinetics
-    </a>
-   </li>
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FTheory_1_Hydropower.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
-  </a>
- </li>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Theory_1_Hydropower.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Hydropower Estimation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Hydropower Estimation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hg-workflow">HG Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-hydropower-calculation">Basic hydropower calculation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diversion">Diversion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-steps">Computation Steps:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hydrokinetics">Hydrokinetics</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
 
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Hydropower Estimation</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Hydropower Estimation
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hg-workflow">
-     HG Workflow
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#basic-hydropower-calculation">
-     Basic hydropower calculation:
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#diversion">
-     Diversion
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computation-steps">
-     Computation Steps:
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hydrokinetics">
-     Hydrokinetics
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
+              
                 
-  <div class="section" id="hydropower-estimation">
-<h1>Hydropower Estimation<a class="headerlink" href="#hydropower-estimation" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="hydropower-estimation">
+<span id="hydropower-eq"></span><h1>Hydropower Estimation<a class="headerlink" href="#hydropower-estimation" title="Permalink to this heading">#</a></h1>
 <p>Hydrogenerate canculates hydropower potential using</p>
 <div class="math notranslate nohighlight">
 \[P = \eta \times \gamma \times Q \times H\]</div>
@@ -411,36 +434,37 @@
 <li><p><span class="math notranslate nohighlight">\(Q\)</span> is the flow (m^3/s), and</p></li>
 <li><p><span class="math notranslate nohighlight">\(H\)</span> is the net hydraulic head (m).</p></li>
 </ul>
-<p>HG uses a simplified configuration, consisting of one penstock, turbine, and generator. The turbine type is selected based on head and the elements are sized for a <span class="xref myst">design flow</span> that can be entered by the user or computed in HG, using flow data. The overall efficiency of the system is calculated as <span class="math notranslate nohighlight">\(\eta = e_{turb}*e_{gen}\)</span>, where  <span class="math notranslate nohighlight">\(e_{turb}\)</span>  and  <span class="math notranslate nohighlight">\(e_{gen}\)</span> are turbine and generator efficiencies. Turbine efficiencies at flows below or above the design flow are computed using a set of <span class="xref myst">empirical equations</span> for each turbine type (CANMET, 2004), while considering constant generator efficiency.</p>
+<p>HG uses a simplified configuration, consisting of one penstock, turbine, and generator. The turbine type is selected based on head and design flow. Penstock, turbine diamter and other element are sized for a <a class="reference internal" href="Theory_2_Design_Flow.html"><span class="doc std std-doc">design flow</span></a> that can be entered by the user or computed in HG, using flow data. The overall efficiency of the system is calculated as <span class="math notranslate nohighlight">\(\eta = e_{turb}*e_{gen}\)</span>, where  <span class="math notranslate nohighlight">\(e_{turb}\)</span>  and  <span class="math notranslate nohighlight">\(e_{gen}\)</span> are turbine and generator efficiencies. Turbine efficiencies at flows below or above the design flow are computed using a set of <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">empirical equations</span></a> for each turbine type (CANMET, 2004), while considering constant generator efficiency.</p>
 <p>HG considers the streamflow provided by the user to be the flow routed through the hydropower plant. In some instances, e.g., multi-purpose operation reservoir, the amount of flow routed through the power system, and its operation, obey different priorities and must be analyzed outside HG to compute the flow available for hydropower generation. The considerations and analyses needed to generate the available-for-hydropower flow are outside the scope of the current version of HG.</p>
-<div class="section" id="hg-workflow">
-<h2>HG Workflow<a class="headerlink" href="#hg-workflow" title="Permalink to this headline">¶</a></h2>
-<p>HG can currently compute hydropower under three hydropower types: Basic, Diversion, and Hydrokinetic. The <span class="xref myst">User Guide section</span> includes multiple examples that illustrate each of these hydropwoer types as well as additional funcitionality.</p>
-</div>
-<div class="section" id="basic-hydropower-calculation">
-<h2>Basic hydropower calculation:<a class="headerlink" href="#basic-hydropower-calculation" title="Permalink to this headline">¶</a></h2>
+<section id="hg-workflow">
+<h2>HG Workflow<a class="headerlink" href="#hg-workflow" title="Permalink to this heading">#</a></h2>
+<p>HG can currently compute hydropower under three hydropower types: Basic, Diversion, and Hydrokinetic. The <a class="reference internal" href="UserGuide_1_IntroductionTutorial.html"><span class="doc std std-doc">User Guide section</span></a> includes multiple examples that illustrate each of these hydropwoer types as well as additional funcitionality.</p>
+</section>
+<section id="basic-hydropower-calculation">
+<h2>Basic hydropower calculation:<a class="headerlink" href="#basic-hydropower-calculation" title="Permalink to this heading">#</a></h2>
 <p>Required inputs: Hydraulic head, flow, rated power. In the basic calculation mode, users can input two of these three variables and HG will calculate the third.</p>
-</div>
-<div class="section" id="diversion">
-<h2>Diversion<a class="headerlink" href="#diversion" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="diversion">
+<h2>Diversion<a class="headerlink" href="#diversion" title="Permalink to this heading">#</a></h2>
 <p>Required inputs: Hydraulic head, flow.
-Optional inputs: all the inputs listed in [Table 1](LINK TO INPUT TABLE), except those used only for hydrokinetic estimations.</p>
-</div>
-<div class="section" id="computation-steps">
-<h2>Computation Steps:<a class="headerlink" href="#computation-steps" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li><p>Compute <span class="xref myst">head losses</span></p></li>
-<li><p>Select the turbine type: Based on the net hydraulic head, HG will suggest a recommended turbine type by following step 3.</p></li>
-<li><p>Define the <span class="xref myst">design flow</span> (<span class="math notranslate nohighlight">\(Q_d\)</span>).</p></li>
-<li><p>Compute the <span class="xref myst">efficiency of the turbine</span> at flows above and below the design flow and estimate power for the value (s) of flow provided the user. Turbine efficiency is calculated following the methodology presented in the Clean Energy Project Analysis electronic textbook (CANMET Energy Technology Center, 2004)</p></li>
+Optional inputs: all the inputs listed in Table 1 in the <a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html"><span class="doc std std-doc">User Guide section</span></a>, except those used only for hydrokinetic estimations.</p>
+</section>
+<section id="computation-steps">
+<h2>Computation Steps:<a class="headerlink" href="#computation-steps" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Compute head losses using the method described in the <a class="reference internal" href="Theory_4_HeadLoss.html"><span class="doc std std-doc">Theory Section - Head Loss Estimation</span></a>.</p></li>
+<li><p>Calculate the design flow as described in the <span class="xref myst">Theory Section - Design Flow Estimation</span> (<span class="math notranslate nohighlight">\(Q_d\)</span>).</p></li>
+<li><p>Select the turbine type based on the net hydraulic head and design flow folowing the graph included in the <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">Theory Section - Turbine Selection</span></a>.</p></li>
+<li><p>Calculate turbine efficiency using the corresponding turbine equation included in the <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">Theory Section - Turbine Efficiency</span></a> for flows above and below the design flow. Turbine efficiency is calculated following the methodology presented in the Clean Energy Project Analysis electronic textbook (CANMET Energy Technology Center, 2004)</p></li>
+<li><p>Estimate estimate power for the value (s) of flow provided the user implementing any contraint selected. Flow constraints are discussed in the <a class="reference internal" href="Theory_6_FlowConstraints.html"><span class="doc std std-doc">Theory Section - Flow Constraints</span></a></p></li>
 <li><p>Compute the overall efficiency of the system. The overall efficiency of the system is computed as the turbine efficiency (calculated in step 4) times the Generator efficiency.</p></li>
-<li><p>Compute estimated power potential using <a class="reference internal" href="#hydropower-eq"><span class="std std-ref">Equation 1</span></a>.</p></li>
-<li><p>Compute all <span class="xref myst">economic parameters (O&amp;M, initial capital cost, revenue)</span>.</p></li>
+<li><p>Compute estimated power potential using the hydropower euqation at the top of this document.</p></li>
+<li><p>Compute all economic parameters as described in the  <a class="reference internal" href="Theory_5_CostOM.html"><span class="doc std std-doc">Theory Section - Cost, O&amp;M, and Revenue Calculation</span></a>.</p></li>
 </ol>
-<p>Output: the list of outputs will depend on the inputs used. In the most complete case, the output list includes all the variables listed in Table 2, except for those resulting from hydrokinetic calculations.</p>
-</div>
-<div class="section" id="hydrokinetics">
-<h2>Hydrokinetics<a class="headerlink" href="#hydrokinetics" title="Permalink to this headline">¶</a></h2>
+<p>Output: the list of outputs will depend on the inputs used. In the most complete case, the output list includes all the variables listed in Table 2 in the <a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html"><span class="doc std std-doc">User Guide section</span></a>, except for those resulting from hydrokinetic calculations.</p>
+</section>
+<section id="hydrokinetics">
+<h2>Hydrokinetics<a class="headerlink" href="#hydrokinetics" title="Permalink to this heading">#</a></h2>
 <p>For hydrokinetic generation, HG will estimate the potential of installing a single turbine. Users can use this single turbine estimate as a reference value for single installations or understand the type of setup needed to meet their energy needs. For hydrokinetic assessments the only required input is the average velocity in the river section. Additionally, the users can select among different hydrokinetic turbine types and vary the dimensions to evaluate energy potential.</p>
 <p>For hydrokinetic estimations, when replacing the net hydraulic head by the velocity head, we obtain:</p>
 <div class="math notranslate nohighlight">
@@ -460,10 +484,10 @@ Optional inputs: all the inputs listed in [Table 1](LINK TO INPUT TABLE), except
 <p>The average channel velocity value introduced by the user is directly used in this equation. The swept area of blades is computed for each turbine type and dimensions given. Niebuhr et al., (2019) provides a review of existing hydrokinetic turbine types. The turbine types and default sizes included in HG were derived from Niebuhr et al., (2019) and brochures of existing hydrokinetic turbines.</p>
 <p>Required inputs: Average cross sectional velocity.
 Optional inputs: type of blade, height and diameter of blade.</p>
-</div>
-</div>
-<div class="section" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+</section>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
 <p>DOE. (2023). Types of Hydropower Plants | Department of Energy. <a class="reference external" href="https://www.energy.gov/eere/water/types-hydropower-plants">https://www.energy.gov/eere/water/types-hydropower-plants</a></p>
 <p>Hadjerioua, Boualem, Wei, Yaxing, and Kao, Shih-Chieh. An Assessment of Energy Potential at Non-Powered Dams in the United States. United States: N. p., 2012. Web. <a class="reference external" href="https://doi.org/10.2172/1039957">https://doi.org/10.2172/1039957</a></p>
 <p>U.S. Bureau of Reclamation. (2011). Hydropower Resource Assessment at Existing Reclamation Facilities. <a class="reference external" href="https://www.usbr.gov/power/AssessmentReport/USBRHydroAssessmentFinalReportMarch2011.pdf">https://www.usbr.gov/power/AssessmentReport/USBRHydroAssessmentFinalReportMarch2011.pdf</a></p>
@@ -471,7 +495,7 @@ Optional inputs: type of blade, height and diameter of blade.</p>
 <p>CANMET Energy Technology Center. (2004). Clean Energy Project Analysis: Retscreen Engineering &amp; Cases Textbook. <a class="reference external" href="https://www.ieahydro.org/media/1ccb8c33/RETScreen%C2%AE-Engineering-Cases-Textbook%E2%80%93-PDF.pdf">https://www.ieahydro.org/media/1ccb8c33/RETScreen®-Engineering-Cases-Textbook–-PDF.pdf</a></p>
 <p>Betz, A. (2014). Introduction to the theory of flow machines. Elsevier. eBook ISBN: 9781483180908. <a class="reference external" href="https://shop.elsevier.com/books/introduction-to-the-theory-of-flow-machines/betz/978-0-08-011433-0">https://shop.elsevier.com/books/introduction-to-the-theory-of-flow-machines/betz/978-0-08-011433-0</a></p>
 <p>Niebuhr, C.M., Van Dijk, M., Neary, V.S. and Bhagwan, J.N., 2019. A review of hydrokinetic turbines and enhancement techniques for canal installations: Technology, applicability and potential. Renewable and Sustainable Energy Reviews, 113, p.109240. <a class="reference external" href="https://doi.org/10.1016/j.rser.2019.06.047">https://doi.org/10.1016/j.rser.2019.06.047</a></p>
-</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -485,7 +509,7 @@ Optional inputs: type of blade, height and diameter of blade.</p>
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -493,44 +517,111 @@ Optional inputs: type of blade, height and diameter of blade.</p>
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="DeveloperGuide_2_MethodsFunctions.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Methods, Functions, Classes, and Input Handling</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="DeveloperGuide_2_MethodsFunctions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Methods, Functions, Classes, and Input Handling</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="Theory_2_Design_Flow.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="Theory_2_Design_Flow.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Design Flow Estimation</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
+                </footer>
+              
+            </div>
             
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By Idaho National Laboratory<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Hydropower Estimation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hg-workflow">HG Workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-hydropower-calculation">Basic hydropower calculation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diversion">Diversion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-steps">Computation Steps:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hydrokinetics">Hydrokinetics</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
 
-      </div>
-    </div>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <div class="footer-item">
+    
+<p class="component-author">
+By Idaho National Laboratory
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

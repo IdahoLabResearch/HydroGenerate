@@ -72,3 +72,8 @@ where
 ## References
 U.S. Environmental Protection Agency. (2020). EPANET 2.2 User Manual. https://epanet22.readthedocs.io/en/latest/index.html 
 
+Bhave, P. R. 1991. Analysis of Flow in Water Distribution Networks. Technomic Publishing. Lancaster, PA.
+
+Dunlop, E. J. 1991. WADI Users Manual. Local Government Computer Services Board, Dublin, Ireland.
+
+
