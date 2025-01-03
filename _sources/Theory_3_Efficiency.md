@@ -10,7 +10,7 @@ Turbine selection for a particular site is performed based on the design flow an
 ---
 name: TurbineSelection
 ---
-Sample Flow-Duration plot using the data from the USGS NWIS example indluded in the [USER GUIDE section](UserGuide_4_QueryingDataUSGS-NWIS.md).
+Graph used for turbine selection. Flow and head and included in this figure and a turbine is selected based on the areas of influence
 ```
 
 
