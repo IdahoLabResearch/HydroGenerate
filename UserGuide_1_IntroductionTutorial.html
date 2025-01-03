@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Hydrokinetics</title>
+    <title>Introduction - Tutorial</title>
   
   
   
@@ -62,13 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'UserGuide_6_Hydrokinetics';</script>
-    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/UserGuide_6_Hydrokinetics.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'UserGuide_1_IntroductionTutorial';</script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/UserGuide_1_IntroductionTutorial.html" />
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Inputs / Outputs - General Workflow" href="UserGuide_7_HydroGenerateWorkflow.html" />
-    <link rel="prev" title="Cost and Revenue Calculations" href="UserGuide_5_Cost%26Revenue.html" />
+    <link rel="next" title="Diversion Mode" href="UserGuide_2_Diversion.html" />
+    <link rel="prev" title="Quick Start" href="GettingStarted_2_QuickStart.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -177,12 +177,12 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction - Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hydrokinetics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
@@ -274,7 +274,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FUserGuide_6_Hydrokinetics.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FUserGuide_1_IntroductionTutorial.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -304,7 +304,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/UserGuide_6_Hydrokinetics.ipynb" target="_blank"
+      <li><a href="_sources/UserGuide_1_IntroductionTutorial.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -375,7 +375,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -386,11 +388,24 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Hydrokinetics</h1>
+    <h1>Introduction - Tutorial</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-hydropower-computations">Basic hydropower computations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-power-from-a-given-head-and-flow">Calculate power from a given head and flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-head-from-a-given-head-and-flow">Calculate head from a given head and flow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-flow-from-a-given-head-and-power">Calculate flow from a given head and power</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -400,9 +415,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="hydrokinetics">
-<h1>Hydrokinetics<a class="headerlink" href="#hydrokinetics" title="Permalink to this heading">#</a></h1>
-<p><strong><em>HydroGenerate</em></strong> can compute hydrokinetic potential based on the aerage cross-sectional velocity of a river or canal. Hydrokinetic calculations are currently under development.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-tutorial">
+<h1>Introduction - Tutorial<a class="headerlink" href="#introduction-tutorial" title="Permalink to this heading">#</a></h1>
+<p>This page contains introductory examples of HydroGenerate python usage. It is assumed that users are familiar with using Python.</p>
+<section id="basic-hydropower-computations">
+<h2>Basic hydropower computations<a class="headerlink" href="#basic-hydropower-computations" title="Permalink to this heading">#</a></h2>
+<p>All the functionality of HydroGenerate is encapsulated in a sigle function, <strong><em>calculate_hp_potential</em></strong>. In <em>basic</em> mode HydroGenerate can estimate power, head, or flow, given the other two values. This sections includes examples using the <em>basic</em> functionality.</p>
+<p>Let’s use <strong><em>calculate_hp_potential</em></strong> to calculate the power, flow, and head in an example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">HydroGenerate.hydropower_potential</span> <span class="kn">import</span> <span class="n">calculate_hp_potential</span>
@@ -410,50 +429,68 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
+<section id="calculate-power-from-a-given-head-and-flow">
+<h2>Calculate power from a given head and flow<a class="headerlink" href="#calculate-power-from-a-given-head-and-flow" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 Average velocity is known. hk_blade_type= &#39;ConventionalRotor&#39; - Default turbine size.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># given flow, in cfs</span>
+<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># head, in ft</span>
+<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="n">V</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># average cross-section velocity m/s</span>
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">)</span>
 
-<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">channel_average_velocity</span> <span class="o">=</span> <span class="n">V</span><span class="p">,</span>
-                           <span class="n">hydropower_type</span> <span class="o">=</span> <span class="s1">&#39;Hydrokinetic&#39;</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;SI&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_type</span><span class="o">=</span> <span class="s1">&#39;ConventionalRotor&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_diameter</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                           <span class="n">hk_blade_heigth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (kW):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The hydropower potential is </span><span class="si">{}</span><span class="s2"> kW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rated Power (kW): 1.85
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The hydropower potential is 11515.0 kW
 </pre></div>
 </div>
 </div>
 </div>
+<p>For a full list of the inputs and output parameters, go to <a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html"><span class="doc std std-doc">Inputs / Outputs - General Workflow</span></a></p>
+</section>
+<section id="calculate-head-from-a-given-head-and-flow">
+<h2>Calculate head from a given head and flow<a class="headerlink" href="#calculate-head-from-a-given-head-and-flow" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2 Average velocity is known. US units. hk_blade_type= &#39;H-DarrieusRotor&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># given flow, in cfs</span>
+<span class="n">power</span> <span class="o">=</span> <span class="mi">11515</span> <span class="c1"># Power, in Kw</span>
 
-<span class="n">V</span> <span class="o">=</span> <span class="mf">6.6</span> <span class="c1"># average cross-section velovicty ft/s</span>
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">)</span>
 
-<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">channel_average_velocity</span> <span class="o">=</span> <span class="n">V</span><span class="p">,</span>
-                           <span class="n">hydropower_type</span> <span class="o">=</span> <span class="s1">&#39;Hydrokinetic&#39;</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_type</span><span class="o">=</span> <span class="s1">&#39;H-DarrieusRotor&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_diameter</span><span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span>
-                           <span class="n">hk_blade_heigth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (kW):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The head required to produce </span><span class="si">{}</span><span class="s2"> kW with a flow of </span><span class="si">{}</span><span class="s2"> cfs is </span><span class="si">{}</span><span class="s2"> ft&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">flow</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">head</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rated Power (kW): 0.67
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The head required to produce 11515 kW with a flow of 8000.0 cfs is 20.0 ft
 </pre></div>
 </div>
 </div>
 </div>
+<section id="calculate-flow-from-a-given-head-and-power">
+<h3>Calculate flow from a given head and power<a class="headerlink" href="#calculate-flow-from-a-given-head-and-power" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># head, in ft</span>
+<span class="n">power</span> <span class="o">=</span> <span class="mi">11515</span>
+
+<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The flow required to produce </span><span class="si">{}</span><span class="s2"> kW with a head of </span><span class="si">{}</span><span class="s2"> ft is </span><span class="si">{}</span><span class="s2"> cfs&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">head</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">flow</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The flow required to produce 11515 kW with a head of 20.0 ft is 8000.0 cfs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -487,20 +524,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="UserGuide_5_Cost%26Revenue.html"
+       href="GettingStarted_2_QuickStart.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Cost and Revenue Calculations</p>
+        <p class="prev-next-title">Quick Start</p>
       </div>
     </a>
     <a class="right-next"
-       href="UserGuide_7_HydroGenerateWorkflow.html"
+       href="UserGuide_2_Diversion.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Inputs / Outputs - General Workflow</p>
+        <p class="prev-next-title">Diversion Mode</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -510,6 +547,25 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-hydropower-computations">Basic hydropower computations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-power-from-a-given-head-and-flow">Calculate power from a given head and flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-head-from-a-given-head-and-flow">Calculate head from a given head and flow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-flow-from-a-given-head-and-power">Calculate flow from a given head and power</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

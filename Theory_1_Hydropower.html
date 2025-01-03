@@ -179,10 +179,10 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_Introduction-Tutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
@@ -199,9 +199,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_3_Efficiency.html">Turbine Selection &amp; Efficiency Calculation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Theory_4_Head_loss.html">Head Loss Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
+
+
 </ul>
 
     </div>
@@ -431,11 +434,11 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(Q\)</span> is the flow (m^3/s), and</p></li>
 <li><p><span class="math notranslate nohighlight">\(H\)</span> is the net hydraulic head (m).</p></li>
 </ul>
-<p>HG uses a simplified configuration, consisting of one penstock, turbine, and generator. The turbine type is selected based on head and the elements are sized for a <span class="xref myst">design flow</span> that can be entered by the user or computed in HG, using flow data. The overall efficiency of the system is calculated as <span class="math notranslate nohighlight">\(\eta = e_{turb}*e_{gen}\)</span>, where  <span class="math notranslate nohighlight">\(e_{turb}\)</span>  and  <span class="math notranslate nohighlight">\(e_{gen}\)</span> are turbine and generator efficiencies. Turbine efficiencies at flows below or above the design flow are computed using a set of <span class="xref myst">empirical equations</span> for each turbine type (CANMET, 2004), while considering constant generator efficiency.</p>
+<p>HG uses a simplified configuration, consisting of one penstock, turbine, and generator. The turbine type is selected based on head and design flow. Penstock, turbine diamter and other element are sized for a <a class="reference internal" href="Theory_2_Design_Flow.html"><span class="doc std std-doc">design flow</span></a> that can be entered by the user or computed in HG, using flow data. The overall efficiency of the system is calculated as <span class="math notranslate nohighlight">\(\eta = e_{turb}*e_{gen}\)</span>, where  <span class="math notranslate nohighlight">\(e_{turb}\)</span>  and  <span class="math notranslate nohighlight">\(e_{gen}\)</span> are turbine and generator efficiencies. Turbine efficiencies at flows below or above the design flow are computed using a set of <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">empirical equations</span></a> for each turbine type (CANMET, 2004), while considering constant generator efficiency.</p>
 <p>HG considers the streamflow provided by the user to be the flow routed through the hydropower plant. In some instances, e.g., multi-purpose operation reservoir, the amount of flow routed through the power system, and its operation, obey different priorities and must be analyzed outside HG to compute the flow available for hydropower generation. The considerations and analyses needed to generate the available-for-hydropower flow are outside the scope of the current version of HG.</p>
 <section id="hg-workflow">
 <h2>HG Workflow<a class="headerlink" href="#hg-workflow" title="Permalink to this heading">#</a></h2>
-<p>HG can currently compute hydropower under three hydropower types: Basic, Diversion, and Hydrokinetic. The <span class="xref myst">User Guide section</span> includes multiple examples that illustrate each of these hydropwoer types as well as additional funcitionality.</p>
+<p>HG can currently compute hydropower under three hydropower types: Basic, Diversion, and Hydrokinetic. The <a class="reference internal" href="UserGuide_1_IntroductionTutorial.html"><span class="doc std std-doc">User Guide section</span></a> includes multiple examples that illustrate each of these hydropwoer types as well as additional funcitionality.</p>
 </section>
 <section id="basic-hydropower-calculation">
 <h2>Basic hydropower calculation:<a class="headerlink" href="#basic-hydropower-calculation" title="Permalink to this heading">#</a></h2>
@@ -449,15 +452,16 @@ Optional inputs: all the inputs listed in Table 1 in the <a class="reference int
 <section id="computation-steps">
 <h2>Computation Steps:<a class="headerlink" href="#computation-steps" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Compute <span class="xref myst">head losses</span>.</p></li>
-<li><p>Define the <span class="xref myst">design flow</span> (<span class="math notranslate nohighlight">\(Q_d\)</span>).</p></li>
-<li><p>Select the turbine type: Based on the net hydraulic head and design flow.</p></li>
-<li><p>Compute the <span class="xref myst">efficiency of the turbine</span> at flows above and below the design flow and estimate power for the value (s) of flow provided the user. Turbine efficiency is calculated following the methodology presented in the Clean Energy Project Analysis electronic textbook (CANMET Energy Technology Center, 2004)</p></li>
+<li><p>Compute head losses using the method described in the <a class="reference internal" href="Theory_4_HeadLoss.html"><span class="doc std std-doc">Theory Section - Head Loss Estimation</span></a>.</p></li>
+<li><p>Calculate the design flow as described in the <span class="xref myst">Theory Section - Design Flow Estimation</span> (<span class="math notranslate nohighlight">\(Q_d\)</span>).</p></li>
+<li><p>Select the turbine type based on the net hydraulic head and design flow folowing the graph included in the <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">Theory Section - Turbine Selection</span></a>.</p></li>
+<li><p>Calculate turbine efficiency using the corresponding turbine equation included in the <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">Theory Section - Turbine Efficiency</span></a> for flows above and below the design flow. Turbine efficiency is calculated following the methodology presented in the Clean Energy Project Analysis electronic textbook (CANMET Energy Technology Center, 2004)</p></li>
+<li><p>Estimate estimate power for the value (s) of flow provided the user implementing any contraint selected. Flow constraints are discussed in the <a class="reference internal" href="Theory_6_FlowConstraints.html"><span class="doc std std-doc">Theory Section - Flow Constraints</span></a></p></li>
 <li><p>Compute the overall efficiency of the system. The overall efficiency of the system is computed as the turbine efficiency (calculated in step 4) times the Generator efficiency.</p></li>
-<li><p>Compute estimated power potential using <a class="reference internal" href="#hydropower-eq"><span class="std std-ref">Equation 1</span></a>.</p></li>
-<li><p>Compute all <span class="xref myst">economic parameters (O&amp;M, initial capital cost, revenue)</span>.</p></li>
+<li><p>Compute estimated power potential using the hydropower euqation at the top of this document.</p></li>
+<li><p>Compute all economic parameters as described in the  <a class="reference internal" href="Theory_5_CostOM.html"><span class="doc std std-doc">Theory Section - Cost, O&amp;M, and Revenue Calculation</span></a>.</p></li>
 </ol>
-<p>Output: the list of outputs will depend on the inputs used. In the most complete case, the output list includes all the variables listed in Table 2, except for those resulting from hydrokinetic calculations.</p>
+<p>Output: the list of outputs will depend on the inputs used. In the most complete case, the output list includes all the variables listed in Table 2 in the <a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html"><span class="doc std std-doc">User Guide section</span></a>, except for those resulting from hydrokinetic calculations.</p>
 </section>
 <section id="hydrokinetics">
 <h2>Hydrokinetics<a class="headerlink" href="#hydrokinetics" title="Permalink to this heading">#</a></h2>

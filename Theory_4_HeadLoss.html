@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Hydrokinetics</title>
+    <title>Head Loss Estimation</title>
   
   
   
@@ -62,13 +62,15 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'UserGuide_6_Hydrokinetics';</script>
-    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/UserGuide_6_Hydrokinetics.html" />
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Theory_4_HeadLoss';</script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/Theory_4_HeadLoss.html" />
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Inputs / Outputs - General Workflow" href="UserGuide_7_HydroGenerateWorkflow.html" />
-    <link rel="prev" title="Cost and Revenue Calculations" href="UserGuide_5_Cost%26Revenue.html" />
+    <link rel="next" title="Cost, O&amp;M, and Revenue Calculation" href="Theory_5_CostOM.html" />
+    <link rel="prev" title="Turbine Selection &amp; Efficiency Calculation" href="Theory_3_Efficiency.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -176,13 +178,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted_2_QuickStart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hydrokinetics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
@@ -191,13 +193,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Theory_1_Hydropower.html">Hydropower Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_3_Efficiency.html">Turbine Selection &amp; Efficiency Calculation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Head Loss Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
@@ -274,7 +276,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FUserGuide_6_Hydrokinetics.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FTheory_4_HeadLoss.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -304,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/UserGuide_6_Hydrokinetics.ipynb" target="_blank"
+      <li><a href="_sources/Theory_4_HeadLoss.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -314,7 +316,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -375,7 +377,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -386,11 +390,25 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Hydrokinetics</h1>
+    <h1>Head Loss Estimation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Head Loss Estimation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-darcy-weisbach-head-loss-calculation">A. Darcy-Weisbach head loss calculation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-hazen-williams-head-loss-calculation">B. Hazen-Williams head loss calculation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -400,60 +418,86 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="hydrokinetics">
-<h1>Hydrokinetics<a class="headerlink" href="#hydrokinetics" title="Permalink to this heading">#</a></h1>
-<p><strong><em>HydroGenerate</em></strong> can compute hydrokinetic potential based on the aerage cross-sectional velocity of a river or canal. Hydrokinetic calculations are currently under development.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">HydroGenerate.hydropower_potential</span> <span class="kn">import</span> <span class="n">calculate_hp_potential</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1 Average velocity is known. hk_blade_type= &#39;ConventionalRotor&#39; - Default turbine size.</span>
-
-<span class="n">V</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># average cross-section velocity m/s</span>
-
-<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">channel_average_velocity</span> <span class="o">=</span> <span class="n">V</span><span class="p">,</span>
-                           <span class="n">hydropower_type</span> <span class="o">=</span> <span class="s1">&#39;Hydrokinetic&#39;</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;SI&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_type</span><span class="o">=</span> <span class="s1">&#39;ConventionalRotor&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_diameter</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                           <span class="n">hk_blade_heigth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (kW):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rated Power (kW): 1.85
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2 Average velocity is known. US units. hk_blade_type= &#39;H-DarrieusRotor&#39;</span>
-
-<span class="n">V</span> <span class="o">=</span> <span class="mf">6.6</span> <span class="c1"># average cross-section velovicty ft/s</span>
-
-<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">channel_average_velocity</span> <span class="o">=</span> <span class="n">V</span><span class="p">,</span>
-                           <span class="n">hydropower_type</span> <span class="o">=</span> <span class="s1">&#39;Hydrokinetic&#39;</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_type</span><span class="o">=</span> <span class="s1">&#39;H-DarrieusRotor&#39;</span><span class="p">,</span>
-                           <span class="n">hk_blade_diameter</span><span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span>
-                           <span class="n">hk_blade_heigth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (kW):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rated Power (kW): 0.67
-</pre></div>
-</div>
-</div>
-</div>
+  <section id="head-loss-estimation">
+<h1>Head Loss Estimation<a class="headerlink" href="#head-loss-estimation" title="Permalink to this heading">#</a></h1>
+<p>The net hydraulic head is computed as the available head minus head losses:</p>
+<div class="math notranslate nohighlight">
+\[H = H_e - h_l\]</div>
+<p>Where,</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H\)</span> is the net hydraulic head (m),</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_e\)</span> is the available head (m) and</p></li>
+<li><p><span class="math notranslate nohighlight">\(h_l\)</span> is the head loss (m).</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(h_l\)</span> is computed to account for friction losses only, or <span class="math notranslate nohighlight">\(h_l = h_f\)</span> (other losses are more minor and hence are not included). HG includes the following options for head loss calculations:</p>
+<ol class="arabic simple">
+<li><p>Head losses in the penstock, using the Darcy-Weisbach equation (default) as explained below, or the Hazen-Williams equation (if selected by the user). The required input for this calculation is the penstock length. Users can also select penstock material, with steel being the default if none is provided.</p></li>
+<li><p>If the penstock diameter is not known, HG will calculate a diameter that will limit head losses to 10% (default) of the available head. Users can change the penstock diameter, or the maximum percent of head loss allowed to calculate a different penstock diameter. Head losses will decrease with larger diameters while costs will increase. HG provides the flexibility to evaluate different scenarios.</p></li>
+</ol>
+<p>HG can calculate head losses using the Darcy-Weisbach equation (default) or the Hazen-Williams equation.</p>
+<section id="a-darcy-weisbach-head-loss-calculation">
+<h2>A. Darcy-Weisbach head loss calculation<a class="headerlink" href="#a-darcy-weisbach-head-loss-calculation" title="Permalink to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[h_f = f \times \frac{L \times V^2}{D \times 2g}  \]</div>
+<p>HG computes the friction factor <span class="math notranslate nohighlight">\(f\)</span> by using different equations, as:</p>
+<ol class="arabic simple">
+<li><p>For laminar flow (Re &lt; 2000), f is given by (Bhave, 1991):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ f = \frac{64}{Re}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>For fully turbulent flow (Re &gt; 4,000), the Swamee-Jain approximation to the Colebrook-White equation (Bhave, 1991) is used:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f = \frac{.25}{\Big[log\big(\frac{\epsilon}{3.7D}+\frac{5.74}{Re^0.9}\big)\Big]^2}  \]</div>
+<ol class="arabic simple" start="3">
+<li><p>For flow in the transition zone (2,000 &lt; Re &lt; 4,000), f is computed using a cubic interpolation formula derived from the Moody Diagram by Dunlop (1991):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[f=X1+R(X2+R(X3+RX4)\]</div>
+<div class="math notranslate nohighlight">
+\[R=\ \frac{Re}{2000}\]</div>
+<div class="math notranslate nohighlight">
+\[X1=7FA-FB\]</div>
+<div class="math notranslate nohighlight">
+\[X2=0.128-17FA+2.5FB\]</div>
+<div class="math notranslate nohighlight">
+\[X3=\ -0.128+13FA-2FB\]</div>
+<div class="math notranslate nohighlight">
+\[X4=0.032-3FA+0.5FB\]</div>
+<div class="math notranslate nohighlight">
+\[FA=\ {Y3}^{-2}\]</div>
+<div class="math notranslate nohighlight">
+\[FB=FA\left(2-\ \frac{AA\ AB}{Y2\ Y3}\right)\]</div>
+<div class="math notranslate nohighlight">
+\[Y2=\ \frac{\varepsilon}{3.7D}+AB\]</div>
+<div class="math notranslate nohighlight">
+\[Y3=\ -2\log(Y2)\]</div>
+<div class="math notranslate nohighlight">
+\[AA=\ -1.5634601348517065795\]</div>
+<div class="math notranslate nohighlight">
+\[AB=\ 0.00328895476345399058690\]</div>
+<p>following similar methodology presented in EPANET (U.S. Environmental Protection Agency, 2020), depending on the flow’s Reynolds Number (Re), defined as <span class="math notranslate nohighlight">\( Re = \frac{4q}{\pi Dv}\)</span>.</p>
+</section>
+<section id="b-hazen-williams-head-loss-calculation">
+<h2>B. Hazen-Williams head loss calculation<a class="headerlink" href="#b-hazen-williams-head-loss-calculation" title="Permalink to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[h_f=10.67\ast\frac{L{\ast Q}^{1.852}}{C^{1.852}\ast D^{4.87}}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(h_f\)</span> = head loss due to friction (m),</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> = length of the pipe (m),</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> = Volumetric flow rate (m^3/s),</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span> = pipe roughness coefficient and</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span> = internal diameter of the pipe (m).</p></li>
+</ul>
+</section>
+</section>
+<section id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
+<p>U.S. Environmental Protection Agency. (2020). EPANET 2.2 User Manual. <a class="reference external" href="https://epanet22.readthedocs.io/en/latest/index.html">https://epanet22.readthedocs.io/en/latest/index.html</a></p>
+<p>Bhave, P. R. 1991. Analysis of Flow in Water Distribution Networks. Technomic Publishing. Lancaster, PA.</p>
+<p>Dunlop, E. J. 1991. WADI Users Manual. Local Government Computer Services Board, Dublin, Ireland.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -487,20 +531,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="UserGuide_5_Cost%26Revenue.html"
+       href="Theory_3_Efficiency.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Cost and Revenue Calculations</p>
+        <p class="prev-next-title">Turbine Selection &amp; Efficiency Calculation</p>
       </div>
     </a>
     <a class="right-next"
-       href="UserGuide_7_HydroGenerateWorkflow.html"
+       href="Theory_5_CostOM.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Inputs / Outputs - General Workflow</p>
+        <p class="prev-next-title">Cost, O&amp;M, and Revenue Calculation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -510,6 +554,26 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Head Loss Estimation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-darcy-weisbach-head-loss-calculation">A. Darcy-Weisbach head loss calculation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-hazen-williams-head-loss-calculation">B. Hazen-Williams head loss calculation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

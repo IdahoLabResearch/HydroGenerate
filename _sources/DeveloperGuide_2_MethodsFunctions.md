@@ -64,3 +64,16 @@ Computations Workflow, methods, functions, and classes
 |	ConstantEletrictyPrice,	|		|	Compute revenue	|
 |	ConstantEletrictyPrice_pd	|		|		|
 |	calculate_hp_potential	|	Function	|	Performs all computation and executes existing functions depending on parameters	|
+|	flow_efficiency_plot	|	Function	|	Plot turbine efficiency as a function of flow	|
+|	flow_efficiency_power_plot	|	Function	|	Plot power and turbine efficiency as a function of flow	|
+|	turbine_type_plot	|	Function	|	Plot turbine selection information	|
+|	flow_duration_curve_plot	|	Function	|	Plot the flow-duration curve	|
+|	plant_capfactor_plot	|	Function	|	Plot monthly capacity fator summary	|
+|	plant_turbineflow_plot	|	Function	|	Plot monthly turbine flow summary	|
+|	plant_elecgeneration_plot	|	Function	|	Plot monthly electricity generation summary |
+|	FlowPreProcessingParameters	|	Class	|	Initializes parameters needed for flow preprocessing |
+|   FlowPreProcessing	|	Class	|	Contains methods for flwo preprocessing	|
+|	max_turbineflow_checker	|	Function	|	Checks that flow is not larger than design flow	|
+|	min_turbineflow_checker	|	Function	|	Checks that flow is not less than minimum turbine flow	|
+|   annual_maintenance_implementer	|	Function	|	Implements annual maintenance   |
+|   major_maintenance_implementer	|	Function	|	Implements major maintenance    |

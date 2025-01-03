@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Flow Input Options</title>
+    <title>Querying data from the USGS National Water Information System</title>
   
   
   
@@ -62,13 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'UserGuide_3_FlowOptions';</script>
-    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/UserGuide_3_FlowOptions.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'UserGuide_4_QueryingDataUSGSNWIS';</script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/UserGuide_4_QueryingDataUSGSNWIS.html" />
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Querying data from the USGS National Water Information System" href="UserGuide_4_QueryingDataUSGSNWIS.html" />
-    <link rel="prev" title="Diversion Mode" href="UserGuide_2_Diversion.html" />
+    <link rel="next" title="Cost and Revenue Calculations" href="UserGuide_5_Cost%26Revenue.html" />
+    <link rel="prev" title="Flow Input Options" href="UserGuide_3_FlowOptions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -179,8 +179,8 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Flow Input Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Querying data from the USGS National Water Information System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
@@ -274,7 +274,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FUserGuide_3_FlowOptions.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FUserGuide_4_QueryingDataUSGSNWIS.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -304,7 +304,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/UserGuide_3_FlowOptions.ipynb" target="_blank"
+      <li><a href="_sources/UserGuide_4_QueryingDataUSGSNWIS.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -388,7 +388,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Flow Input Options</h1>
+    <h1>Querying data from the USGS National Water Information System</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -398,8 +398,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-as-a-numpy-array">Flow as a numpy array</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-as-pandas-dataframe-with-a-datetime-index-additional-functionality">Flow as Pandas dataframe with a datetime index - Additional functionality.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-streamflow-data-from-a-usgs-stream-gauge">Use streamflow data from a USGS stream gauge.</a></li>
 </ul>
             </nav>
         </div>
@@ -411,113 +410,138 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="flow-input-options">
-<h1>Flow Input Options<a class="headerlink" href="#flow-input-options" title="Permalink to this heading">#</a></h1>
-<p><strong><em>HydroGenerate</em></strong> allows entering flow in multiple formats. More advance functionality is avaliable when a time series of flow is avaliable.</p>
-<p>Using <strong><em>hydropower_type = Diversion</em></strong> allows computing hydropower potential for a <em>diversion</em> or <em>run-of-river</em> project.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="querying-data-from-the-usgs-national-water-information-system">
+<h1>Querying data from the USGS National Water Information System<a class="headerlink" href="#querying-data-from-the-usgs-national-water-information-system" title="Permalink to this heading">#</a></h1>
+<p>The USGS National Water Information System (NWIS) provides access to surface-water data at approximately 8,500 sites. The data are served online—most in near realtime—to meet many diverse needs. For additional information regarding NWIS, visit the <a class="reference external" href="https://waterdata.usgs.gov/nwis">USGS website</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">HydroGenerate.hydropower_potential</span> <span class="kn">import</span> <span class="n">calculate_hp_potential</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="flow-as-a-numpy-array">
-<h2>Flow as a numpy array<a class="headerlink" href="#flow-as-a-numpy-array" title="Permalink to this heading">#</a></h2>
-<p>When flow is a numpy array, <strong><em>HydroGenerate</em></strong> can select a design flow and calculate nameplate capacity, effiiency, and head losses for the given vlues of flow.</p>
+<section id="use-streamflow-data-from-a-usgs-stream-gauge">
+<h2>Use streamflow data from a USGS stream gauge.<a class="headerlink" href="#use-streamflow-data-from-a-usgs-stream-gauge" title="Permalink to this heading">#</a></h2>
+<p>The USGS has a Python package (<strong><em>dataretrieval</em></strong>) designed to simplify the process of loading hydrologic data into the Python environment. <strong><em>dataretrieval</em></strong> can be pip installed into a Python environment. The example code shows how to donwload data using <strong><em>dataretrieval</em></strong> and format it for hydropower potential evaluation in <strong><em>HydroGenerate</em></strong>. The example used, and additional information, is avlaiable as a <a class="reference external" href="http://www.hydroshare.org/resource/c97c32ecf59b4dff90ef013030c54264">HydroShare Resource</a>. Information about <strong><em>dataretrieval</em></strong> is avaliable directly on the <a class="reference external" href="https://github.com/DOI-USGS/dataretrieval-python">USGS GitHUb Repository</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Head, power, and length of penstock are known. Multiple values of flow are available, the design flow is not known.</span>
-<span class="c1"># In this scenario HydroGenerate will select a turbine, compute efficiency for the given flow values,</span>
-<span class="c1"># design flow based on a percent of exceedance, penstock diameter (assuming steel if no material is given),</span>
-<span class="c1"># head loss for all flows, rater power,</span>
-<span class="c1"># power a given range of flow, </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install dataretrieval, if it doesn&#39;t exist in Python environment, using: </span>
+<span class="c1"># !pip install dataretrieval</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import data retrieval</span>
+<span class="kn">from</span> <span class="nn">dataretrieval</span> <span class="kn">import</span> <span class="n">nwis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the parameters needed to retrieve data</span>
+<span class="n">siteNumber</span> <span class="o">=</span> <span class="s2">&quot;10109000&quot;</span> <span class="c1"># LOGAN RIVER ABOVE STATE DAM, NEAR LOGAN, UT</span>
+<span class="n">parameterCode</span> <span class="o">=</span> <span class="s2">&quot;00060&quot;</span> <span class="c1"># Discharge</span>
+<span class="n">startDate</span> <span class="o">=</span> <span class="s2">&quot;2010-01-01&quot;</span>
+<span class="n">endDate</span> <span class="o">=</span> <span class="s2">&quot;2020-12-31&quot;</span>
 
-<span class="n">flow</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_test.csv&#39;</span><span class="p">)[</span><span class="s1">&#39;discharge_cfs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="c1"># cfs</span>
-<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># ft</span>
-<span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># ft</span>
-<span class="n">hp_type</span> <span class="o">=</span> <span class="s1">&#39;Diversion&#39;</span>
-<span class="n">pctime_runfull</span><span class="o">=</span> <span class="mi">20</span> <span class="c1"># percent of time the turbine is running full - default is 30%</span>
-
-<span class="c1"># Note: decreasing the percent of time the turbine will run full will result in a </span>
-<span class="c1"># larger system (rated power and cost)</span>
-
-<span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span>
-                           <span class="n">penstock_headloss_calculation</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                           <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
-                           <span class="n">pctime_runfull</span><span class="o">=</span> <span class="n">pctime_runfull</span><span class="p">)</span>
-
-<span class="c1"># Explore output</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design flow (cfs):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">design_flow</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head_loss at design flow (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_design_headloss</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine type:&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">turbine_type</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rated Power (Kw):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">rated_power</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Net head (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">net_head</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Generator Efficiency:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">generator_efficiency</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head Loss method:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_headloss_method</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Flow range evaluated (cfs):&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">flow</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Turbine Efficiency for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">turbine_efficiency</span> <span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Power (kW) for the given flow range:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">power</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="c1"># Retrieve the data</span>
+<span class="n">dailyStreamflow</span> <span class="o">=</span> <span class="n">nwis</span><span class="o">.</span><span class="n">get_dv</span><span class="p">(</span><span class="n">sites</span><span class="o">=</span><span class="n">siteNumber</span><span class="p">,</span> <span class="n">parameterCd</span><span class="o">=</span><span class="n">parameterCode</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">startDate</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">endDate</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert to pandas dataframe</span>
+<span class="n">flow</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dailyStreamflow</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">flow</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 10800.0
-Head_loss at design flow (ft): 1.88
-Turbine type: Kaplan
-Rated Power (Kw): 14828.83
-Net head (ft): 18.12
-Generator Efficiency: 0.98
-Head Loss method: Darcy-Weisbach
-Penstock length (ft): 50.0
-Penstock diameter (ft): 18.73
-Runner diameter (ft): 20.16
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-Flow range evaluated (cfs): [3260. 3270. 3250. ... 3170. 3100. 3150.]
-Turbine Efficiency for the given flow range: [0.768 0.77  0.766 ... 0.751 0.736 0.747]
-Power (kW) for the given flow range: [4118.3 4140.3 4096.2 ... 3917.7 3759.3 3872.7]
-</pre></div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>site_no</th>
+      <th>00060_Mean</th>
+      <th>00060_Mean_cd</th>
+    </tr>
+    <tr>
+      <th>datetime</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2010-01-01 00:00:00+00:00</th>
+      <td>10109000</td>
+      <td>108.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2010-01-02 00:00:00+00:00</th>
+      <td>10109000</td>
+      <td>107.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2010-01-03 00:00:00+00:00</th>
+      <td>10109000</td>
+      <td>106.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2010-01-04 00:00:00+00:00</th>
+      <td>10109000</td>
+      <td>102.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2010-01-05 00:00:00+00:00</th>
+      <td>10109000</td>
+      <td>105.0</td>
+      <td>A</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
-</div>
-</section>
-<section id="flow-as-pandas-dataframe-with-a-datetime-index-additional-functionality">
-<h2>Flow as Pandas dataframe with a datetime index - Additional functionality.<a class="headerlink" href="#flow-as-pandas-dataframe-with-a-datetime-index-additional-functionality" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2.1) Using flow as a pandas dataframe adds annual energy calculation</span>
-
-<span class="c1"># Note: When using a pandas dataframe as flow data, set the datetime index before </span>
-<span class="c1"># using HydroGenerate.  (https://pandas.pydata.org/docs/reference/api/pandas.DatetimeIndex.html)</span>
-
-<span class="n">flow</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_test.csv&#39;</span><span class="p">)</span> <span class="c1"># pandas data frame</span>
-<span class="n">flow</span><span class="p">[</span><span class="s1">&#39;dateTime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">flow</span><span class="p">[</span><span class="s1">&#39;dateTime&#39;</span><span class="p">])</span> <span class="c1"># preprocessing convert to datetime</span>
-<span class="n">flow</span> <span class="o">=</span> <span class="n">flow</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;dateTime&#39;</span><span class="p">)</span> <span class="c1"># set datetime index # flolw is in cfs</span>
-
-<span class="n">head</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># ft</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the streamflow data from a USGS stream gauge - Cont.</span>
+<span class="c1"># The flow data for this example was created in the previous step. </span>
+<span class="n">head</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># ft</span>
 <span class="n">power</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># ft</span>
+<span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">120</span> <span class="c1"># ft</span>
 <span class="n">hp_type</span> <span class="o">=</span> <span class="s1">&#39;Diversion&#39;</span> 
+<span class="n">flow_column</span> <span class="o">=</span> <span class="s1">&#39;00060_Mean&#39;</span>  <span class="c1"># name of the column containing the flow data</span>
 
 <span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span>
-                            <span class="n">pctime_runfull</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
                             <span class="n">penstock_headloss_calculation</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                            <span class="n">design_flow</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                            <span class="n">electricity_sell_price</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
-                            <span class="n">resource_category</span><span class="o">=</span> <span class="s1">&#39;CanalConduit&#39;</span><span class="p">,</span>
-                            <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
-                            <span class="n">flow_column</span><span class="o">=</span> <span class="s1">&#39;discharge_cfs&#39;</span><span class="p">,</span> <span class="n">annual_caclulation</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-
-<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># </span>
-<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.width&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+                           <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
+                           <span class="n">flow_column</span><span class="o">=</span> <span class="n">flow_column</span><span class="p">,</span> <span class="n">annual_caclulation</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Explore output</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design flow (cfs):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">design_flow</span><span class="p">)</span>
@@ -537,48 +561,27 @@ Power (kW) for the given flow range: [4118.3 4140.3 4096.2 ... 3917.7 3759.3 387
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 9620.0
-Head_loss at design flow (ft): 1.96
-Turbine type: Kaplan
-Rated Power (Kw): 13142.39
-Net head (ft): 18.04
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 200.0
+Head_loss at design flow (ft): 8.94
+Turbine type: Crossflow
+Rated Power (Kw): 1193.76
+Net head (ft): 91.06
 Generator Efficiency: 0.98
 Head Loss method: Darcy-Weisbach
-Penstock length (ft): 50.0
-Penstock diameter (ft): 17.75
-Runner diameter (ft): 19.08
+Penstock length (ft): 120.0
+Penstock diameter (ft): 3.31
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">24</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="ne">---&gt; </span><span class="mi">24</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pandas dataframe output: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">dataframe_output</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Annual output: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">annual_dataframe_output</span><span class="p">)</span>
 
-Pandas dataframe output: 
-                            discharge_cfs   site_id     power_kW  turbine_flow_cfs  efficiency   energy_kWh
-dateTime                                                                                                  
-2010-01-01 08:00:00+00:00         3260.0  11370500  4417.413411            3260.0    0.825791          NaN
-2010-01-01 08:15:00+00:00         3270.0  11370500  4437.662487            3270.0    0.827097  1109.415622
-2010-01-01 08:30:00+00:00         3250.0  11370500  4397.114770            3250.0    0.824469  1099.278692
-2010-01-01 08:45:00+00:00         3270.0  11370500  4437.662487            3270.0    0.827097  1109.415622
-2010-01-01 09:00:00+00:00         3270.0  11370500  4437.662487            3270.0    0.827097  1109.415622
-...                                  ...       ...          ...               ...         ...          ...
-2021-01-01 06:45:00+00:00         3100.0  11370500  4086.646847            3100.0    0.802515  1021.661712
-2021-01-01 07:00:00+00:00         3190.0  11370500  4274.278135            3190.0    0.816173  1068.569534
-2021-01-01 07:15:00+00:00         3170.0  11370500  4232.933171            3170.0    0.813268  1058.233293
-2021-01-01 07:30:00+00:00         3100.0  11370500  4086.646847            3100.0    0.802515  1021.661712
-2021-01-01 07:45:00+00:00         3150.0  11370500  4191.387888            3150.0    0.810289  1047.846972
-
-[385416 rows x 6 columns]
-Annual output: 
-           annual_turbinedvolume_ft3  mean_annual_effienciency  total_annual_energy_KWh  revenue_M$  capacity_factor
-dateTime                                                                                                           
-2010                   6.605955e+06                  0.890552             8.136850e+07    4.068425         0.706769
-2011                   7.696602e+06                  0.907936             9.468480e+07    4.734240         0.822435
-2012                   6.511915e+06                  0.899117             8.102678e+07    4.051339         0.703801
-2013                   6.685759e+06                  0.901904             8.281361e+07    4.140681         0.719322
-2014                   5.637207e+06                  0.883477             6.988931e+07    3.494465         0.607061
-2015                   5.444864e+06                  0.882418             6.832364e+07    3.416182         0.593461
-2016                   6.545640e+06                  0.895130             8.106022e+07    4.053011         0.704092
-2017                   8.507096e+06                  0.909318             1.037434e+08    5.187168         0.901118
-2018                   6.269139e+06                  0.886202             7.704975e+07    3.852487         0.669257
-2019                   7.354655e+06                  0.899037             9.021813e+07    4.510907         0.783638
-2020                   6.719952e+06                  0.902407             8.339807e+07    4.169903         0.724398
-2021                   2.825733e+03                  0.805338             3.300123e+04    0.001650         0.000287
+<span class="ne">TypeError</span>: type NoneType doesn&#39;t define __round__ method
 </pre></div>
 </div>
 </div>
@@ -587,6 +590,7 @@ dateTime
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot results</span>
 <span class="c1"># Columns:  discharge_cfs   site_id     power_kW  efficiency   energy_kWh</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">dataframe_output</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -613,11 +617,7 @@ dateTime
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\BASTC\AppData\Local\Temp\1\ipykernel_15740\3156669373.py:18: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;b-&quot; (-&gt; color=&#39;b&#39;). The keyword argument will take precedence.
-  ax2.plot(df[&#39;power_kW&#39;],&#39;b-&#39;,label=&quot;Power&quot;, color=color_plot2)
-</pre></div>
-</div>
-<img alt="_images/a9ab8525f3c34ab7757de76fcc744c7ef861f22ee18375825ca45046beef78c5.png" src="_images/a9ab8525f3c34ab7757de76fcc744c7ef861f22ee18375825ca45046beef78c5.png" />
+<img alt="_images/073facfe58ca1758a699c3f7f30ef71a251fdec646d15dd078eeac3c9e39317d.png" src="_images/073facfe58ca1758a699c3f7f30ef71a251fdec646d15dd078eeac3c9e39317d.png" />
 </div>
 </div>
 </section>
@@ -654,20 +654,20 @@ dateTime
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="UserGuide_2_Diversion.html"
+       href="UserGuide_3_FlowOptions.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Diversion Mode</p>
+        <p class="prev-next-title">Flow Input Options</p>
       </div>
     </a>
     <a class="right-next"
-       href="UserGuide_4_QueryingDataUSGSNWIS.html"
+       href="UserGuide_5_Cost%26Revenue.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Querying data from the USGS National Water Information System</p>
+        <p class="prev-next-title">Cost and Revenue Calculations</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -686,8 +686,7 @@ dateTime
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-as-a-numpy-array">Flow as a numpy array</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flow-as-pandas-dataframe-with-a-datetime-index-additional-functionality">Flow as Pandas dataframe with a datetime index - Additional functionality.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-streamflow-data-from-a-usgs-stream-gauge">Use streamflow data from a USGS stream gauge.</a></li>
 </ul>
   </nav></div>
 

@@ -177,10 +177,10 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_Introduction-Tutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
@@ -197,9 +197,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_3_Efficiency.html">Turbine Selection &amp; Efficiency Calculation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Theory_4_Head_loss.html">Head Loss Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
+
+
 </ul>
 
     </div>
@@ -592,6 +595,58 @@ document.write(`
 <tr class="row-even"><td class="text-left"><p>calculate_hp_potential</p></td>
 <td class="text-center"><p>Function</p></td>
 <td class="text-center"><p>Performs all computation and executes existing functions depending on parameters</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>flow_efficiency_plot</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Plot turbine efficiency as a function of flow</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>flow_efficiency_power_plot</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Plot power and turbine efficiency as a function of flow</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>turbine_type_plot</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Plot turbine selection information</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>flow_duration_curve_plot</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Plot the flow-duration curve</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>plant_capfactor_plot</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Plot monthly capacity fator summary</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>plant_turbineflow_plot</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Plot monthly turbine flow summary</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>plant_elecgeneration_plot</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Plot monthly electricity generation summary</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>FlowPreProcessingParameters</p></td>
+<td class="text-center"><p>Class</p></td>
+<td class="text-center"><p>Initializes parameters needed for flow preprocessing</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>FlowPreProcessing</p></td>
+<td class="text-center"><p>Class</p></td>
+<td class="text-center"><p>Contains methods for flwo preprocessing</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>max_turbineflow_checker</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Checks that flow is not larger than design flow</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>min_turbineflow_checker</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Checks that flow is not less than minimum turbine flow</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>annual_maintenance_implementer</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Implements annual maintenance</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>major_maintenance_implementer</p></td>
+<td class="text-center"><p>Function</p></td>
+<td class="text-center"><p>Implements major maintenance</p></td>
 </tr>
 </tbody>
 </table>

@@ -10,7 +10,7 @@ Cost for hydropower project is calcualted using the following equations (ORNL, 2
 |	#	|	Resource Category (HG)   |	Cost Model Equation *	|
 |	:---	|	:---:	|	:---:	|
 |	1	|	'Non-PoweredDam'	|	$ICC = 11,489,245 P^{0.976} H^{-0.240}$	|	
-|	2	|	'NewStream-reach'	|	$ICC = 9,605,245 P^{0.977} H^{-0.126}$	|	
+|	2	|	'NewStream-reach'	|	$ICC = 9,605,710 P^{0.977} H^{-0.126}$	|	
 |	3	|	'CanalConduit'	|	$ICC = 9,297,820 P^{0.810} H^{-0.102}$	|	
 |	4	|	'PSH_ExistingInfrastructure'	|	$ICC = 3,008,246 P e^{-0.000460P}$	|	
 |	5	|	'PSH_Greenfield'	|	$ICC = 8,882,655 P e^{-0.000776P}$	|	

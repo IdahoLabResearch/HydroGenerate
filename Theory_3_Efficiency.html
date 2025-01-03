@@ -69,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Head Loss Estimation" href="Theory_4_Head_loss.html" />
+    <link rel="next" title="Head Loss Estimation" href="Theory_4_HeadLoss.html" />
     <link rel="prev" title="Design Flow Estimation" href="Theory_2_Design_Flow.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -179,10 +179,10 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_Introduction-Tutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
@@ -199,9 +199,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Turbine Selection &amp; Efficiency Calculation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Theory_4_Head_loss.html">Head Loss Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
+
+
 </ul>
 
     </div>
@@ -425,11 +428,11 @@ document.write(`
 <h1>Turbine Selection &amp; Efficiency Calculation<a class="headerlink" href="#turbine-selection-efficiency-calculation" title="Permalink to this heading">#</a></h1>
 <section id="turbine-selection">
 <h2>Turbine Selection<a class="headerlink" href="#turbine-selection" title="Permalink to this heading">#</a></h2>
-<p>Turbine selection for a particular site is performed based on the design flow and the hydraulic head. The turbine characterics map as shown below [1,2] has several overlapping regions and it is possible that site characteristic might fall into one of the overlapping zones as indicated by the brown dot in the figure below. This new method provides a solution to selecting the most suitable turbine type when site characteristics match with multiple turbine types. A third party python package called “Shapely” [3] is imported to perform the required functions as in the steps described below. This is included in the installation.</p>
-<p><a class="reference internal" href="#turbineselection"><span class="std std-numref">Fig. 5</span></a> shows the general workflow computations followed in <strong><em>HydroGenerate</em></strong>.</p>
+<p>Turbine selection for a particular site is performed based on the design flow and the hydraulic head. <a class="reference internal" href="#turbineselection"><span class="std std-numref">Fig. 5</span></a> shows the turbine selection graph (Gulliver &amp; Arndt, 1991). The figure shows multiple overlapping regions. When a site is located in a overlapping region, the distance from the point to the centroid of each figure are calculated and the turbine type with the smallest centroid distance is is selected for computation. Turbine types can be manually entered by users and, when more than one turbine type is suitable, than information is stored in the output. A python package called “Shapely” (Gillies et al., 2024) is imported to perform the area selection, centroid and distance to centroids calculations.</p>
+<p><a class="reference internal" href="#turbineselection"><span class="std std-numref">Fig. 5</span></a> shows the turbine selection graph (Gulliver &amp; Arndt, 1991).</p>
 <figure class="align-default" id="turbineselection">
-<img alt="_images/turb_sel.SVG" src="_images/turb_sel.SVG" /><figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Turbine selection using</span><a class="headerlink" href="#turbineselection" title="Permalink to this image">#</a></p>
+<img alt="_images/Turbine_Selection.SVG" src="_images/Turbine_Selection.SVG" /><figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Sample Flow-Duration plot using the data from the USGS NWIS example indluded in the <span class="xref myst">USER GUIDE section</span>.</span><a class="headerlink" href="#turbineselection" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -449,7 +452,7 @@ document.write(`
 </ul>
 <p>Specific speed (<span class="math notranslate nohighlight">\(n_q\)</span>)</p>
 <div class="math notranslate nohighlight">
-\[n_q=kh^{-5}\]</div>
+\[n_q=kh^{-0.5}\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(n_q\)</span> = specific speed based on flow,</p></li>
@@ -475,13 +478,13 @@ document.write(`
 \[Q_p=0.65\ Q_d\ n_q^{0.05}\]</div>
 <p>Efficiencies at flows below peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
 <div class="math notranslate nohighlight">
-\[e_q=\ \left\{1-\left[1.25\left(\frac{Q_p-Q}{Q_p}\right)^{3.94-0.0159\ n_q}\right]\right\}\ e_p\]</div>
+\[e_q=\ \left\{1-\left[1.25\left(\frac{Q_p-Q}{Q_p}\right)^{3.94-0.0195\ n_q}\right]\right\}\ e_p\]</div>
 <p>Drop in efficiency at full load (<span class="math notranslate nohighlight">\(\land e_p\)</span>)</p>
 <div class="math notranslate nohighlight">
 \[\land e_p=0.0072\ n_q^{0.4}\]</div>
 <p>Efficiency at full load (<span class="math notranslate nohighlight">\(e_r\)</span>)</p>
 <div class="math notranslate nohighlight">
-\[e_r=\left(1-\ \land e_p\right)\land e_p\]</div>
+\[e_r=\left(1-\ \land e_p\right) e_p\]</div>
 <p>Efficiencies at flows above peak efficiency flow (<span class="math notranslate nohighlight">\(e_q\)</span>)</p>
 <div class="math notranslate nohighlight">
 \[e_q=\ e_p-\ \left[\left(\frac{Q-\ Q_p}{Q_d-Q_p}\right)^2\left(e_p-e_r\right)\right]\]</div>
@@ -493,7 +496,7 @@ document.write(`
 \[\land e_{nq}\ =\ \left(\frac{n_q-170}{700}\right)^2\]</div>
 <p>Runner size adjustment to peak efficiency (<span class="math notranslate nohighlight">\(\land e_d\)</span>)</p>
 <div class="math notranslate nohighlight">
-\[\land e_d\ \ =(0.0095+\ \land e_{nq}\ )(1-0.789\ d^{-0.2})\ \ \]</div>
+\[\land e_d\ \ =(0.095+\ \land e_{nq}\ )(1-0.789\ d^{-0.2})\ \ \]</div>
 <p>Turbine peak efficiency (<span class="math notranslate nohighlight">\(e_p\)</span>)</p>
 <div class="math notranslate nohighlight">
 \[e_p=\left(0.905-\ \land e_{nq}+\ \land e_d\right)-0.0305+0.005{\ R}_m\ \]</div>
@@ -555,7 +558,7 @@ document.write(`
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <p>CANMET Energy Technology Center. (2004). Clean Energy Project Analysis: Retscreen Engineering &amp; Cases Textbook. <a class="reference external" href="https://www.ieahydro.org/media/1ccb8c33/RETScreen%C2%AE-Engineering-Cases-Textbook%E2%80%93-PDF.pdf">https://www.ieahydro.org/media/1ccb8c33/RETScreen®-Engineering-Cases-Textbook–-PDF.pdf</a></p>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Water_turbine">https://en.wikipedia.org/wiki/Water_turbine</a></p>
+<p>Gulliver, John S.; Arndt, Roger E.A.. (1991). Hydropower Engineering Handbook. McGraw-Hill, Inc.. Retrieved from the University of Minnesota Digital Conservancy, <a class="reference external" href="https://hdl.handle.net/11299/195476">https://hdl.handle.net/11299/195476</a>.</p>
 <p>Gillies, S., van der Wel, C., Van den Bossche, J., Taves, M. W., Arnott, J., Ward, B. C., &amp; others. (2024). Shapely (Version 2.0.6) [Computer software]. <a class="reference external" href="https://doi.org/10.5281/zenodo.5597138">https://doi.org/10.5281/zenodo.5597138</a></p>
 </section>
 </section>
@@ -600,7 +603,7 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="Theory_4_Head_loss.html"
+       href="Theory_4_HeadLoss.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>

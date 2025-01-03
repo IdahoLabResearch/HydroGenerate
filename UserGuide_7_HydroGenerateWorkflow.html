@@ -177,10 +177,10 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_Introduction-Tutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_2_Diversion.html">Diversion Mode</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGS-NWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Inputs / Outputs - General Workflow</a></li>
@@ -197,9 +197,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_3_Efficiency.html">Turbine Selection &amp; Efficiency Calculation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Theory_4_Head_loss.html">Head Loss Estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
+
+
 </ul>
 
     </div>
@@ -765,6 +768,56 @@ document.write(`
 <td class="text-center"><p>-</p></td>
 <td class="text-right"><p>-</p></td>
 </tr>
+<tr class="row-even"><td class="text-left"><p>33</p></td>
+<td class="text-center"><p>min_flow_check</p></td>
+<td class="text-center"><p>Method for allowing users to turn on/off minimum flow check</p></td>
+<td class="text-center"><p>Boolean</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-center"><p>no</p></td>
+<td class="text-center"><p>Minimum flow through the turbine</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-right"><p>-</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>34</p></td>
+<td class="text-center"><p>min_turbine_flow</p></td>
+<td class="text-center"><p>Minimum flow rate passigin through the turbine</p></td>
+<td class="text-center"><p>Numerical</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-center"><p>no</p></td>
+<td class="text-center"><p>Power calculation</p></td>
+<td class="text-center"><p>cfs</p></td>
+<td class="text-right"><p>m3/s</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>35</p></td>
+<td class="text-center"><p>min_flow_percent</p></td>
+<td class="text-center"><p>Minimum flow rate passigin through the turbine as a percentage of design flow</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-center"><p>no</p></td>
+<td class="text-center"><p>Power calculation</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-right"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>36</p></td>
+<td class="text-center"><p>annual_maintenance_flag</p></td>
+<td class="text-center"><p>Method for allowing users to turn on/off annual maintenance</p></td>
+<td class="text-center"><p>Boolean</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-center"><p>no</p></td>
+<td class="text-center"><p>Power calculation</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-right"><p>-</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>36</p></td>
+<td class="text-center"><p>major_maintenance_flag</p></td>
+<td class="text-center"><p>Method for allowing users to turn on/off major maintenance</p></td>
+<td class="text-center"><p>Boolean</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-center"><p>no</p></td>
+<td class="text-center"><p>Power calculation</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-right"><p>-</p></td>
+</tr>
 </tbody>
 </table>
 <ul class="simple">
@@ -1102,7 +1155,15 @@ document.write(`
 </tr>
 <tr class="row-odd"><td class="text-left"><p>40</p></td>
 <td class="text-center"><p>turbine_type_o</p></td>
-<td class="text-center"><p>Type of turbine used in the system.</p></td>
+<td class="text-center"><p>Type of turbine used in the system</p></td>
+<td class="text-center"><p>String</p></td>
+<td class="text-center"><p>Kaplan, Francis, Propellor, Pelton, Turgo, Crossflow</p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-right"><p>-</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>41</p></td>
+<td class="text-center"><p>turbine_type_dict</p></td>
+<td class="text-center"><p>All turbines suitable for a site, when more than 1</p></td>
 <td class="text-center"><p>String</p></td>
 <td class="text-center"><p>Kaplan, Francis, Propellor, Pelton, Turgo, Crossflow</p></td>
 <td class="text-center"><p>-</p></td>
@@ -1110,6 +1171,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
+<p>turbine_type_dict</p>
 <ul class="simple">
 <li><p>DL: dimensionless.</p></li>
 </ul>
