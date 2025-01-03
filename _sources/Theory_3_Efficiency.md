@@ -1,4 +1,22 @@
-# Turbine Efficiency Calculation
+# Turbine Selection & Efficiency Calculation
+
+
+## Turbine Selection 
+
+Turbine selection for a particular site is performed based on the design flow and the hydraulic head. The turbine characterics map as shown below [1,2] has several overlapping regions and it is possible that site characteristic might fall into one of the overlapping zones as indicated by the brown dot in the figure below. This new method provides a solution to selecting the most suitable turbine type when site characteristics match with multiple turbine types. A third party python package called "Shapely" [3] is imported to perform the required functions as in the steps described below. This is included in the installation.
+
+{numref}`TurbineSelection` shows the general workflow computations followed in **_HydroGenerate_**.
+
+```{figure} turb_sel.SVG
+---
+name: TurbineSelection
+---
+Turbine selection using 
+```
+
+
+
+## Turbine Efficiency Calculation
 
 The turbine efficiency calculation follows the same methodology and equations included in (CANMET, 2004). For further details on turbine efficiency, refer to CANMET, (2004). Turbine efficiency computations are conducted using the following equations:
 
@@ -133,3 +151,6 @@ $$e_q=\ \ 0.79-0.15\left(\frac{Q_d-Q}{Q_p}\right)-1.37\left(\frac{Q_d-Q}{Q_p}\ri
 ## References
 CANMET Energy Technology Center. (2004). Clean Energy Project Analysis: Retscreen Engineering & Cases Textbook. https://www.ieahydro.org/media/1ccb8c33/RETScreen%C2%AE-Engineering-Cases-Textbook%E2%80%93-PDF.pdf 
 
+https://en.wikipedia.org/wiki/Water_turbine
+
+Gillies, S., van der Wel, C., Van den Bossche, J., Taves, M. W., Arnott, J., Ward, B. C., & others. (2024). Shapely (Version 2.0.6) [Computer software]. https://doi.org/10.5281/zenodo.5597138

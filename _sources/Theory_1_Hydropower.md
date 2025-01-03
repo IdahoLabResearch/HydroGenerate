@@ -24,12 +24,14 @@ Required inputs: Hydraulic head, flow, rated power. In the basic calculation mod
 
 ### Diversion
 Required inputs: Hydraulic head, flow.
-Optional inputs: all the inputs listed in [Table 1](LINK TO INPUT TABLE), except those used only for hydrokinetic estimations.
+Optional inputs: all the inputs listed in Table 1 in the [User Guide section](UserGuide_7_HydroGenerateWorkflow.md), except those used only for hydrokinetic estimations.
 
 ### Computation Steps: 
-1. Compute [head losses](4_Theory_Head_loss.md)
-2. Select the turbine type: Based on the net hydraulic head, HG will suggest a recommended turbine type by following step 3. 
-3. Define the [design flow](2_Theory_Design_Flow.md) ($Q_d$).
+1. Compute [head losses](4_Theory_Head_loss.md).
+2. Define the [design flow](2_Theory_Design_Flow.md) ($Q_d$).
+3. Select the turbine type: Based on the net hydraulic head and design flow. 
+
+
 4. Compute the [efficiency of the turbine](3_Theory_Efficiency.md) at flows above and below the design flow and estimate power for the value (s) of flow provided the user. Turbine efficiency is calculated following the methodology presented in the Clean Energy Project Analysis electronic textbook (CANMET Energy Technology Center, 2004) 
 5. Compute the overall efficiency of the system. The overall efficiency of the system is computed as the turbine efficiency (calculated in step 4) times the Generator efficiency. 
 6. Compute estimated power potential using [Equation 1](hydropower-eq).
