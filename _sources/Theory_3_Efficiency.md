@@ -10,7 +10,7 @@ Turbine selection for a particular site is performed based on the design flow an
 ---
 name: TurbineSelection
 ---
-Graph used for turbine selection. Flow and head and included in this figure and a turbine is selected based on the areas of influence
+Graph used for turbine selection. Flow and head are included in this figure and a turbine is selected based on the areas of influence represented by the polygons.
 ```
 
 
