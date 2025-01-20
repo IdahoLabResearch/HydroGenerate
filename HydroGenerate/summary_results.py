@@ -91,8 +91,10 @@ def flow_duration_curve_plot(x):
         if x.units == 'US':
             ax.set_ylabel('River discharge (ft^3/s)')
             df.Flow = df.Flow / cfs_to_cms
+            flow_units = ' cfs'
         else:
             ax.set_ylabel('River discharge (m^3/s)')
+            flow_units = ' m3/s'
         
         ax.plot(df['Percent_Exceedance'], df['Flow'], label="Flow duration curve", linewidth=2)
         ax.tick_params(axis='y')
@@ -103,7 +105,7 @@ def flow_duration_curve_plot(x):
         plt.ylim([0, df.Flow.max() * 1.05])
         ax.hlines(y = d_flow, xmin = 0, xmax = pcrf, color='r', linestyle=':')
         ax.vlines(x = pcrf, ymin = 0, ymax = d_flow, color='r', linestyle=':')
-        ax.plot(pcrf, d_flow, 'ro', markersize = 10, label = 'Design flow')
+        ax.plot(pcrf, d_flow, 'ro', markersize = 10, label = 'Design flow' + str(round(x.design_flow, 0)) + flow_units)
         plt.legend()
         plt.close()
         return fig
