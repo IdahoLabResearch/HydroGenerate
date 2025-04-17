@@ -22,7 +22,7 @@ affiliations:
    index: 1
    ror: 00ty2a548
 date: 15 April 2025
-bibliography: HydroGenerate.bib
+bibliography: paper.bib
 ---
 
 # Summary
