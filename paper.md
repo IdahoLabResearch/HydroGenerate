@@ -55,9 +55,11 @@ After the user has a chosen a site for hydropower potential analysis, and collec
 
 * Step 3 Power and energy calculation: Hydrogenerate canculates hydropower potential using  $$ P = \eta \times \gamma \times Q \times H$$   where,  $P$ is the hydropower potential (watt),  $\eta$ is the overall system efficiency (dimensionless),  $\gamma$ is the specific weight of water (9,810 N/m^3), $Q$ is the flow (m^3/s), and $H$ is the net hydraulic head (m). For hydrokinetic applications, the hydropower potential is calculated using $$        P=0.295\ast\rho\ast A_b \ast V^3$$ where, $\rho$ is the density of water, in Kg/m^3, $A_b$ is the swept area of blades, in m^2, and $V$ is the velocity of water, in m/s, 59% Betz limit of energy extraction [@BETZ]. [@NIEBUHR2019109240] provides a review of existing hydrokinetic turbine types. The overall efficiency of the system is calculated as $\eta = e_{turb} \times e_{gen}$, where $e_{turb}$ and $e_{gen}$ are turbine and generator efficiencies. 
 
-* Step 4 Economic calculations: HydroGenerate uses empirical equations to calculate the capital and O&M cost of the plant [@osti_1244193]. The capital cost calculation equations are separated based on type of plant. Revenue is calculated using an average wholesale electricity market price [@EIA_price].
+* Step 4 Economic calculations: HydroGenerate uses empirical equations to calculate the capital and O&M cost of the plant [@osti_1244193]. The capital cost calculation equations are separated based on type of plant. Revenue is calculated using an average wholesale electricity market price [@EIA_price]. 
 
-<div style="text-align: center;"><img src="HG_workflow.jpg" width="800"/><figcaption>Fig.1 HydroGenerate workflow with sample inputs and outputs</figcaption></figure></div>
+![Fig.1 HydroGenerate workflow with sample inputs and outputs](HG_workflow.jpg)
+
+
 
 # Acknowledgements
 
