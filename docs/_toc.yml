@@ -19,11 +19,13 @@ parts:
     - file: UserGuide_5_Cost&Revenue
     - file: UserGuide_6_Hydrokinetics
     - file: UserGuide_7_HydroGenerateWorkflow
+    - file: UserGuide_8_Issues_Support
 
   - caption: Developer Guide 
     chapters:
     - file: DeveloperGuide_1_Architecture
     - file: DeveloperGuide_2_MethodsFunctions
+    - file: DeveloperGuide_3_Contributing
 
   - caption: Theory
     chapters:

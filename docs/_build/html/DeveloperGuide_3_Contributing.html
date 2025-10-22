@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>HydroGenerate</title>
+    <title>Contributing to HydroGenerate</title>
   
   
   
@@ -62,12 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'HydroGenerate_Introduction';</script>
-    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/HydroGenerate_Introduction.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'DeveloperGuide_3_Contributing';</script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/DeveloperGuide_3_Contributing.html" />
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation" href="GettingStarted_1_Installation.html" />
+    <link rel="next" title="Hydropower Estimation" href="Theory_1_Hydropower.html" />
+    <link rel="prev" title="Methods, Functions, Classes, and Input Handling" href="DeveloperGuide_2_MethodsFunctions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -143,7 +144,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="HydroGenerate_Introduction.html">
   
   
   
@@ -163,8 +164,8 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="HydroGenerate_Introduction.html">
                     HydroGenerate
                 </a>
             </li>
@@ -186,10 +187,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Contributing to HydroGenerate</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="nav bd-sidenav">
@@ -275,7 +276,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FHydroGenerate_Introduction.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FDeveloperGuide_3_Contributing.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -305,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/HydroGenerate_Introduction.md" target="_blank"
+      <li><a href="_sources/DeveloperGuide_3_Contributing.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -389,7 +390,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>HydroGenerate</h1>
+    <h1>Contributing to HydroGenerate</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -399,8 +400,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#giving-credit">Giving credit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-contribute">How to Contribute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-setup">Development Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-requests">Feature Requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-improvements">Documentation Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guide">Style Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#community">Community</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
             </nav>
         </div>
@@ -412,64 +419,129 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="hydrogenerate">
-<h1>HydroGenerate<a class="headerlink" href="#hydrogenerate" title="Permalink to this heading">#</a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
-<p><strong>HydroGenerate</strong> is an open-source python library that estimates hydropower generation based on head height and flow rate for different types of hydropower:impoundment, diversion, and hydrokinetic. Additional features allow the user to retrieve instantaneous flow from United States Geological Survey (USGS) water data services stream gages where available. The tool calculates the turbine efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user. Some of the additional features are:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="contributing-to-hydrogenerate">
+<h1>Contributing to HydroGenerate<a class="headerlink" href="#contributing-to-hydrogenerate" title="Permalink to this heading">#</a></h1>
+<p>Thank you for your interest in contributing to HydroGenerate! We welcome contributions of all kinds—bug reports, feature requests, documentation improvements, and code enhancements.</p>
+<p>This guide will help you get started.</p>
+<hr class="docutils" />
+<section id="how-to-contribute">
+<h2>How to Contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this heading">#</a></h2>
+<ol class="arabic">
+<li><p><strong>Fork the repository</strong> and clone it locally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR-USERNAME/HydroGenerate.git
+<span class="nb">cd</span><span class="w"> </span>HydroGenerate
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create a new branch</strong> for your feature or fix:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/your-feature-name
+</pre></div>
+</div>
+</li>
+<li><p><strong>Make your changes</strong>, commit, and push:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;ENH: Add new feature description&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/your-feature-name
+</pre></div>
+</div>
+</li>
+<li><p><strong>Open a Pull Request</strong> on GitHub and describe your changes clearly.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="development-setup">
+<h2>Development Setup<a class="headerlink" href="#development-setup" title="Permalink to this heading">#</a></h2>
+<p>We recommend using <code class="docutils literal notranslate"><span class="pre">conda</span></code> for environment management:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>hg-env<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10
+conda<span class="w"> </span>activate<span class="w"> </span>hg-env
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>HydroGenerate
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="submitting-a-pull-request">
+<h2>Submitting a Pull Request<a class="headerlink" href="#submitting-a-pull-request" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p>In the power calculation, the net hydraulic head is conisidered. Where penstock dimameter is available, the user can select from several methods (see thr <strong>User Guide</strong> for more details). If the penstock diameter is not known, HG will calculate a diameter that will limit head losses to 10% (default) of the available head.</p></li>
-<li><p>For power extraction from kinetic energy, the available head is the velocity head.</p></li>
-<li><p>HydroGenerate uses a simplified configuration consisting of one penstock, turbine, and generator.</p></li>
-<li><p>The user can specify a set of flow constraints as a proxy of hydropower operation. Otherwise, the results are the <strong>maximum technical potential</strong>.</p></li>
-<li><p>When a flow-time series is available, HydroGenerate computes at every time-step, the generated power, capacity factor, and annual energy production (AEP).</p></li>
-<li><p>Using publicly available CAPEX and OPEX data for hydropower, HydroGenerate performs a “light” techno-economic analysis of turbine configuration based on the nameplate capacity. Furthermore, the LCOE is computed using the wholesale electricity price as an user input.</p></li>
+<li><p>Use clear and descriptive commit messages.</p></li>
+<li><p>Prefix PR titles with:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ENH:</span></code> for enhancements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BUG:</span></code> for bug fixes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DOC:</span></code> for documentation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TST:</span></code> for tests</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CLN:</span></code> for cleanup</p></li>
+</ul>
+</li>
+<li><p>Link to any related issues using <code class="docutils literal notranslate"><span class="pre">Closes</span> <span class="pre">#issue_number</span></code>.</p></li>
+<li><p>Ensure your branch is up to date with <code class="docutils literal notranslate"><span class="pre">main</span></code> before submitting.</p></li>
 </ul>
 </section>
-<section id="giving-credit">
-<h2>Giving credit<a class="headerlink" href="#giving-credit" title="Permalink to this heading">#</a></h2>
-<p>HydroGenerate was built with support from the USDOE Office of Energy Efficiency and Renewable Energy (EERE). For more information please refer to the <a class="reference external" href="https://www.osti.gov/biblio/1829986">OSTI webpage</a>.</p>
-<p><strong>Authors</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Camilo</span> <span class="n">J</span><span class="o">.</span> <span class="n">Bastidas</span> <span class="n">Pacheco</span>
-
-<span class="n">Juan</span> <span class="n">Gallego</span><span class="o">-</span><span class="n">Calderon</span>
-
-<span class="n">Soumyadeep</span> <span class="n">Nag</span>
-
-<span class="n">Bhaskar</span> <span class="n">Mitra</span>
-
-<span class="n">Shiloh</span> <span class="n">Elliott</span>
-
-<span class="n">Thomas</span> <span class="n">M</span><span class="o">.</span> <span class="n">Mosier</span>
-
-</pre></div>
-</div>
-<p><strong>Citation</strong></p>
-<p>If you are using our repository kindly use the following citation format.</p>
-<p><em>Bibtex</em></p>
+<hr class="docutils" />
+<section id="feature-requests">
+<h2>Feature Requests<a class="headerlink" href="#feature-requests" title="Permalink to this heading">#</a></h2>
+<p>We welcome ideas to improve HydroGenerate! If you have a feature in mind:</p>
+<ol class="arabic simple">
+<li><p><strong>Search existing issues</strong> to see if it’s already been proposed.</p></li>
+<li><p>If not, <strong>open a new issue</strong>.</p></li>
+<li><p>Clearly describe:</p>
+<ul class="simple">
+<li><p>The problem you’re trying to solve</p></li>
+<li><p>Why it’s important</p></li>
+<li><p>A possible solution or implementation idea (if you have one)</p></li>
+</ul>
+</li>
+</ol>
+<p>We encourage discussion and feedback from the community before implementation.</p>
+</section>
+<hr class="docutils" />
+<section id="documentation-improvements">
+<h2>Documentation Improvements<a class="headerlink" href="#documentation-improvements" title="Permalink to this heading">#</a></h2>
+<p>Improving documentation is a great way to contribute!</p>
+<p>You can help by:</p>
+<ul class="simple">
+<li><p>Fixing typos or grammar</p></li>
+<li><p>Clarifying examples or explanations</p></li>
+<li><p>Adding new usage examples or tutorials</p></li>
+<li><p>Improving docstrings in the code</p></li>
+</ul>
+<p>To contribute:</p>
+<ol class="arabic simple">
+<li><p>Make your edits in the appropriate <code class="docutils literal notranslate"><span class="pre">.md</span></code> or <code class="docutils literal notranslate"><span class="pre">.py</span></code> files.</p></li>
+<li><p>Follow the same process as for code contributions (fork, branch, PR).</p></li>
+<li><p>Preview your changes locally if possible.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="style-guide">
+<h2>Style Guide<a class="headerlink" href="#style-guide" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Follow PEP8 for Python code.</p></li>
+<li><p>Use <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a>.</p></li>
+<li><p>Format code with <a class="reference external" href="https://black.readthedocs.io/en/stable/"><code class="docutils literal notranslate"><span class="pre">black</span></code></a> and check with <a class="reference external" href="https://flake8.pycqa.org/en/latest/"><code class="docutils literal notranslate"><span class="pre">flake8</span></code></a>.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="community">
+<h2>Community<a class="headerlink" href="#community" title="Permalink to this heading">#</a></h2>
+<p>We encourage open discussion and collaboration. If you have questions or ideas:</p>
+<ul class="simple">
+<li><p>Open an issue</p></li>
+<li><p>Join our discussions (if applicable)</p></li>
+<li><p>Reach out via GitHub</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors">GitHub Docs: Setting Guidelines</a></p></li>
+<li><p><a class="reference external" href="https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-open-source">GitHub Docs: Contributing to Open Source</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/development/contributing.html">pandas Contributing Guide</a></p></li>
+</ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-@misc{osti_1829986,
-title = {Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series, Version 3.6 or newer},
-author = {Mitra, Bhaskar and Gallego-Calderon, Juan F. and Elliott, Shiloh N and Mosier, Thomas M and Bastidas Pacheco, Camilo Jose and USDOE Office of Energy Efficiency and Renewable Energy},
-abstractNote = {Hydropower is one of the most mature forms of renewable energy generation. The United States (US) has almost 103 GW of installed, with 80 GW of conventional generation and 23 GW of pumped hydropower [1]. Moreover, the potential for future development on Non-Powered Dams is up to 10 GW. With the US setting its goals to become carbon neutral [2], more renewable energy in the form of hydropower needs to be integrated with the grid. Currently, there are no publicly available tool that can estimate the hydropower potential for existing hydropower dams or other non-powered dams. The HydroGenerate is an open-source python library that has the capability of estimating hydropower generation based on flow rate either provided by the user or received from United States Geological Survey (USGS) water data services. The tool calculates the efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user.},
-url = {https://www.osti.gov//servlets/purl/1829986},
-doi = {10.11578/dc.20211112.1},
-url = {https://www.osti.gov/biblio/1829986}, year = {2021},
-month = {10},
-note =
-}
-
 </pre></div>
 </div>
 </section>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -502,12 +574,21 @@ note =
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="DeveloperGuide_2_MethodsFunctions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Methods, Functions, Classes, and Input Handling</p>
+      </div>
+    </a>
     <a class="right-next"
-       href="GettingStarted_1_Installation.html"
+       href="Theory_1_Hydropower.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Installation</p>
+        <p class="prev-next-title">Hydropower Estimation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -526,8 +607,14 @@ note =
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#giving-credit">Giving credit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-contribute">How to Contribute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-setup">Development Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-requests">Feature Requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-improvements">Documentation Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#style-guide">Style Guide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#community">Community</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>
 
