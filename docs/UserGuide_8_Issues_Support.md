@@ -1,4 +1,4 @@
-# 🛠 Getting Help and Reporting Issues
+# Getting Help and Reporting Issues
 
 We want HydroGenerate to be reliable, useful, and easy to work with. This guide explains how to seek support and report issues effectively.
 

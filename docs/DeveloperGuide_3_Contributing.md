@@ -1,4 +1,4 @@
-# 🧭 Contributing to HydroGenerate
+# Contributing to HydroGenerate
 
 Thank you for your interest in contributing to HydroGenerate! We welcome contributions of all kinds—bug reports, feature requests, documentation improvements, and code enhancements.
 
