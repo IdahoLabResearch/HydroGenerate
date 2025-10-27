@@ -184,11 +184,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="nav bd-sidenav">
@@ -553,7 +555,6 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Head Loss method:&#39;</span><span class="p">,</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_headloss_method</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pandas dataframe output: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">dataframe_output</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Annual output: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">annual_dataframe_output</span><span class="p">)</span>
@@ -570,18 +571,65 @@ Generator Efficiency: 0.98
 Head Loss method: Darcy-Weisbach
 Penstock length (ft): 120.0
 Penstock diameter (ft): 3.31
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">24</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock length (ft):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">penstock_length</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Penstock diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">penstock_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-<span class="ne">---&gt; </span><span class="mi">24</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Runner diameter (ft):&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">runner_diameter</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Pandas dataframe output: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">dataframe_output</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Annual output: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">annual_dataframe_output</span><span class="p">)</span>
 
-<span class="ne">TypeError</span>: type NoneType doesn&#39;t define __round__ method
+Pandas dataframe output: 
+                             site_no  00060_Mean 00060_Mean_cd    power_kW  \
+datetime                                                                    
+2010-01-01 00:00:00+00:00  10109000       108.0             A  502.584462   
+2010-01-02 00:00:00+00:00  10109000       107.0             A  456.688144   
+2010-01-03 00:00:00+00:00  10109000       106.0             A  398.442172   
+2010-01-04 00:00:00+00:00  10109000       102.0             A    0.000000   
+2010-01-05 00:00:00+00:00  10109000       105.0             A  324.023491   
+...                             ...         ...           ...         ...   
+2020-12-27 00:00:00+00:00  10109000        91.0             A    0.000000   
+2020-12-28 00:00:00+00:00  10109000        85.9             A    0.000000   
+2020-12-29 00:00:00+00:00  10109000        83.0             A    0.000000   
+2020-12-30 00:00:00+00:00  10109000        82.3             A    0.000000   
+2020-12-31 00:00:00+00:00  10109000        90.1             A    0.000000   
+
+                           turbine_flow_cfs  efficiency    energy_kWh  
+datetime                                                               
+2010-01-01 00:00:00+00:00             108.0    0.575850           NaN  
+2010-01-02 00:00:00+00:00             107.0    0.527893  10960.515465  
+2010-01-03 00:00:00+00:00             106.0    0.464683   9562.612123  
+2010-01-04 00:00:00+00:00             102.0    0.000000      0.000000  
+2010-01-05 00:00:00+00:00             105.0    0.381307   7776.563783  
+...                                     ...         ...           ...  
+2020-12-27 00:00:00+00:00              91.0    0.000000      0.000000  
+2020-12-28 00:00:00+00:00              85.9    0.000000      0.000000  
+2020-12-29 00:00:00+00:00              83.0    0.000000      0.000000  
+2020-12-30 00:00:00+00:00              82.3    0.000000      0.000000  
+2020-12-31 00:00:00+00:00              90.1    0.000000      0.000000  
+
+[4018 rows x 7 columns]
+Annual output: 
+           annual_turbinedvolume_ft3  mean_annual_effienciency  \
+datetime                                                        
+2010                    1319.865870                  0.398728   
+2011                    1835.676204                  0.687777   
+2012                    1442.086842                  0.559378   
+2013                    1087.183892                  0.213385   
+2014                    1290.223844                  0.401570   
+2015                    1208.405282                  0.285440   
+2016                    1374.823115                  0.478596   
+2017                    1917.789260                  0.772958   
+2018                    1416.658356                  0.546933   
+2019                    1458.516249                  0.568326   
+2020                    1333.259716                  0.402846   
+
+          total_annual_energy_KWh  revenue_M$  capacity_factor  
+datetime                                                        
+2010                 4.266764e+06    0.248326         0.408017  
+2011                 8.650045e+06    0.503433         0.827177  
+2012                 6.069435e+06    0.353241         0.580401  
+2013                 2.392200e+06    0.139226         0.228759  
+2014                 4.319024e+06    0.251367         0.413015  
+2015                 3.219217e+06    0.187358         0.307844  
+2016                 5.142542e+06    0.299296         0.491765  
+2017                 9.640457e+06    0.561075         0.921887  
+2018                 5.757931e+06    0.335112         0.550613  
+2019                 6.103963e+06    0.355251         0.583703  
+2020                 4.347384e+06    0.253018         0.415727  
 </pre></div>
 </div>
 </div>
@@ -606,7 +654,7 @@ Penstock diameter (ft): 3.31
 <span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>  <span class="c1"># instantiate a second axes that shares the same x-axis</span>
 <span class="n">color_plot2</span> <span class="o">=</span> <span class="s1">&#39;tab:blue&#39;</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Power (kW)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_plot2</span><span class="p">)</span>  <span class="c1"># we already handled the x-label with ax1</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;power_kW&#39;</span><span class="p">],</span><span class="s1">&#39;b-&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Power&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_plot2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;power_kW&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Power&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_plot2</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="n">color_plot2</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Yearly flow data from USGS and potential power&quot;</span><span class="p">)</span>
@@ -617,7 +665,7 @@ Penstock diameter (ft): 3.31
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/073facfe58ca1758a699c3f7f30ef71a251fdec646d15dd078eeac3c9e39317d.png" src="_images/073facfe58ca1758a699c3f7f30ef71a251fdec646d15dd078eeac3c9e39317d.png" />
+<img alt="_images/c2de521295e4606295cd6e202ebf0d5eaec45bc46aef578cc5a7936b827d177b.png" src="_images/c2de521295e4606295cd6e202ebf0d5eaec45bc46aef578cc5a7936b827d177b.png" />
 </div>
 </div>
 </section>

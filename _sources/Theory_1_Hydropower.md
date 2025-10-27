@@ -28,7 +28,7 @@ Optional inputs: all the inputs listed in Table 1 in the [User Guide section](Us
 
 ### Computation Steps: 
 1. Compute head losses using the method described in the [Theory Section - Head Loss Estimation](Theory_4_HeadLoss.md).
-2. Calculate the design flow as described in the [Theory Section - Design Flow Estimation](Theory_4_Design_Flow.md) ($Q_d$).
+2. Calculate the design flow as described in the [Theory Section - Design Flow Estimation](Theory_2_Design_Flow.md) ($Q_d$).
 3. Select the turbine type based on the net hydraulic head and design flow folowing the graph included in the [Theory Section - Turbine Selection](Theory_3_Efficiency.md).
 4. Calculate turbine efficiency using the corresponding turbine equation included in the [Theory Section - Turbine Efficiency](Theory_3_Efficiency.md) for flows above and below the design flow. Turbine efficiency is calculated following the methodology presented in the Clean Energy Project Analysis electronic textbook (CANMET Energy Technology Center, 2004) 
 5. Estimate estimate power for the value (s) of flow provided the user implementing any contraint selected. Flow constraints are discussed in the [Theory Section - Flow Constraints](Theory_6_FlowConstraints.md)

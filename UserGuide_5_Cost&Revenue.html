@@ -184,11 +184,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="nav bd-sidenav">
@@ -536,6 +538,9 @@ Annual Operation and Maintennance (M$): 1.0
 </section>
 <section id="using-flow-as-a-pandas-dataframe-and-energy-calculation">
 <h2>Using flow as a pandas dataframe and energy calculation<a class="headerlink" href="#using-flow-as-a-pandas-dataframe-and-energy-calculation" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The file data_test.csv used in the examples below is available in the ./examples/ directory of the repository. The Jupyter notebook files for all examples are located in the jugc-docs branch, within the docs folder.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flow</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_test.csv&#39;</span><span class="p">)</span> <span class="c1"># pandas data frame</span>

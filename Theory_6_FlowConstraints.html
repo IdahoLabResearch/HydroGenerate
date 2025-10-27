@@ -183,11 +183,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="current nav bd-sidenav">
@@ -418,7 +420,7 @@ document.write(`
 </section>
 <section id="flow-constraints-for-design">
 <h1>Flow Constraints for Design<a class="headerlink" href="#flow-constraints-for-design" title="Permalink to this heading">#</a></h1>
-<p>The <span style="color:blue"> ‘minimum_turbineflow’ </span>  and <span style="color:blue"> ‘minimum_turbineflow_percent’ </span> parameters can be used to declare lower limit of flow, and can be either a cfs value (minimum_turbineflow) or a percentage of the design flow (minimum_turbineflow_percent). If neither of these parameters are defined by the user, Hydrogenerate assumes 10% of design flow as the minimum admissible flow for power generation. The maximum flow through the turbine is limited to the design flow (calculated internally or user-defined using <span style="color:blue">’design_flow’</span>). By default, the minimum and maximum flow constraints are always active.</p>
+<p>The <span style="color:blue"> ‘minimum_turbineflow’ </span> parameter, can be used to declare lower limit of flow, and can be either a cfs value or a percentage of the design flow. If the <span style="color:blue"> ‘minimum_turbineflow’ </span> parameter is not defined by the user, Hydrogenerate assumes 10% of design flow as the minimum admissible flow for power generation. The maximum flow through the turbine is limited to the design flow (calculated internally or user-defined using <span style="color:blue">’design_flow’</span>). By default, the minimum and maximum flow constraints are always active.</p>
 </section>
 <section id="workflow">
 <h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this heading">#</a></h1>

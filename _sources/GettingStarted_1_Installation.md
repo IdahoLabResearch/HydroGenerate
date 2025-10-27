@@ -26,7 +26,7 @@ cd HydroGenerate
 2. It is recommended that a dedicated conda environment be created for developing/using this repo and prior to the installation below. 
 
 ```
-conda create --name hydro-gen python=3.6
+conda create --name hydro-gen python=3.10
 ```
 
 To activate the environment, execute the following command:

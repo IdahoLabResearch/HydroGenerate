@@ -9,7 +9,7 @@
 ---
 name: DesignFlow
 ---
-Sample Flow-Duration plot using the data from the USGS NWIS example indluded in the [USER GUIDE section](UserGuide_4_QueryingDataUSGS-NWIS.md).
+Sample Flow-Duration plot using the data from the USGS NWIS example indluded in the [USER GUIDE section](UserGuide_4_QueryingDataUSGSNWIS.ipynb).
 ```
 
 
@@ -22,7 +22,7 @@ Sample Flow-Duration plot using the data from the USGS NWIS example indluded in 
 > While the flow-duration curve does not show the chronological sequence of flows, it is an important means 
 > of representing flow characteristics of a stream throughout the range of flow on a single curve. 
 > The flow-duration figure presented here represent the flow-duration curves of daily streamflow data for 
->  the [period downloaded](UserGuide_4_QueryingDataUSGS-NWIS.md). In the example, using the default ['pctime_runfull = 30' leads to a design flow of 200 cfs](UserGuide_4_QueryingDataUSGS-NWIS.md).
+>  the [period downloaded](UserGuide_4_QueryingDataUSGSNWIS.ipynb). In the example, using the default ['pctime_runfull = 30' leads to a design flow of 200 cfs](UserGuide_4_QueryingDataUSGSNWIS.ipynb).
 
 
 In cases where there are significant variations of flow throughout the year, selecting more than one turbine can be a more effective scenario, over selecting a single larger turbine that will operate full a smaller time of the year. In contrast, some turbine types can operate at relatively high efficiency for low flows (Yildiz & Vrugt, 2019), allowing the selection of a larger percent of exceedance (larger design flow) without compromising efficiency. Each configuration will have associated costs and specific details that need to be evaluated.

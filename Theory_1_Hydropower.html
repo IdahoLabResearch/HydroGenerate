@@ -70,7 +70,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Design Flow Estimation" href="Theory_2_Design_Flow.html" />
-    <link rel="prev" title="Methods, Functions, Classes, and Input Handling" href="DeveloperGuide_2_MethodsFunctions.html" />
+    <link rel="prev" title="Contributing to HydroGenerate" href="DeveloperGuide_3_Contributing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -186,11 +186,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="current nav bd-sidenav">
@@ -453,7 +455,7 @@ Optional inputs: all the inputs listed in Table 1 in the <a class="reference int
 <h2>Computation Steps:<a class="headerlink" href="#computation-steps" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Compute head losses using the method described in the <a class="reference internal" href="Theory_4_HeadLoss.html"><span class="doc std std-doc">Theory Section - Head Loss Estimation</span></a>.</p></li>
-<li><p>Calculate the design flow as described in the <span class="xref myst">Theory Section - Design Flow Estimation</span> (<span class="math notranslate nohighlight">\(Q_d\)</span>).</p></li>
+<li><p>Calculate the design flow as described in the <a class="reference internal" href="Theory_2_Design_Flow.html"><span class="doc std std-doc">Theory Section - Design Flow Estimation</span></a> (<span class="math notranslate nohighlight">\(Q_d\)</span>).</p></li>
 <li><p>Select the turbine type based on the net hydraulic head and design flow folowing the graph included in the <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">Theory Section - Turbine Selection</span></a>.</p></li>
 <li><p>Calculate turbine efficiency using the corresponding turbine equation included in the <a class="reference internal" href="Theory_3_Efficiency.html"><span class="doc std std-doc">Theory Section - Turbine Efficiency</span></a> for flows above and below the design flow. Turbine efficiency is calculated following the methodology presented in the Clean Energy Project Analysis electronic textbook (CANMET Energy Technology Center, 2004)</p></li>
 <li><p>Estimate estimate power for the value (s) of flow provided the user implementing any contraint selected. Flow constraints are discussed in the <a class="reference internal" href="Theory_6_FlowConstraints.html"><span class="doc std std-doc">Theory Section - Flow Constraints</span></a></p></li>
@@ -528,12 +530,12 @@ Optional inputs: type of blade, height and diameter of blade.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="DeveloperGuide_2_MethodsFunctions.html"
+       href="DeveloperGuide_3_Contributing.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Methods, Functions, Classes, and Input Handling</p>
+        <p class="prev-next-title">Contributing to HydroGenerate</p>
       </div>
     </a>
     <a class="right-next"

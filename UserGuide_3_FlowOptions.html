@@ -184,11 +184,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="nav bd-sidenav">
@@ -428,6 +430,9 @@ document.write(`
 <section id="flow-as-a-numpy-array">
 <h2>Flow as a numpy array<a class="headerlink" href="#flow-as-a-numpy-array" title="Permalink to this heading">#</a></h2>
 <p>When flow is a numpy array, <strong><em>HydroGenerate</em></strong> can select a design flow and calculate nameplate capacity, effiiency, and head losses for the given vlues of flow.</p>
+<ul class="simple">
+<li><p>The file data_test.csv used in the examples below is available in the ./examples/ directory of the repository. The Jupyter notebook files for all examples are located in the jugc-docs branch, within the docs folder.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Head, power, and length of penstock are known. Multiple values of flow are available, the design flow is not known.</span>
@@ -613,7 +618,7 @@ dateTime
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\BASTC\AppData\Local\Temp\1\ipykernel_68896\3156669373.py:18: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;b-&quot; (-&gt; color=&#39;b&#39;). The keyword argument will take precedence.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\BASTC\AppData\Local\Temp\1\ipykernel_40692\3156669373.py:18: UserWarning: color is redundantly defined by the &#39;color&#39; keyword argument and the fmt string &quot;b-&quot; (-&gt; color=&#39;b&#39;). The keyword argument will take precedence.
   ax2.plot(df[&#39;power_kW&#39;],&#39;b-&#39;,label=&quot;Power&quot;, color=color_plot2)
 </pre></div>
 </div>
