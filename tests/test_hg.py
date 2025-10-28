@@ -4,6 +4,8 @@ from HydroGenerate.hydropower_potential import *
 
 # test basic hydropower calculation
 def test_calculate_potential():
+    """Basic mode: given flow (cfs), head (ft), and efficiency, compute rated power (kW)."""   
+     
     flow = 8000 # given flow, in cfs
     head = 20 # head, in ft
     power = None
@@ -15,6 +17,7 @@ def test_calculate_potential():
 
 # test diversion mode
 def test_diversion_calculate_potential():
+    """Diversion mode: FDC-based design flow, headloss calc, revenue on DF input."""
 
     flow_data = {'dateTime': pd.Series(['2010-01-01 08:00:00+00:00', '2010-01-01 08:15:00+00:00',
                                     '2010-01-01 08:30:00+00:00', '2010-01-01 08:45:00+00:00',

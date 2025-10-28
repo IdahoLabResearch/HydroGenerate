@@ -3,11 +3,39 @@ Copyright 2023, Battelle Energy Alliance, LLC
 '''
 
 """
-10-2024 
+10-2024
 @author: Camilo J. Bastidas Pacheco, J. Gallego-Calderon, Soumyadeep Nag
 
-This module includes function to summarize HydroGenerate results. 
+This module includes functions to summarize and visualize HydroGenerate results.
+
+Overview
+--------
+Provides post-processing utilities to:
+1) Plot turbine efficiency and power curves.
+2) Generate flow-duration, turbine-type, and monthly performance figures.
+3) Support both SI and US customary units.
+
+Expected Input Object
+---------------------
+All plotting functions receive an object `x` produced by HydroGenerate,
+which typically exposes:
+- pandas_dataframe : bool
+- dataframe_output : pandas.DataFrame
+- flowduration_curve : pandas.DataFrame (optional)
+- design_flow : float
+- pctime_runfull : float
+- rated_power : float
+- net_head : float
+- units : {'US', 'SI'}
+
+Notes
+-----
+- Figures are returned as `matplotlib.figure.Figure` objects and closed
+  (`plt.close()`) after creation.
+- Functions print a short message instead of raising an error when
+  required attributes are missing.
 """
+
 
 import numpy as np
 import pandas as pd
@@ -21,7 +49,30 @@ cfs_to_cms = 0.0283168 # 1 cubic feet per second to cubic meter per second
 ft_to_m = 0.3048 # 1 feet to meters
 
 # function to plot turbine efficiency and power generation as a function of flow
-def flow_efficiency_power_plot(x) :
+def flow_efficiency_power_plot(x):
+    """
+    Plot turbine efficiency and power (kW) as functions of discrete turbine flow.
+
+    Parameters
+    ----------
+    x : object
+        HydroGenerate results container with:
+        - pandas_dataframe : bool
+        - dataframe_output : pandas.DataFrame
+          Must include columns: 'turbine_flow_cfs', 'efficiency', 'power_kW'.
+
+    Returns
+    -------
+    matplotlib.figure.Figure or None
+        Figure with efficiency (left y-axis) and power (right y-axis) vs flow (cfs).
+        Returns None and prints a message if `x.pandas_dataframe` is False.
+
+    Notes
+    -----
+    - Points are deduplicated by 'turbine_flow_cfs' and sorted before plotting.
+    - The function closes the figure (`plt.close()`) and returns the handle.
+    """    
+    
     # extract dataframe output, order and subset wanted values
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -52,7 +103,29 @@ def flow_efficiency_power_plot(x) :
         print('Plotting turbine efficiency annd power requires flow time series data '\
               'provided as pandas dataframe')
 
-def flow_efficiency_plot(x) :
+def flow_efficiency_plot(x):
+    """
+    Plot turbine efficiency as a function of discrete turbine flow.
+
+    Parameters
+    ----------
+    x : object
+        HydroGenerate results container with:
+        - pandas_dataframe : bool
+        - dataframe_output : pandas.DataFrame
+          Must include columns: 'turbine_flow_cfs', 'efficiency', 'power_kW'.
+
+    Returns
+    -------
+    matplotlib.figure.Figure or None
+        Figure with efficiency vs flow (cfs).
+        Returns None and prints a message if `x.pandas_dataframe` is False.
+
+    Notes
+    -----
+    Points are deduplicated by 'turbine_flow_cfs' and sorted before plotting.
+    """
+
     # extract dataframe output, order and subset wanted values
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -79,6 +152,29 @@ def flow_efficiency_plot(x) :
 
 # function to plot the flow duration curve
 def flow_duration_curve_plot(x):
+    """
+    Plot the flow duration curve with design-flow and percent-run-full markers.
+
+    Parameters
+    ----------
+    x : object
+        HydroGenerate results container with:
+        - flowduration_curve : pandas.DataFrame with columns 'Percent_Exceedance', 'Flow'
+        - units : {'US', 'SI'}
+        - design_flow : float
+        - pctime_runfull : float
+    Returns
+    -------
+    matplotlib.figure.Figure or None
+        Flow-duration figure. Returns None and prints a message if required
+        attributes are missing.
+
+    Notes
+    -----
+    - If `x.units == 'US'`, the y-axis is ft^3/s (cfs); otherwise m^3/s.
+    - Draws horizontal/vertical dashed lines and a marker at
+      (percent run-full, design flow).
+    """
 
     # if x.flowduration_curve:
     try:
@@ -117,8 +213,30 @@ def flow_duration_curve_plot(x):
 
 # function to plot turbine selection figure
 def turbine_type_plot(x):
+    """
+    Plot turbine selection regions and overlay site head/flow on log–log axes.
 
- # inputs
+    Parameters
+    ----------
+    x : object
+        HydroGenerate results container with:
+        - net_head : float
+        - design_flow : float or None (falls back to `flow` if None)
+        - flow : float (used if `design_flow` is None)
+        - units : {'US', 'SI'}
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        Log–log plot with Pelton, Turgo, Francis, Crossflow, and Kaplan regions,
+        plus a point marking the site's (flow, head).
+
+    Notes
+    -----
+    Converts ft→m and cfs→m^3/s when `x.units == 'US'`.
+    """
+
+    # inputs
     head = x.net_head           # head, m
     
     if x.design_flow:
@@ -166,6 +284,27 @@ def turbine_type_plot(x):
 
 # function that generates a monhtly figure given a dataframe and a column name
 def monthly_figure_plot(df, var_fig):
+    """
+    Create a monthly summary figure with mean/median and IQR shading.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Time-indexed DataFrame (DatetimeIndex) containing `var_fig` as a column.
+    var_fig : {"turbine_flow_cfs", "energy_kWh", "capacity_factor"}
+        Column to summarize by calendar month.
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        Figure with monthly mean, median, and interquartile range.
+
+    Notes
+    -----
+    - The y-axis label is set based on `var_fig`.
+    - The function closes the figure (`plt.close()`) and returns the handle.
+    """
+
     y_mean = df[var_fig].groupby(df[var_fig].index.month).mean()
     y_med = df[var_fig].groupby(df[var_fig].index.month).median()
     x = y_mean.index
