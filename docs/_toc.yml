@@ -1,0 +1,37 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: HydroGenerate_Introduction
+
+parts:
+  - caption: Getting Started
+    chapters:
+    - file: GettingStarted_1_Installation
+    - file: GettingStarted_2_QuickStart
+
+  - caption: User Guide 
+    chapters:
+    - file: UserGuide_1_IntroductionTutorial
+    - file: UserGuide_2_Diversion
+    - file: UserGuide_3_FlowOptions
+    - file: UserGuide_4_QueryingDataUSGSNWIS
+    - file: UserGuide_5_Cost&Revenue
+    - file: UserGuide_6_Hydrokinetics
+    - file: UserGuide_7_HydroGenerateWorkflow
+    - file: UserGuide_8_Issues_Support
+
+  - caption: Developer Guide 
+    chapters:
+    - file: DeveloperGuide_1_Architecture
+    - file: DeveloperGuide_2_MethodsFunctions
+    - file: DeveloperGuide_3_Contributing
+
+  - caption: Theory
+    chapters:
+    - file: Theory_1_Hydropower
+    - file: Theory_2_Design_Flow
+    - file: Theory_3_Efficiency
+    - file: Theory_4_HeadLoss
+    - file: Theory_5_CostOM
+    - file: Theory_6_FlowConstraints
