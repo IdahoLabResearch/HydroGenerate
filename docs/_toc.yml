@@ -35,3 +35,16 @@ parts:
     - file: Theory_4_HeadLoss
     - file: Theory_5_CostOM
     - file: Theory_6_FlowConstraints
+
+  # - caption: API Reference
+  #   chapters:
+  #   - file: api/hydropower_potential
+  #   - file: api/turbine_calculation
+    # sections:
+    #   - file: api/hydropower_potential
+    #   - file: api/turbine_calculation
+      # - file: generated/HydroGenerate.hydraulic_processing
+      # - file: generated/HydroGenerate.flow_preprocessing
+      # - file: generated/HydroGenerate.summary_results
+
+
