@@ -14,7 +14,7 @@ dependencies = [
   "shapely",
   "pytest"
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 authors = [
   {name = "Juan Gallego-Calderon", email = "juan.gallegocalderon@inl.gov"},
   {name = "Camilo Bastidas-Pacheco", email = "camilojose.bastidaspacheco@inl.gov"},
