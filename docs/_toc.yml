@@ -26,6 +26,7 @@ parts:
     - file: DeveloperGuide_1_Architecture
     - file: DeveloperGuide_2_MethodsFunctions
     - file: DeveloperGuide_3_Contributing
+    - file: DeveloperGuide_4_Testing
 
   - caption: Theory
     chapters:
