@@ -1,12 +1,32 @@
-'''
-Copyright 2023, Battelle Energy Alliance, LLC
-'''
-
 """
 03-2023
 @authors: Camilo J. Bastidas Pacheco, J. Gallego-Calderon, Soumyadeep Nag, MITRB
 
-This module handles turbine selection and efficiency calculation
+This module handles turbine selection and efficiency calculation.
+
+Overview
+--------
+- Selects a feasible turbine type from head/flow via polygon regions.
+- Computes turbine efficiencies for Pelton, Turgo, Francis, Kaplan, Propeller,
+  Crossflow, and hydrokinetic types across a flow range around design flow.
+- Provides helpers for runner sizing and design-flow selection from a flow
+  duration curve (percent exceedance).
+
+Expected Inputs
+---------------
+Most functions receive a `turbine` object with (at minimum):
+- head : float
+- flow : float or array-like
+- design_flow : float
+- pelton_n_jets : int or None
+- Rm : float or None
+- pctime_runfull : float or None
+- hk_blade_type, hk_blade_diameter, hk_blade_heigth : optional for hydrokinetic
+
+Notes
+-----
+- Units must be used consistently (SI or US) across `head` and `flow`.
+- Selection polygons assume SI units (head in m, flow in m³/s).
 """
 
 import numpy as np
@@ -18,13 +38,61 @@ from shapely.geometry import Point
 from shapely.geometry import Polygon
 import matplotlib.pyplot as plt
    
-# TODO: add documentation along the class: reference equations, describe the inputs, outputs, constants.
-# TODO: validate that the method implemented is correct. Juan to cross-check the equations
 
 max_flow_turbine = 1      # multiplier for the maximum flow that can be passed through a turbine
 
 # Turbine Parameters
 class TurbineParameters:
+    """
+    Container for turbine inputs and computed attributes.
+
+    Parameters
+    ----------
+    turbine_type : str or None
+        One of {"Hydrokinetic","Francis","Propellor","Pelton","Turgo","CrossFlow"}.
+    flow : float or pandas.Series or numpy.ndarray
+        Flow (cfs or m³/s). Use a scalar for single-point design calculations.
+    design_flow : float
+        Design flow (cfs or m³/s).
+    flow_column : str or None
+        If `flow` is a DataFrame, column name containing the flow series.
+    head : float
+        Hydraulic head (ft or m).
+    rated_power : float or None
+        Rated power (kW).
+    system_efficiency : float or None
+        Overall system efficiency in [0, 1].
+    generator_efficiency : float or None
+        Generator efficiency in [0, 1] (default 0.98 if set upstream).
+    Rm : float or None
+        Manufacturer/design coefficient; if None defaults to 4.5.
+    pctime_runfull : float or None
+        Percent of time the turbine runs at full flow (0–100).
+    pelton_n_jets : int or None
+        Number of jets for Pelton turbines (default 3 if None).
+    hk_blade_diameter : float or None
+        Hydrokinetic rotor/blade diameter (m).
+    hk_blade_heigth : float or None
+        Hydrokinetic blade height (m) for Darrieus types.
+    hk_blade_type : str or None
+        {'ConventionalRotor','H-DarrieusRotor','DarrieusRotor'}.
+    hk_swept_area : float or None
+        Hydrokinetic swept area (m²), computed if not provided.
+
+    Attributes
+    ----------
+    Rm : float
+        Manufacturer/design coefficient (defaults to 4.5 when None).
+    design_efficiency : float or None
+        Efficiency at design flow (set by calculators when applicable).
+    turbine_flow : numpy.ndarray or None
+        Flow array used in efficiency curves (may be filled by helpers).
+    dataframe_output : pandas.DataFrame or None
+        Optional results table.
+    runner_diameter : float or None
+        Runner diameter (m) for reaction turbines.
+
+    """    
 
     def __init__(self, turbine_type, flow, design_flow, flow_column, head, 
                  rated_power,
@@ -66,6 +134,29 @@ class TurbineParameters:
         self.runner_diameter = None    # placeholder for the runner diameter   
     
 def turbine_type_selector(hp_params):
+    """
+    Select a feasible turbine type from head/flow using polygon regions.
+
+    Parameters
+    ----------
+    hp_params : TurbineParameters
+        Must provide `head` (m) and `design_flow` (m³/s).
+
+    Raises
+    ------
+    ValueError
+        If the (flow, head) point falls outside all supported turbine regions.
+
+    Side Effects
+    ------------
+    Updates
+        - `hp_params.turbine_type` with the closest (centroid distance) match.
+        - `hp_params.turbine_type_dict` with {turbine: distance} for all hits.
+
+    Notes
+    -----
+    The polygon limits are specified in SI units (m, m³/s).
+    """
 
     # inputs
     head = hp_params.head           # head, m
@@ -132,12 +223,26 @@ def turbine_type_selector(hp_params):
 
 # Flow range calculation
 class FlowRange():
-
-    '''
-    Function to calculate a range of flows from 0.5 to max_flow_turbine.
-    '''
+    """
+    Utility to expand a scalar flow into a range for efficiency curves.
+    """
 
     def flowrange_calculator(self, turbine):
+        """
+        If `turbine.flow` is scalar, create a flow vector from 50% to
+        `max_flow_turbine` (default 100%) of that scalar.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Must have scalar `flow`.
+
+        Side Effects
+        ------------
+        Overwrites `turbine.flow` with an array of 18 values.
+
+        """    
+        
         if isinstance(turbine.flow, Number):
             range = np.linspace(0.5, max_flow_turbine, 18) # the values are %
             turbine.flow = turbine.flow * range
@@ -146,11 +251,30 @@ class FlowRange():
 
 # Runner diameter for reaction turbines
 class ReactionTurbines():      
-    '''
-    Function to calculate the turbine runner diameter
-    '''
+    """
+    Runner sizing utilities for reaction turbines.
+    """
 
     def runnersize_calculator(self, design_flow):  
+        """
+        Estimate runner throat diameter for reaction turbines.
+
+        Parameters
+        ----------
+        design_flow : float
+            Design discharge (m³/s).
+
+        Returns
+        -------
+        float
+            Runner throat diameter (m).
+
+        Notes
+        -----
+        Uses piecewise k coefficient (0.41 for Qd>23 m³/s, else 0.46) and
+        d = k * Qd**0.473.
+        """
+
         if design_flow > 23: # d > 1.8 - The formula in the document has an 'undefined' area
             k = 0.41
         else:
@@ -160,16 +284,49 @@ class ReactionTurbines():
     
 # Functions to calculate turbine efficiency by turbine type (CANMET Energy Technology Center, 2004)
 class Turbine(ABC):   
-    
+    """
+    Abstract base class for turbine efficiency calculators.
+    """
+
     @abstractmethod
     def turbine_calculator(self, turbine):
+        """
+        Compute efficiency curve and update turbine attributes.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Input/output container with at least `head`, `design_flow`,
+            `flow` or `turbine_flow`, and optional coefficients.
+        """
+
         pass
 
 class FrancisTurbine(Turbine):
-    '''
-    Francis turbine calculation
-    '''
+    """
+    Francis turbine efficiency calculation (CANMET, 2004).
+    """
+
     def turbine_calculator(self, turbine):   
+        """
+        Populate `turbine.turbine_efficiency` across a flow range around Qd.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Requires `head`, `design_flow`, `Rm`. Creates/uses a flow range.
+
+        Side Effects
+        ------------
+        Updates:
+        - `turbine.turbine_efficiency` (numpy.ndarray in [0,1]).
+        - `turbine.runner_diameter` (m).
+
+        Notes
+        -----
+        Uses specific speed and runner-size adjustments to peak efficiency, and
+        piecewise relations above/below peak-flow `Qp`.
+        """        
 
         Qd = turbine.design_flow        # design flow
         d = ReactionTurbines().runnersize_calculator(Qd)
@@ -199,11 +356,24 @@ class FrancisTurbine(Turbine):
         turbine.runner_diameter = d     # update
 
 class KaplanTurbine(Turbine):
-    '''
-    Kaplan turbine calculation
-    '''
+    """
+    Kaplan turbine efficiency calculation (CANMET, 2004).
+    """
+
     def turbine_calculator(self, turbine):
-        
+        """
+        Compute efficiency across flow range; clip negatives to zero.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Requires `head`, `design_flow`, `Rm`.
+
+        Side Effects
+        ------------
+        Updates `turbine.turbine_efficiency` and `turbine.runner_diameter`.
+        """
+
         Qd = turbine.design_flow        # design flow
         d = ReactionTurbines().runnersize_calculator(Qd)
         nq = 800 * turbine.head**(-0.5)     # Specific speed
@@ -218,12 +388,24 @@ class KaplanTurbine(Turbine):
         turbine.runner_diameter = d     # update
 
 class PropellerTurbine(Turbine):
-    '''
-    Propellor turbine calculation
-    '''
+    """
+    Propeller turbine efficiency calculation (CANMET, 2004).
+    """
       
     def turbine_calculator(self, turbine):
-        
+        """
+        Compute efficiency across flow range; clip negatives to zero.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Requires `head`, `design_flow`, `Rm`.
+
+        Side Effects
+        ------------
+        Updates `turbine.turbine_efficiency` and `turbine.runner_diameter`.
+        """
+
         Qd = turbine.design_flow        # design flow
         d = ReactionTurbines().runnersize_calculator(Qd)
         nq = 800 * turbine.head**(-0.5)     # Specific speed
@@ -238,11 +420,24 @@ class PropellerTurbine(Turbine):
         turbine.runner_diameter = d     # update
 
 class PeltonTurbine(Turbine):  
-    '''
-    Pelton turbine calculation
-    '''
+    """
+    Pelton turbine efficiency calculation (CANMET, 2004).
+    """
 
-    def turbine_calculator(self, turbine):  
+    def turbine_calculator(self, turbine): 
+        """
+        Compute Pelton efficiency across the flow range.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Requires `head`, `design_flow`; uses `pelton_n_jets` (default 3).
+
+        Side Effects
+        ------------
+        Updates `turbine.turbine_efficiency` and `turbine.runner_diameter`.
+        """        
+
         if turbine.pelton_n_jets is None:
             turbine.pelton_n_jets = 3
     
@@ -259,21 +454,47 @@ class PeltonTurbine(Turbine):
         turbine.runner_diameter = d     # update
 
 class TurgoTurbine(Turbine):
-    '''
-    Pelton turbine calculation
-    '''
+    """
+    Turgo turbine efficiency approximated from Pelton minus 0.03.
+    """
 
     def turbine_calculator(self, turbine):
-          PeltonTurbine().turbine_calculator(turbine)       # Calculate Pelton efficiency
-          turbine.turbine_efficiency = turbine.turbine_efficiency - 0.03        # Pelton efficiency - 0.03
-          turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies 
+        """
+        Compute Turgo efficiency by offsetting Pelton efficiency.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Requires `head`, `design_flow`.
+
+        Side Effects
+        ------------
+        Updates `turbine.turbine_efficiency` (values clipped at 0).
+        """
+
+        PeltonTurbine().turbine_calculator(turbine)       # Calculate Pelton efficiency
+        turbine.turbine_efficiency = turbine.turbine_efficiency - 0.03        # Pelton efficiency - 0.03
+        turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies 
           
 class CrossFlowTurbine(Turbine):
-    '''
-    Pelton turbine calculation
-    '''
+    """
+    Crossflow turbine efficiency calculation (empirical relation).
+    """
       
     def turbine_calculator(self, turbine):
+        """
+        Compute crossflow efficiency across the flow range.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Requires `design_flow`; uses empirical relation vs Qd and Q.
+
+        Side Effects
+        ------------
+        Updates `turbine.turbine_efficiency` (values clipped at 0).
+        """
+
         Qd = turbine.design_flow 
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.turbine_flow
@@ -281,11 +502,27 @@ class CrossFlowTurbine(Turbine):
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies
 
 class Hydrokinetic_Turbine(Turbine):
-    '''
-    Hydrokinetic turbine calculation
-    '''       
+    """
+    Hydrokinetic turbine swept-area setup and related parameters.
+    """    
 
     def turbine_calculator(self, turbine):
+        """
+        Ensure hydrokinetic blade geometry and swept area are populated.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Uses/updates:
+            - hk_blade_type : {'ConventionalRotor','H-DarrieusRotor','DarrieusRotor'}
+            - hk_blade_diameter : float (m)
+            - hk_blade_heigth : float (m) when required
+            - hk_swept_area : float (m²)
+
+        Side Effects
+        ------------
+        Sets defaults when missing and updates `hk_swept_area`.
+        """
 
         if turbine.hk_blade_type is None:       # if a turbine type is not given
             turbine.hk_blade_type = 'ConventionalRotor'     # default - update
@@ -320,17 +557,46 @@ class Hydrokinetic_Turbine(Turbine):
 
 # Functions to calculate design flow. 
 class DesignFlow(ABC):
+    """
+    Abstract base for design-flow selection strategies.
+    """
+
     @abstractmethod
     def designflow_calculator(self, turbine):
+        """
+        Compute and update `turbine.design_flow`.
+        """
+
         pass
 
 # Desing flow selected from the flow duration curve for a percentage of exceedance
 class PercentExceedance(DesignFlow):
-    '''
-    Design flow calculation based on the percent exceedance
-    '''
+    """
+    Design flow based on a target percent exceedance from a flow duration curve.
+    """
 
     def designflow_calculator(self, turbine):
+        """
+        Select design flow from the flow duration curve at target exceedance.
+
+        Parameters
+        ----------
+        turbine : TurbineParameters
+            Uses:
+            - pctime_runfull : float or None
+                Target % exceedance (rounded to nearest integer). If None,
+                defaults to 30%.
+            - flow : array-like or scalar
+                If array-like, computes the flow duration curve; if scalar,
+                uses it directly as `design_flow`.
+
+        Side Effects
+        ------------
+        Updates:
+        - `turbine.design_flow`
+        - `turbine.pctime_runfull` (rounded int)
+        - `turbine.flowduration_curve` (pandas.DataFrame) when series provided.
+        """
 
         pe = turbine.pctime_runfull     # percentage of time a turbine is running full
         flow = turbine.flow     # user-entered flow
@@ -348,7 +614,14 @@ class PercentExceedance(DesignFlow):
             flow = flow[~np.isnan(flow)] # remove nan values
             flow_percentiles = np.percentile(flow, q = np.linspace(0, 100, 101))        # percentiles to compute, 1:100
             flowduration_curve = {'Flow': flow_percentiles, 'Percent_Exceedance':pc_e}      # Flow duration curve
-            design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe])     # flow for the selected percent of excedante
+            # design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe])     # flow for the selected percent of excedante
+
+            filtered = flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe]
+            if filtered.size > 0:
+                design_flow = float(filtered[0])
+            else:
+                raise ValueError(f"No flow found for Percent_Exceedance == {pe}")
+
             turbine.flowduration_curve = pd.DataFrame(data = flowduration_curve)
         
         turbine.design_flow = design_flow       # Update
