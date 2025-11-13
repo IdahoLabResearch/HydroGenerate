@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Installation</title>
+    <title>HydroGenerate Test Suite</title>
   
   
   
@@ -62,13 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'GettingStarted_1_Installation';</script>
-    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/GettingStarted_1_Installation.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'DeveloperGuide_4_Testing';</script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/DeveloperGuide_4_Testing.html" />
     <link rel="shortcut icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Quick Start" href="GettingStarted_2_QuickStart.html" />
-    <link rel="prev" title="HydroGenerate" href="HydroGenerate_Introduction.html" />
+    <link rel="next" title="Hydropower Estimation" href="Theory_1_Hydropower.html" />
+    <link rel="prev" title="Contributing to HydroGenerate" href="DeveloperGuide_3_Contributing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -171,8 +171,8 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Installation</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted_1_Installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted_2_QuickStart.html">Quick Start</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
@@ -187,11 +187,11 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_1_Architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
-<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide_4_Testing.html">HydroGenerate Test Suite</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">HydroGenerate Test Suite</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="nav bd-sidenav">
@@ -277,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FGettingStarted_1_Installation.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2FDeveloperGuide_4_Testing.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/GettingStarted_1_Installation.md" target="_blank"
+      <li><a href="_sources/DeveloperGuide_4_Testing.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -391,7 +391,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Installation</h1>
+    <h1>HydroGenerate Test Suite</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -401,9 +401,16 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-basic-usage">For basic usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-verify-your-installation-run-tests">Optional - Verify your installation (run tests)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-hydropower-tests">1. Basic Hydropower Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diversion-projects">2. Diversion Projects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#headloss-models">3. Headloss Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turbine-selection-efficiency">4. Turbine Selection &amp; Efficiency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hydrokinetic-projects">5. Hydrokinetic Projects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#economic-calculations">6. Economic Calculations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#revenue-calculations">7. Revenue Calculations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-handling">8. Error Handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conventions-and-notes">9. Conventions and Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">Running Tests</a></li>
 </ul>
             </nav>
         </div>
@@ -415,64 +422,128 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h1>
-<p><strong>HydroGenerate</strong> is offered as a python package. This means that the classes and utilities can be used anywhere in your system, without risks of making unwanted changes to the core code in the repo, issues with finding the module in path, etc.</p>
-<section id="for-basic-usage">
-<h2>For basic usage<a class="headerlink" href="#for-basic-usage" title="Permalink to this heading">#</a></h2>
-<p><strong>HydroGenerate</strong> can be installed by downloading the source code from GitHub or via the PyPI package manager using pip.</p>
-<p>For those interested only in using the code, the simplest way to obtain it is with pip by using this command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">HydroGenerate</span>
+  <section class="tex2jax_ignore mathjax_ignore" id="hydrogenerate-test-suite">
+<h1>HydroGenerate Test Suite<a class="headerlink" href="#hydrogenerate-test-suite" title="Permalink to this heading">#</a></h1>
+<p>This page documents the purpose and coverage of the automated tests for <strong>HydroGenerate</strong>, located in <code class="docutils literal notranslate"><span class="pre">tests/test_hg.py</span></code>.</p>
+<p>You can run all tests locally or in CI with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>-q
 </pre></div>
 </div>
-<p>For a quick start guide, follow the steps in the <strong>Quick start</strong> page.</p>
+<hr class="docutils" />
+<section id="basic-hydropower-tests">
+<h2>1. Basic Hydropower Tests<a class="headerlink" href="#basic-hydropower-tests" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_basic_hydropower_calculation</span></code></strong><br />
+Confirms that the <code class="docutils literal notranslate"><span class="pre">calculate_hp_potential()</span></code> function produces the correct rated power for a simple BASIC hydropower configuration.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_units_roundtrip_basic</span></code></strong><br />
+Ensures hydropower results remain consistent when switching between <strong>US</strong> and <strong>SI</strong> units.</p></li>
+</ul>
 </section>
-<section id="optional-verify-your-installation-run-tests">
-<h2>Optional - Verify your installation (run tests)<a class="headerlink" href="#optional-verify-your-installation-run-tests" title="Permalink to this heading">#</a></h2>
-<p>After installing HydroGenerate locally, you can validate the setup and (optionally) see test coverage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># From the repository root</span>
-pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>pytest-cov
-pytest<span class="w"> </span>-q<span class="w"> </span>--cov<span class="o">=</span>HydroGenerate<span class="w"> </span>--cov-report<span class="o">=</span>term-missing:skip-covered
-</pre></div>
-</div>
+<hr class="docutils" />
+<section id="diversion-projects">
+<h2>2. Diversion Projects<a class="headerlink" href="#diversion-projects" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_diversion_calculate_potential</span></code></strong><br />
+Runs an end-to-end diversion test using a short flow DataFrame, verifying that power, design flow, and revenue are computed correctly.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_diversion_</span></code></strong><br />
+Ensures turbine efficiency values remain between 0 and 1, and headloss is computed correctly.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_percent_exceedance_design_flow_uses_P70_when_pe_30</span></code></strong><br />
+Verifies that a percent exceedance of 30 selects the 70th percentile of flow as the design flow.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_min_turbineflow_default_10_percent_clamps_to_zero</span></code></strong><br />
+Confirms that the minimum turbine flow defaults to 10% of the design flow and that smaller flows are clamped to zero.</p></li>
+</ul>
 </section>
-<section id="for-developers">
-<h2>For developers<a class="headerlink" href="#for-developers" title="Permalink to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>Clone the repo:</p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">IdahoLabResearch</span><span class="o">/</span><span class="n">HydroGenerate</span><span class="o">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">HydroGenerate</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>It is recommended that a dedicated conda environment be created for developing/using this repo and prior to the installation below.</p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">hydro</span><span class="o">-</span><span class="n">gen</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.10</span>
-</pre></div>
-</div>
-<p>To activate the environment, execute the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">hydro</span><span class="o">-</span><span class="n">gen</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Install the package in your environment:</p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">HydroGenerate</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
-</pre></div>
-</div>
-<p><strong>Optional</strong></p>
-<ol class="arabic simple" start="4">
-<li><p>Install jupyter lab in your new environment to run the examples provided in <code class="docutils literal notranslate"><span class="pre">./examples</span></code></p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">jupyterlab</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="5">
-<li><p>Install the package <code class="docutils literal notranslate"><span class="pre">dataretrieval</span></code> in your new environment to use streamflow data from a USGS stream gauge.</p></li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">dataretrieval</span>
+<hr class="docutils" />
+<section id="headloss-models">
+<h2>3. Headloss Models<a class="headerlink" href="#headloss-models" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_headloss_methods_run</span></code></strong><br />
+Ensures both <strong>Darcy–Weisbach</strong> and <strong>Hazen–Williams</strong> methods run successfully.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_darcy_headloss_increases_with_length_si</span></code></strong><br />
+Verifies that longer penstock lengths produce higher headloss and lower rated power.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_hazen_williams_infers_diameter_when_missing</span></code></strong><br />
+Checks that Hazen–Williams can infer penstock diameter when not provided.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="turbine-selection-efficiency">
+<h2>4. Turbine Selection &amp; Efficiency<a class="headerlink" href="#turbine-selection-efficiency" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_turbine_type_selector_inside_regions</span></code></strong><br />
+Confirms correct turbine type (Kaplan, Francis, Turgo, Crossflow) is chosen for valid flow–head pairs.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_generator_efficiency_default_applied</span></code></strong><br />
+Ensures the default generator efficiency (0.98) is applied and a valid runner diameter is assigned.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="hydrokinetic-projects">
+<h2>5. Hydrokinetic Projects<a class="headerlink" href="#hydrokinetic-projects" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_hydrokinetic_mode_simple_si</span></code></strong><br />
+Verifies that hydrokinetic power &gt; 0 when blade area and velocity are given and that costs are skipped.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="economic-calculations">
+<h2>6. Economic Calculations<a class="headerlink" href="#economic-calculations" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_costs_present_for_diversion_canalconduit_us</span></code></strong><br />
+Checks that the ORNL Baseline Cost Model sets <strong>ICC</strong> (initial capital cost) and <strong>annual O&amp;M</strong> for canal conduit projects.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_costs_present_for_diversion_npd_alias</span></code></strong><br />
+Verifies that the “NPD” alias for non-powered dams produces valid cost outputs.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_annual_om_is_capped_at_2p5_percent_of_icc_when_applicable</span></code></strong><br />
+Confirms that annual O&amp;M ≤ 2.5% of ICC, per model guidance.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_costs_not_computed_for_hydrokinetic</span></code></strong><br />
+Ensures hydrokinetic projects skip cost modeling.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="revenue-calculations">
+<h2>7. Revenue Calculations<a class="headerlink" href="#revenue-calculations" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_revenue_capacity_factor_path_sets_days_and_energy</span></code></strong><br />
+Checks that providing a capacity factor sets the correct number of operation days and computes annual energy correctly.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_revenue_days_path_sets_capacity_factor_and_energy</span></code></strong><br />
+Validates the reverse case: providing days sets the capacity factor and energy outputs correctly.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_revenue_outputs_present_and_valid</span></code></strong><br />
+Ensures DataFrame-based revenue calculations produce valid, non-negative energy and revenue values.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_revenue_dataframe_path_uses_default_price_when_none</span></code></strong><br />
+Verifies that default wholesale electricity price (0.0582 $/kWh) is applied when none is provided.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_dataframe_revenue_groupby_yields_reasonable_capacity_factor</span></code></strong><br />
+Confirms that the computed capacity factor is clamped between 0 and 1.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="error-handling">
+<h2>8. Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_missing_flow_column_raises</span></code></strong><br />
+Ensures a missing <code class="docutils literal notranslate"><span class="pre">flow_column</span></code> parameter raises a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_invalid_units_raise</span></code></strong><br />
+Confirms invalid unit strings raise an error.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_invalid_hydropower_type_raises</span></code></strong><br />
+Ensures unsupported hydropower types are rejected.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">test_diversion_requires_penstock_length_when_headloss_calc_true</span></code></strong><br />
+Verifies that penstock length is required if headloss calculation is enabled.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="conventions-and-notes">
+<h2>9. Conventions and Notes<a class="headerlink" href="#conventions-and-notes" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>All DataFrames use a <code class="docutils literal notranslate"><span class="pre">dateTime</span></code> index.</p></li>
+<li><p>Frequency codes use lowercase (<code class="docutils literal notranslate"><span class="pre">&quot;h&quot;</span></code>) to avoid pandas deprecation warnings.</p></li>
+<li><p>Floating-point comparisons use <code class="docutils literal notranslate"><span class="pre">pytest.approx()</span></code> for stability.</p></li>
+<li><p>Run the tests regularly to ensure physics, units, and economics remain consistent.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="running-tests">
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this heading">#</a></h2>
+<p>From the repository root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>HydroGenerate
+pip<span class="w"> </span>install<span class="w"> </span>pytest
+pytest<span class="w"> </span>-q
 </pre></div>
 </div>
 </section>
@@ -509,20 +580,20 @@ pytest<span class="w"> </span>-q<span class="w"> </span>--cov<span class="o">=</
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="HydroGenerate_Introduction.html"
+       href="DeveloperGuide_3_Contributing.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">HydroGenerate</p>
+        <p class="prev-next-title">Contributing to HydroGenerate</p>
       </div>
     </a>
     <a class="right-next"
-       href="GettingStarted_2_QuickStart.html"
+       href="Theory_1_Hydropower.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Quick Start</p>
+        <p class="prev-next-title">Hydropower Estimation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -541,9 +612,16 @@ pytest<span class="w"> </span>-q<span class="w"> </span>--cov<span class="o">=</
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-basic-usage">For basic usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-verify-your-installation-run-tests">Optional - Verify your installation (run tests)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-hydropower-tests">1. Basic Hydropower Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diversion-projects">2. Diversion Projects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#headloss-models">3. Headloss Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turbine-selection-efficiency">4. Turbine Selection &amp; Efficiency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hydrokinetic-projects">5. Hydrokinetic Projects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#economic-calculations">6. Economic Calculations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#revenue-calculations">7. Revenue Calculations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-handling">8. Error Handling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conventions-and-notes">9. Conventions and Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">Running Tests</a></li>
 </ul>
   </nav></div>
 
