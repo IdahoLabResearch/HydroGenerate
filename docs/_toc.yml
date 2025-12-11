@@ -37,10 +37,6 @@ parts:
     - file: Theory_5_CostOM
     - file: Theory_6_FlowConstraints
 
-  - caption: API
-    chpters:
-    - file: api
-
   - caption: API Reference
     chapters:
     - file: api/FPP
