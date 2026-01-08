@@ -36,7 +36,6 @@ Notes
   selecting the two-week period with the lowest bi-weekly mean flow.
 """
 
-
 import numpy as np
 import pandas as pd
 from datetime import datetime
@@ -45,26 +44,14 @@ from datetime import datetime
 # Hydraulic design parameters
 class FlowPreProcessingParameters:
 
-    """
-    Container for flow pre-processing options used by flow limit and
-    maintenance logic.
+    """Configuration container for flow preprocessing.
+
+    This class holds user-configurable parameters that control minimum turbine
+    flow enforcement and maintenance scheduling. It does not perform any
+    computations by itself; the values are consumed by
+    :class:`~FlowPreProcessing`.
 
     Parameters
-    ----------
-    minimum_turbineflow : float or None
-        Absolute minimum turbine flow (m^3/s). If None, a percentage of
-        `design_flow` is used (see `minimum_turbineflow_percent`).
-    minimum_turbineflow_percent : float or None
-        Minimum turbine flow as a percentage of `design_flow` (1–100). Used
-        only when `minimum_turbineflow` is None. If both are None, a default
-        of 10% is applied.
-    annual_maintenance_flag : bool
-        If True, enforce a 7-day annual maintenance outage (flow set to 0).
-    major_maintenance_flag : bool
-        If True, enforce a 14-day major maintenance outage every 5 years
-        (flow set to 0).
-
-    Attributes
     ----------
     minimum_turbineflow : float or None
         Absolute minimum turbine flow (m³/s). If provided, this overrides the
