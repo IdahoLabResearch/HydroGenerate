@@ -67,15 +67,25 @@ class FlowPreProcessingParameters:
     Attributes
     ----------
     minimum_turbineflow : float or None
-    minimum_turbineflow_percent : float or None
+        Absolute minimum turbine flow (m³/s). If provided, this overrides the
+        percentage-based minimum flow. If ``None``, the minimum is computed from
+        ``minimum_turbineflow_percent`` (or a default of 10%).
+    minimum_turbineflow_percent : float or int or None
+        Minimum turbine flow as a percentage of ``design_flow`` (1–100). Used
+        only when ``minimum_turbineflow`` is ``None``.
     annual_maintenance_flag : bool
+        If ``True``, apply annual maintenance by setting turbine flow to zero
+        for the lowest-flow calendar week each year (based on mean weekly flow).
     major_maintenance_flag : bool
+        If ``True``, apply major maintenance by setting turbine flow to zero
+        for the lowest-flow two-week period every five years.
 
     Notes
     -----
-    This class only stores configuration; calculations are performed by
-    methods in `FlowPreProcessing`.
-    """        
+    These parameters are typically attached to a higher-level *flow object*
+    (e.g., a project-specific container) and then read by methods in
+    :class:`~FlowPreProcessing`.
+    """      
 
     def __init__(self, minimum_turbineflow, minimum_turbineflow_percent,       # Flow parameters
                  annual_maintenance_flag, major_maintenance_flag): 
@@ -89,89 +99,49 @@ class FlowPreProcessingParameters:
 
 
 class FlowPreProcessing():
+    """Flow preprocessing routines operating on a provided flow object.
 
+    Methods in this class update values on ``flow_obj`` in-place (most
+    importantly ``flow_obj.turbine_flow``).
+
+    Notes
+    -----
+    The caller is responsible for ensuring that:
+
+    - ``flow_obj.turbine_flow`` is a 1D numpy array aligned with
+      ``flow_obj.datetime_index``.
+    - ``flow_obj.datetime_index`` is a pandas.DatetimeIndex whose name (or level
+      name) is ``"dateTime"`` so that ``pd.Grouper(level="dateTime", ...)``
+      works as written in the implementation.
     """
-    Apply design flow limits and scheduled maintenance to a flow object.
-
-    The methods in this class expect a `flow_obj` with, at minimum, the
-    attributes described in the module docstring. Methods update
-    `flow_obj.turbine_flow` in place and do not return values.
-
-    See Also
-    --------
-    max_turbineflow_checker : Cap turbine flow at design flow.
-    min_turbineflow_checker : Enforce minimum turbine flow threshold.
-    annual_maintenance_implementer : Zero 7 days/year at lowest-flow week.
-    major_maintenance_implementer : Zero 14 days/5 years at lowest bi-weekly mean.
-    """
-
-    # Function that sets max turbine flow to the design flow
-    def max_turbineflow_checker(self, flow_obj):
-        """
-        Cap turbine flow at the design flow.
-
-        Parameters
-        ----------
-        flow_obj : object
-            Object with attributes:
-            - flow : numpy.ndarray
-                Raw inflow time series (m^3/s).
-            - design_flow : float or numpy.ndarray
-                Turbine design flow (m^3/s). If array, must align with `flow`.
-
-        Side Effects
-        ------------
-        Updates `flow_obj.turbine_flow` (numpy.ndarray), where each element is
-        `min(flow, design_flow)`.
-
-        Examples
-        --------
-        >>> # flow_obj.flow = [12, 8], design_flow = 10
-        >>> # turbine_flow becomes [10, 8]
-        """
-
-        flow = flow_obj.flow            # this is a numpy array
-        design_flow = flow_obj.design_flow
-        flow_obj.turbine_flow = np.where(flow > design_flow, design_flow, flow)         # turbine_flow is created here as this code is always active and runs 1st. flow is < design flow
-
     # Function that sets min turbine flow to the design flow
     def min_turbineflow_checker(self, flow_obj):
-        """
-        Enforce a minimum turbine flow threshold; set values below it to zero.
+        """Enforce a minimum turbine flow threshold.
 
-        Logic
-        -----
-        - If `flow_obj.minimum_turbineflow` is provided, use it (m^3/s).
-        - Else, compute min flow as
-        (`minimum_turbineflow_percent` or 10 by default) × `design_flow` / 100.
-        The computed value is stored back into `flow_obj.minimum_turbineflow`.
+        Any values in ``flow_obj.turbine_flow`` that fall below the computed
+        minimum are replaced with zero.
 
         Parameters
         ----------
         flow_obj : object
-            Object with attributes:
-            - turbine_flow : numpy.ndarray
-                Turbine flow series (m^3/s), typically after max-capping.
-            - design_flow : float or numpy.ndarray
-                Turbine design flow (m^3/s).
-            - minimum_turbineflow : float or None
-            - minimum_turbineflow_percent : float or None
+            A flow object with attributes:
 
-        Side Effects
-        ------------
-        Updates `flow_obj.turbine_flow`, replacing values `< min_flow` with 0.
+            - ``turbine_flow`` (numpy.ndarray)
+            - ``design_flow`` (float)
+            - ``minimum_turbineflow`` (float or None)
+            - ``minimum_turbineflow_percent`` (float or None)
 
         Notes
         -----
-        - If `design_flow` is an array, elementwise percentages are applied.
-        - Default minimum percent is 10 if neither absolute nor percentage is given.
+        This method modifies ``flow_obj.turbine_flow`` in place.
 
-        Examples
-        --------
-        >>> # design_flow = 20 m^3/s, minimum_turbineflow_percent = 10
-        >>> # min_flow = 2.0; turbine_flow < 2.0 becomes 0
+        If ``flow_obj.minimum_turbineflow`` is ``None``, the minimum flow is
+        computed as::
+
+            min_flow = (minimum_turbineflow_percent / 100) * design_flow
+
+        where ``minimum_turbineflow_percent`` defaults to 10 if not provided.
         """
-        
         flow = flow_obj.turbine_flow # this is a numpy array        
         design_flow = flow_obj.design_flow
 
@@ -190,40 +160,23 @@ class FlowPreProcessing():
         flow_obj.turbine_flow = np.where(flow < min_flow, 0, flow)          # replace flows less than min flow with 0
 
     def annual_maintenance_implementer(self, flow_obj):
-        """
-        Zero turbine flow for 7 consecutive days once per calendar year.
+        """Apply annual maintenance by zeroing the lowest-flow week each year.
 
-        Procedure
-        ---------
-        1) Compute weekly mean flow and identify the week with the lowest mean
-        (excluding first/last partial weeks).
-        2) For each year in the time span, zero out the 7-day window starting on
-        the Monday of that lowest-flow week.
+        The method identifies the calendar week with the lowest mean weekly
+        flow (aggregated across all years) and sets turbine flow to zero for
+        that week in every year of the dataset.
 
         Parameters
         ----------
         flow_obj : object
-            Object with attributes:
-            - turbine_flow : numpy.ndarray
-                Turbine flow series (m^3/s).
-            - datetime_index : pandas.DatetimeIndex
-                Timestamps aligned with `turbine_flow`.
 
-        Side Effects
-        ------------
-        Updates `flow_obj.turbine_flow`, setting the 7 chosen days per year to 0.
+        Notes
+        -----
+        This method modifies ``flow_obj.turbine_flow`` in place.
 
-        Assumptions
-        -----------
-        - `datetime_index` covers multiple years or at least one full year.
-        - Weekly grouping uses `pd.Grouper(level="dateTime", freq='W')`. Ensure your
-        index (or a MultiIndex level) is named "dateTime" or adjust the grouper
-        accordingly.
-
-        Examples
-        --------
-        >>> # After applying, each year has a 7-day zero-flow outage at the
-        >>> # statistically lowest weekly mean period.
+        Weekly means are computed using ``freq='W'`` and grouped by calendar
+        week number (``%W``). The maintenance window spans 7 days starting on
+        the Monday of the selected week.
         """
 
         # Function to set annual maintennace - i.e., make the flow 0 for a week a year
@@ -262,44 +215,24 @@ class FlowPreProcessing():
 
     # Function that schedules the major maintennace
     def major_maintenance_implementer(self, flow_obj):
+        """Apply major maintenance by zeroing a low-flow two-week period every 5 years.
 
-        """
-        Zero turbine flow for 14 consecutive days every 5 years (skip first year).
-
-        Procedure
-        ---------
-        1) Compute bi-weekly (2W) mean flow and identify the bi-weekly window with
-        the lowest mean (excluding first/last partial windows).
-        2) For maintenance years spaced every 5 years (starting after the first),
-        zero out the 14-day window starting on the Monday of the selected week.
+        The method identifies the calendar week associated with the lowest
+        mean two-week flow and applies a 14-day zero-flow window starting
+        from that week in each major-maintenance year.
 
         Parameters
         ----------
         flow_obj : object
-            Object with attributes:
-            - turbine_flow : numpy.ndarray
-                Turbine flow series (m^3/s).
-            - datetime_index : pandas.DatetimeIndex
-                Timestamps aligned with `turbine_flow`.
 
-        Side Effects
-        ------------
-        Updates `flow_obj.turbine_flow`, setting the selected 14 days to 0 in each
-        maintenance year (every 5 years; first year excluded).
+        Notes
+        -----
+        This method modifies ``flow_obj.turbine_flow`` in place.
 
-        Assumptions
-        -----------
-        - Sufficient span to include one or more 5-year intervals.
-        - Bi-weekly grouping uses `pd.Grouper(level="dateTime", freq='2W')`. Ensure
-        your index (or a MultiIndex level) is named "dateTime" or adjust the
-        grouper accordingly.
-
-        Examples
-        --------
-        >>> # In a 10-year record, days 1–14 of the lowest 2-week flow window
-        >>> # are zeroed in years 5 and 10 (year 0 excluded).
+        Major maintenance years occur every five years starting after the
+        first year of the dataset. Two-week means are computed using
+        ``freq='2W'``.
         """
-        
         # Major maintenance will happend on the month with lowest flow a year - during the first 15 days of this month.
 
         turbine_flow = flow_obj.turbine_flow            # turbine flow series with max and min (if on) limits implemented
@@ -334,5 +267,3 @@ class FlowPreProcessing():
         flow.loc[flow.date.isin(dates_maint), 'flow_cms'] = 0           # replace flow in minimum weeks with 0
         
         flow_obj.turbine_flow = flow['flow_cms'].to_numpy()         # update
-
-

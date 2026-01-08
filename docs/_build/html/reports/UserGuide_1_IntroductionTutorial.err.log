@@ -1,0 +1,38 @@
+Traceback (most recent call last):
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 1324, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from HydroGenerate.hydropower_potential import calculate_hp_potential
+------------------
+
+
+Traceback [36m(most recent call last)[39m:
+
+  File [92m~\anaconda3\envs\HG\Lib\site-packages\IPython\core\interactiveshell.py:3701[39m in [95mrun_code[39m
+    exec(code_obj, self.user_global_ns, self.user_ns)
+
+[36m  [39m[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 1[39m
+[31m    [39m[31mfrom HydroGenerate.hydropower_potential import calculate_hp_potential[39m
+
+  [36mFile [39m[32m~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:682[39m
+[31m    [39m[31mdef revenue_calculation(self, hp_params):[39m
+    ^
+[31mIndentationError[39m[31m:[39m unexpected indent
+
+

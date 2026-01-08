@@ -1,0 +1,88 @@
+Traceback (most recent call last):
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 1324, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Head, power, and length of penstock are known. Multiple values of flow are available, the design flow is not known.
+# In this scenario HydroGenerate will select a turbine, compute efficiency for the given flow values,
+# design flow based on a percent of exceedance, penstock diameter (assuming steel if no material is given),
+# head loss for all flows, rater power,
+# power a given range of flow, 
+
+flow = pd.read_csv('data_test.csv')['discharge_cfs'].to_numpy() # cfs
+head = 20 # ft
+power = None
+penstock_length = 50 # ft
+hp_type = 'Diversion'
+pctime_runfull= 20 # percent of time the turbine is running full - default is 30%
+
+# Note: decreasing the percent of time the turbine will run full will result in a 
+# larger system (rated power and cost)
+
+hp = calculate_hp_potential(flow= flow, rated_power= power, head= head,
+                           penstock_headloss_calculation= True,
+                           hydropower_type= hp_type, penstock_length= penstock_length,
+                           pctime_runfull= pctime_runfull)
+
+# Explore output
+print('Design flow (cfs):', hp.design_flow)
+print('Head_loss at design flow (ft):', round(hp.penstock_design_headloss, 2))
+print('Turbine type:', hp.turbine_type)
+print('Rated Power (Kw):', round(hp.rated_power, 2))
+print('Net head (ft):', round(hp.net_head, 2))
+print('Generator Efficiency:',hp.generator_efficiency)
+print('Head Loss method:',hp.penstock_headloss_method)
+print('Penstock length (ft):', hp.penstock_length)
+print('Penstock diameter (ft):', round(hp.penstock_diameter, 2))
+print('Runner diameter (ft):', round(hp.runner_diameter, 2))
+
+print('\nFlow range evaluated (cfs):', np.round(hp.flow, 1))
+print('Turbine Efficiency for the given flow range:', np.round(hp.turbine_efficiency ,3))
+print('Power (kW) for the given flow range:', np.round(hp.power, 1))
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mAttributeError[39m                            Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[2][39m[32m, line 17[39m
+[32m     12[39m pctime_runfull= [32m20[39m [38;5;66;03m# percent of time the turbine is running full - default is 30%[39;00m
+[32m     14[39m [38;5;66;03m# Note: decreasing the percent of time the turbine will run full will result in a [39;00m
+[32m     15[39m [38;5;66;03m# larger system (rated power and cost)[39;00m
+[32m---> [39m[32m17[39m hp = [43mcalculate_hp_potential[49m[43m([49m[43mflow[49m[43m=[49m[43m [49m[43mflow[49m[43m,[49m[43m [49m[43mrated_power[49m[43m=[49m[43m [49m[43mpower[49m[43m,[49m[43m [49m[43mhead[49m[43m=[49m[43m [49m[43mhead[49m[43m,[49m
+[32m     18[39m [43m                           [49m[43mpenstock_headloss_calculation[49m[43m=[49m[43m [49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m
+[32m     19[39m [43m                           [49m[43mhydropower_type[49m[43m=[49m[43m [49m[43mhp_type[49m[43m,[49m[43m [49m[43mpenstock_length[49m[43m=[49m[43m [49m[43mpenstock_length[49m[43m,[49m
+[32m     20[39m [43m                           [49m[43mpctime_runfull[49m[43m=[49m[43m [49m[43mpctime_runfull[49m[43m)[49m
+[32m     22[39m [38;5;66;03m# Explore output[39;00m
+[32m     23[39m [38;5;28mprint[39m([33m'[39m[33mDesign flow (cfs):[39m[33m'[39m, hp.design_flow)
+
+[36mFile [39m[32m~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:998[39m, in [36mcalculate_hp_potential[39m[34m(flow, head, rated_power, hydropower_type, units, penstock_headloss_method, design_flow, system_efficiency, generator_efficiency, turbine_type, head_loss, penstock_headloss_calculation, penstock_length, penstock_diameter, penstock_material, penstock_frictionfactor, pctime_runfull, max_headloss_allowed, turbine_Rm, pelton_n_jets, flow_column, channel_average_velocity, hk_blade_diameter, hk_blade_heigth, hk_blade_type, hk_swept_area, annual_caclulation, resource_category, electricity_sell_price, cost_calculation_method, capacity_factor, n_operation_days, minimum_turbineflow, minimum_turbineflow_percent, annual_maintenance_flag, major_maintenance_flag)[39m
+[32m    996[39m [38;5;66;03m# Diversion projects[39;00m
+[32m    997[39m [38;5;28;01melif[39;00m hydropower_type.upper() == [33m'[39m[33mDIVERSION[39m[33m'[39m:
+[32m--> [39m[32m998[39m     [43mDiversion[49m[43m([49m[43m)[49m[43m.[49m[43mhydropower_calculation[49m[43m([49m[43mall_params[49m[43m)[49m
+[32m   1000[39m [38;5;28;01melif[39;00m hydropower_type.upper() == [33m'[39m[33mHYDROKINETIC[39m[33m'[39m:
+[32m   1001[39m     Hydrokinetic().hydropower_calculation(all_params)
+
+[36mFile [39m[32m~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:403[39m, in [36mDiversion.hydropower_calculation[39m[34m(self, hp_params)[39m
+[32m    400[39m FlowRange().flowrange_calculator(hp_params)
+[32m    402[39m [38;5;66;03m# Set max flow to the design flow and minimum flow passing throught the turbine[39;00m
+[32m--> [39m[32m403[39m [43mFlowPreProcessing[49m[43m([49m[43m)[49m[43m.[49m[43mmax_turbineflow_checker[49m(hp_params)      [38;5;66;03m# max flow check[39;00m
+[32m    404[39m FlowPreProcessing().min_turbineflow_checker(hp_params)      [38;5;66;03m# min flow check[39;00m
+[32m    406[39m [38;5;66;03m# Run major maintenance and annual maintenance[39;00m
+
+[31mAttributeError[39m: 'FlowPreProcessing' object has no attribute 'max_turbineflow_checker'
+

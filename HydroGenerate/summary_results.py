@@ -36,7 +36,6 @@ Notes
   required attributes are missing.
 """
 
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -49,30 +48,29 @@ cfs_to_cms = 0.0283168 # 1 cubic feet per second to cubic meter per second
 ft_to_m = 0.3048 # 1 feet to meters
 
 # function to plot turbine efficiency and power generation as a function of flow
-def flow_efficiency_power_plot(x):
-    """
-    Plot turbine efficiency and power (kW) as functions of discrete turbine flow.
+def flow_efficiency_power_plot(x):    
+    """Plot turbine efficiency and power as a function of turbine flow.
+
+    This function expects time-series outputs stored on ``x.dataframe_output``.
+    It deduplicates by turbine flow, sorts, and then creates a dual-axis plot:
+    efficiency on the left axis and power on the right axis.
 
     Parameters
     ----------
-    x : object
-        HydroGenerate results container with:
-        - pandas_dataframe : bool
-        - dataframe_output : pandas.DataFrame
-          Must include columns: 'turbine_flow_cfs', 'efficiency', 'power_kW'.
+    x : object 
+        HydroGenerate results object. Expected attributes include ``pandas_dataframe`` (bool)
+        ``dataframe_output`` (pandas.DataFrame) with columns: ``'turbine_flow_cfs'``, ``'efficiency'``, ``'power_kW'``
 
     Returns
     -------
-    matplotlib.figure.Figure or None
-        Figure with efficiency (left y-axis) and power (right y-axis) vs flow (cfs).
-        Returns None and prints a message if `x.pandas_dataframe` is False.
+    matplotlib.figure.Figure
+        Matplotlib figure containing the dual-axis plot.
 
     Notes
     -----
-    - Points are deduplicated by 'turbine_flow_cfs' and sorted before plotting.
-    - The function closes the figure (`plt.close()`) and returns the handle.
-    """    
-    
+    If ``x.pandas_dataframe`` is False, the function prints an informational
+    message and returns ``None``.
+    """
     # extract dataframe output, order and subset wanted values
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -104,28 +102,24 @@ def flow_efficiency_power_plot(x):
               'provided as pandas dataframe')
 
 def flow_efficiency_plot(x):
-    """
-    Plot turbine efficiency as a function of discrete turbine flow.
+    """Plot turbine efficiency as a function of turbine flow.
 
     Parameters
     ----------
     x : object
-        HydroGenerate results container with:
-        - pandas_dataframe : bool
-        - dataframe_output : pandas.DataFrame
-          Must include columns: 'turbine_flow_cfs', 'efficiency', 'power_kW'.
+        HydroGenerate results object. Expected attributes include ``pandas_dataframe`` (bool), 
+        ``dataframe_output`` (pandas.DataFrame) with columns: ``'turbine_flow_cfs'``, ``'efficiency'``, ``'power_kW'``
 
     Returns
     -------
-    matplotlib.figure.Figure or None
-        Figure with efficiency vs flow (cfs).
-        Returns None and prints a message if `x.pandas_dataframe` is False.
+    matplotlib.figure.Figure
+        Matplotlib figure containing the efficiency plot.
 
     Notes
     -----
-    Points are deduplicated by 'turbine_flow_cfs' and sorted before plotting.
+    If ``x.pandas_dataframe`` is False, the function prints an informational
+    message and returns ``None``.
     """
-
     # extract dataframe output, order and subset wanted values
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -152,30 +146,31 @@ def flow_efficiency_plot(x):
 
 # function to plot the flow duration curve
 def flow_duration_curve_plot(x):
-    """
-    Plot the flow duration curve with design-flow and percent-run-full markers.
+    """Plot the flow duration curve (FDC).
+
+    The function reads ``x.flowduration_curve`` and plots flow versus percent
+    exceedance. It also overlays the design-flow marker using ``x.design_flow``
+    and ``x.pctime_runfull`` when available.
 
     Parameters
     ----------
     x : object
-        HydroGenerate results container with:
-        - flowduration_curve : pandas.DataFrame with columns 'Percent_Exceedance', 'Flow'
-        - units : {'US', 'SI'}
-        - design_flow : float
-        - pctime_runfull : float
+        HydroGenerate results object expected to include ``flowduration_curve`` (pandas.DataFrame) with columns
+        ``'Percent_Exceedance'`` and ``'Flow'`` (in m³/s), 
+        ``units`` ('US' or 'SI'), 
+        ``design_flow`` (float), 
+        ``pctime_runfull`` (float)
+
     Returns
     -------
-    matplotlib.figure.Figure or None
-        Flow-duration figure. Returns None and prints a message if required
-        attributes are missing.
+    matplotlib.figure.Figure
+        Matplotlib figure containing the flow duration curve.
 
     Notes
     -----
-    - If `x.units == 'US'`, the y-axis is ft^3/s (cfs); otherwise m^3/s.
-    - Draws horizontal/vertical dashed lines and a marker at
-      (percent run-full, design flow).
+    If the required ``flowduration_curve`` attribute is missing, the function
+    prints an informational message and returns ``None``.
     """
-
     # if x.flowduration_curve:
     try:
         df = x.flowduration_curve.copy()
@@ -213,29 +208,31 @@ def flow_duration_curve_plot(x):
 
 # function to plot turbine selection figure
 def turbine_type_plot(x):
-    """
-    Plot turbine selection regions and overlay site head/flow on log–log axes.
+    """Plot turbine selection regions and mark site characteristics.
+
+    The plot uses polygon "regions of influence" in head-flow space for common
+    turbine types (Pelton, Turgo, Francis, Crossflow, Kaplan) and marks the
+    site's (flow, head) point.
 
     Parameters
     ----------
     x : object
-        HydroGenerate results container with:
-        - net_head : float
-        - design_flow : float or None (falls back to `flow` if None)
-        - flow : float (used if `design_flow` is None)
-        - units : {'US', 'SI'}
+        HydroGenerate results object expected to include:
+        ``net_head`` (float): head (m in SI; ft in US, then converted), 
+        ``design_flow`` (float or None): m³/s in SI; cfs in US, then converted, 
+        ``flow`` (float): used if ``design_flow`` is not available, 
+        ``units`` ('US' or 'SI')
 
     Returns
     -------
     matplotlib.figure.Figure
-        Log–log plot with Pelton, Turgo, Francis, Crossflow, and Kaplan regions,
-        plus a point marking the site's (flow, head).
+        Matplotlib figure containing the turbine selection plot.
 
     Notes
     -----
-    Converts ft→m and cfs→m^3/s when `x.units == 'US'`.
+    The turbine region polygons are defined in SI units. If ``x.units == 'US'``,
+    head and flow are converted to SI before plotting.
     """
-
     # inputs
     head = x.net_head           # head, m
     
@@ -284,27 +281,31 @@ def turbine_type_plot(x):
 
 # function that generates a monhtly figure given a dataframe and a column name
 def monthly_figure_plot(df, var_fig):
-    """
-    Create a monthly summary figure with mean/median and IQR shading.
+    """Generate a monthly summary figure for a specified variable.
+
+    The function computes monthly mean and median, and plots the interquartile
+    range (IQR) as a shaded band.
 
     Parameters
     ----------
     df : pandas.DataFrame
-        Time-indexed DataFrame (DatetimeIndex) containing `var_fig` as a column.
-    var_fig : {"turbine_flow_cfs", "energy_kWh", "capacity_factor"}
-        Column to summarize by calendar month.
+        Time-indexed DataFrame (DatetimeIndex) containing the target column.
+    var_fig : str
+        Column name to plot. Common values in HydroGenerate outputs include:
+        ``'turbine_flow_cfs'``, 
+        ``'energy_kWh'``, 
+        ``'capacity_factor'``
 
     Returns
     -------
     matplotlib.figure.Figure
-        Figure with monthly mean, median, and interquartile range.
+        Matplotlib figure containing the monthly plot.
 
     Notes
     -----
-    - The y-axis label is set based on `var_fig`.
-    - The function closes the figure (`plt.close()`) and returns the handle.
+    Axis labels are set based on ``var_fig`` to match the original plotting
+    behavior.
     """
-
     y_mean = df[var_fig].groupby(df[var_fig].index.month).mean()
     y_med = df[var_fig].groupby(df[var_fig].index.month).median()
     x = y_mean.index
@@ -344,7 +345,26 @@ def monthly_figure_plot(df, var_fig):
 
 # 1) Capacity factor
 def plant_capfactor_plot(x):
-    
+    """Plot monthly capacity factor statistics.
+
+    Parameters
+    ----------
+    x : object
+        HydroGenerate results object expected to include:
+        ``pandas_dataframe`` (bool), 
+        ``dataframe_output`` (pandas.DataFrame) with column ``'power_kW'``, 
+        ``rated_power`` (float): kW
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        Matplotlib figure of monthly capacity factor summary.
+
+    Notes
+    -----
+    If ``x.pandas_dataframe`` is False, the function prints an informational
+    message and returns ``None``.
+    """
     if x.pandas_dataframe:
         df = x.dataframe_output
         df['rated_power_kw'] = x.rated_power 
@@ -358,7 +378,25 @@ def plant_capfactor_plot(x):
         
 # 2) turbine flow
 def plant_turbineflow_plot(x):
-    
+    """Plot monthly turbine flow statistics.
+
+    Parameters
+    ----------
+    x : object
+        HydroGenerate results object expected to include:
+        ``pandas_dataframe`` (bool), 
+        ``dataframe_output`` (pandas.DataFrame) with column ``'turbine_flow_cfs'``
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        Matplotlib figure of monthly turbine flow summary.
+
+    Notes
+    -----
+    If ``x.pandas_dataframe`` is False, the function prints an informational
+    message and returns ``None``.
+    """
     if x.pandas_dataframe:
         df = x.dataframe_output
         tf = monthly_figure_plot(df, 'turbine_flow_cfs')
@@ -370,7 +408,25 @@ def plant_turbineflow_plot(x):
         
 # 3) Electricty generation
 def plant_elecgeneration_plot(x):
-    
+    """Plot monthly electricity generation statistics.
+
+    Parameters
+    ----------
+    x : object
+        HydroGenerate results object expected to include:
+        ``pandas_dataframe`` (bool), 
+        ``dataframe_output`` (pandas.DataFrame) with column ``'energy_kWh'``
+
+    Returns
+    -------
+    matplotlib.figure.Figure
+        Matplotlib figure of monthly electricity generation summary.
+
+    Notes
+    -----
+    If ``x.pandas_dataframe`` is False, the function prints an informational
+    message and returns ``None``.
+    """
     if x.pandas_dataframe:
         df = x.dataframe_output
         eg = monthly_figure_plot(df, 'energy_kWh')

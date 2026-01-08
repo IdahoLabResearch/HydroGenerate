@@ -40,5 +40,9 @@ parts:
   - caption: API Reference
     chapters:
     - file: api/FPP
+    - file: api/HYDPR
+    - file: api/HYDPP
+    - file: api/SR
+    - file: api/TC
 
 
