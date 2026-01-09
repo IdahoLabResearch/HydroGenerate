@@ -1,0 +1,990 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Hydraulic Processing</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css?v=a0a71c94" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/HYDPR';</script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/api/HYDPR.html" />
+    <link rel="icon" href="../_static/HG_icon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Hydropower Potential" href="HYDPP.html" />
+    <link rel="prev" title="Flow Preprocessing" href="FPP.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../HydroGenerate_Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/HG_horizontal.png" class="logo__image only-light" alt=" - Home"/>
+    <script>document.write(`<img src="../_static/HG_horizontal.png" class="logo__image only-dark" alt=" - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../HydroGenerate_Introduction.html">
+                    HydroGenerate
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted_1_Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted_2_QuickStart.html">Quick Start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_2_Diversion.html">Diversion Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_1_Architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_4_Testing.html">HydroGenerate Test Suite</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Theory_1_Hydropower.html">Hydropower Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Theory_3_Efficiency.html">Turbine Selection &amp; Efficiency Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="FPP.html">Flow Preprocessing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hydraulic Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HYDPP.html">Hydropower Potential</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SR.html">Summary Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TC.html">Turbine Calculation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2Fapi/HYDPR.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/HYDPR.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Hydraulic Processing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><code class="docutils literal notranslate"><span class="pre">HydraulicDesignParameters</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.reynoldsnumber_calculator"><code class="docutils literal notranslate"><span class="pre">HydraulicDesignParameters.reynoldsnumber_calculator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.designdiameter_calculator"><code class="docutils literal notranslate"><span class="pre">HydraulicDesignParameters.designdiameter_calculator()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients"><code class="docutils literal notranslate"><span class="pre">RoughnessCoefficients</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values"><code class="docutils literal notranslate"><span class="pre">RoughnessCoefficients.Values</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values.add_roughnesscoefficient_values"><code class="docutils literal notranslate"><span class="pre">RoughnessCoefficients.Values.add_roughnesscoefficient_values()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_RoughnessSelector"><code class="docutils literal notranslate"><span class="pre">DW_RoughnessSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_RoughnessSelector.roughness_selector"><code class="docutils literal notranslate"><span class="pre">DW_RoughnessSelector.roughness_selector()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HW_RoughnessSelector"><code class="docutils literal notranslate"><span class="pre">HW_RoughnessSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HW_RoughnessSelector.roughness_selector"><code class="docutils literal notranslate"><span class="pre">HW_RoughnessSelector.roughness_selector()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector"><code class="docutils literal notranslate"><span class="pre">Manning_RoughnessSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector.roughness_selector"><code class="docutils literal notranslate"><span class="pre">Manning_RoughnessSelector.roughness_selector()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_FrictionFactor"><code class="docutils literal notranslate"><span class="pre">DW_FrictionFactor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_FrictionFactor.frictionfactor_calculator"><code class="docutils literal notranslate"><span class="pre">DW_FrictionFactor.frictionfactor_calculator()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach.penstock_headloss_calculator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.diameter_check"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach.diameter_check()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator_ts"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach.penstock_headloss_calculator_ts()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HazenWilliamns"><code class="docutils literal notranslate"><span class="pre">HazenWilliamns</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator"><code class="docutils literal notranslate"><span class="pre">HazenWilliamns.penstock_headloss_calculator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator_ts"><code class="docutils literal notranslate"><span class="pre">HazenWilliamns.penstock_headloss_calculator_ts()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="hydraulic-processing">
+<h1>Hydraulic Processing<a class="headerlink" href="#hydraulic-processing" title="Link to this heading">#</a></h1>
+<p>This page documents the classes and functions in the <code class="docutils literal notranslate"><span class="pre">hydraulic_processing</span></code> module of the HydroGenerate package.</p>
+<dl class="py class" id="module-HydroGenerate.hydraulic_processing">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HydraulicDesignParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HydraulicDesignParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head_loss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_headloss_allowed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_headloss_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_headloss_calculation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_frictionfactor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_average_velocity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Hydraulic design parameter container.</p>
+<p>This class stores input values needed for penstock head-loss calculations
+and provides helper methods for computing Reynolds number and a starting
+design diameter for iterative sizing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flow</strong> (<em>float</em><em> or </em><em>array-like</em>) – Flow values (m³/s). This may represent a single value or a time series,
+depending on the calling context.</p></li>
+<li><p><strong>design_flow</strong> (<em>float</em>) – Design flow (m³/s).</p></li>
+<li><p><strong>head</strong> (<em>float</em>) – Available (gross) head (m).</p></li>
+<li><p><strong>head_loss</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em><em> or </em><em>None</em>) – Head loss for the provided <code class="docutils literal notranslate"><span class="pre">flow</span></code> values (m). This may be provided by
+the user or computed by head-loss calculators in this module.</p></li>
+<li><p><strong>max_headloss_allowed</strong> (<em>float</em><em> or </em><em>None</em>) – Maximum head loss allowed as a percentage of head (%, 1–100). If
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, method-specific defaults may be applied.</p></li>
+<li><p><strong>penstock_headloss_method</strong> (<em>str</em><em> or </em><em>None</em>) – Name of the head-loss method. Current options in this module include
+<code class="docutils literal notranslate"><span class="pre">&quot;Darcy-Weisbach&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Hazen-Williams&quot;</span></code>. (Manning is referenced
+but not implemented in this file.)</p></li>
+<li><p><strong>penstock_headloss_calculation</strong> (<em>bool</em>) – Whether to calculate head loss in the penstock. If net head is already
+available externally, set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>penstock_length</strong> (<em>float</em><em> or </em><em>None</em>) – Penstock length (m). Required for head-loss calculations that depend on
+length.</p></li>
+<li><p><strong>penstock_diameter</strong> (<em>float</em><em> or </em><em>None</em>) – Penstock diameter (m). If <code class="docutils literal notranslate"><span class="pre">None</span></code>, some methods may size diameter to
+meet the allowed head-loss constraint.</p></li>
+<li><p><strong>penstock_material</strong> (<em>str</em><em> or </em><em>None</em>) – Penstock material key used for roughness selection. Expected options include: <code class="docutils literal notranslate"><span class="pre">CastIron</span></code>, <code class="docutils literal notranslate"><span class="pre">Concrete</span></code>, <code class="docutils literal notranslate"><span class="pre">GalvanizedIron</span></code>, <code class="docutils literal notranslate"><span class="pre">Plastic</span></code>, <code class="docutils literal notranslate"><span class="pre">Steel</span></code>.</p></li>
+<li><p><strong>penstock_frictionfactor</strong> (<em>float</em><em> or </em><em>None</em>) – <p>Friction parameter for the chosen method:
+- Darcy–Weisbach: friction factor <code class="docutils literal notranslate"><span class="pre">f</span></code> (if provided), or roughness</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">epsilon</span></code> used to compute <code class="docutils literal notranslate"><span class="pre">f</span></code>.</p>
+</div></blockquote>
+<ul>
+<li><p>Hazen–Williams: coefficient <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p></li>
+<li><p>Manning: <code class="docutils literal notranslate"><span class="pre">n</span></code> (not used in this file).</p></li>
+</ul>
+</p></li>
+<li><p><strong>channel_average_velocity</strong> (<em>float</em><em> or </em><em>None</em>) – Average cross-sectional water velocity in the channel (Q/A), if
+applicable.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Many algorithms in this module mutate attributes on a shared
+<a class="reference internal" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">HydraulicDesignParameters</span></code></a> instance (e.g., updating
+<code class="docutils literal notranslate"><span class="pre">penstock_design_diameter</span></code> during iterations).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HydraulicDesignParameters.reynoldsnumber_calculator">
+<span class="sig-name descname"><span class="pre">reynoldsnumber_calculator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.reynoldsnumber_calculator" title="Link to this definition">#</a></dt>
+<dd><p>Compute and store the Reynolds number for the design condition.</p>
+<p class="rubric">Notes</p>
+<p>This method updates <code class="docutils literal notranslate"><span class="pre">self.penstock_design_diameter</span></code> (if needed) and
+writes the resulting Reynolds number to <code class="docutils literal notranslate"><span class="pre">self.Re</span></code>.</p>
+<p>The Reynolds number is computed as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Re</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span> <span class="o">*</span> <span class="n">nu</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">Q</span></code> is <code class="docutils literal notranslate"><span class="pre">self.design_flow</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code> is the (design) diameter, and
+<code class="docutils literal notranslate"><span class="pre">nu</span></code> is the kinematic viscosity constant defined in this module.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HydraulicDesignParameters.designdiameter_calculator">
+<span class="sig-name descname"><span class="pre">designdiameter_calculator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.designdiameter_calculator" title="Link to this definition">#</a></dt>
+<dd><p>Initialize <code class="docutils literal notranslate"><span class="pre">penstock_design_diameter</span></code> for calculations.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">self.penstock_diameter</span></code> is provided, it becomes the design
+diameter.</p></li>
+<li><p>Otherwise, the method initializes <code class="docutils literal notranslate"><span class="pre">self.penstock_design_diameter</span></code> to
+a small starting value (0.01 m) the first time it is needed.</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.RoughnessCoefficients">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RoughnessCoefficients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">darcyweisbach_epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazenwiliams_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mannings_n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Roughness coefficient record for a penstock material.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material</strong> (<em>str</em>) – Material identifier key (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Steel&quot;</span></code>).</p></li>
+<li><p><strong>darcyweisbach_epsilon</strong> (<em>float</em>) – Absolute roughness <code class="docutils literal notranslate"><span class="pre">epsilon</span></code> for Darcy–Weisbach calculations (m).</p></li>
+<li><p><strong>hazenwiliams_c</strong> (<em>float</em>) – Hazen–Williams coefficient <code class="docutils literal notranslate"><span class="pre">C</span></code> (dimensionless).</p></li>
+<li><p><strong>mannings_n</strong> (<em>float</em>) – Manning roughness coefficient <code class="docutils literal notranslate"><span class="pre">n</span></code> (s/m^(1/3)).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Values</span></span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Catalog of default roughness values.</p>
+<p>This nested class provides a dictionary mapping material keys to
+<a class="reference internal" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients" title="HydroGenerate.hydraulic_processing.RoughnessCoefficients"><code class="xref py py-class docutils literal notranslate"><span class="pre">RoughnessCoefficients</span></code></a> instances. Values are sourced from EPANET
+documentation as indicated in the original code comments.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values.add_roughnesscoefficient_values">
+<span class="sig-name descname"><span class="pre">add_roughnesscoefficient_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">darcyweisbach_epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hazenwiliams_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mannings_n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values.add_roughnesscoefficient_values" title="Link to this definition">#</a></dt>
+<dd><p>Add a roughness coefficient record for a material key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material</strong> (<em>str</em>) – Material identifier key.</p></li>
+<li><p><strong>darcyweisbach_epsilon</strong> (<em>float</em>) – Darcy–Weisbach roughness (m).</p></li>
+<li><p><strong>hazenwiliams_c</strong> (<em>float</em>) – Hazen–Williams coefficient.</p></li>
+<li><p><strong>mannings_n</strong> (<em>float</em>) – Manning <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">self.roughnesscoefficients</span></code> in place.</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DW_RoughnessSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DW_RoughnessSelector</span></span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DW_RoughnessSelector" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Roughness</span></code></p>
+<p>Darcy–Weisbach roughness selector.</p>
+<p>Selects absolute roughness <code class="docutils literal notranslate"><span class="pre">epsilon</span></code> (m) based on material.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DW_RoughnessSelector.roughness_selector">
+<span class="sig-name descname"><span class="pre">roughness_selector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DW_RoughnessSelector.roughness_selector" title="Link to this definition">#</a></dt>
+<dd><p>Select Darcy–Weisbach absolute roughness <code class="docutils literal notranslate"><span class="pre">epsilon</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>material</strong> (<em>str</em><em> or </em><em>None</em>) – Material identifier key. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;Steel&quot;</span></code> when <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Absolute roughness <code class="docutils literal notranslate"><span class="pre">epsilon</span></code> (m).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HW_RoughnessSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HW_RoughnessSelector</span></span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HW_RoughnessSelector" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Roughness</span></code></p>
+<p>Hazen–Williams roughness selector.</p>
+<p>Selects Hazen–Williams coefficient <code class="docutils literal notranslate"><span class="pre">C</span></code> based on material.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HW_RoughnessSelector.roughness_selector">
+<span class="sig-name descname"><span class="pre">roughness_selector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HW_RoughnessSelector.roughness_selector" title="Link to this definition">#</a></dt>
+<dd><p>Select Hazen–Williams coefficient <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>material</strong> (<em>str</em><em> or </em><em>None</em>) – Material identifier key. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;Steel&quot;</span></code> when <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Hazen–Williams coefficient <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.Manning_RoughnessSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Manning_RoughnessSelector</span></span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Roughness</span></code></p>
+<p>Manning roughness selector.</p>
+<p>Selects Manning coefficient <code class="docutils literal notranslate"><span class="pre">n</span></code> based on material.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.Manning_RoughnessSelector.roughness_selector">
+<span class="sig-name descname"><span class="pre">roughness_selector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector.roughness_selector" title="Link to this definition">#</a></dt>
+<dd><p>Select Manning roughness coefficient <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>material</strong> (<em>str</em><em> or </em><em>None</em>) – Material identifier key. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;Concrete&quot;</span></code> when <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Manning roughness coefficient <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DW_FrictionFactor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DW_FrictionFactor</span></span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DW_FrictionFactor" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Darcy–Weisbach friction factor calculator.</p>
+<p>Computes a Darcy friction factor using regime-dependent formulas:
+Swamee–Jain approximation (turbulent),
+Cubic interpolation (transitional),
+Laminar expression (laminar),</p>
+<p>References are preserved from the original inline comments.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DW_FrictionFactor.frictionfactor_calculator">
+<span class="sig-name descname"><span class="pre">frictionfactor_calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydraulic_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DW_FrictionFactor.frictionfactor_calculator" title="Link to this definition">#</a></dt>
+<dd><p>Compute Darcy–Weisbach friction factor <code class="docutils literal notranslate"><span class="pre">f</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hydraulic_parameters</strong> (<a class="reference internal" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><em>HydraulicDesignParameters</em></a>) – Hydraulic parameters containing:
+<code class="docutils literal notranslate"><span class="pre">penstock_material</span></code> (str or None),
+<code class="docutils literal notranslate"><span class="pre">Re</span></code> (float),
+<code class="docutils literal notranslate"><span class="pre">penstock_design_diameter</span></code> (float)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Darcy friction factor <code class="docutils literal notranslate"><span class="pre">f</span></code> (dimensionless).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method does not mutate <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters</span></code>; it reads from it.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DarcyWeisbach">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DarcyWeisbach</span></span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">HeadLoss</span></code></p>
+<p>Penstock head-loss calculator using Darcy–Weisbach.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator">
+<span class="sig-name descname"><span class="pre">penstock_headloss_calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydraulic_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator" title="Link to this definition">#</a></dt>
+<dd><p>Compute Darcy–Weisbach head loss at design flow and update parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hydraulic_parameters</strong> (<a class="reference internal" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><em>HydraulicDesignParameters</em></a>) – Parameter container. This method reads (at minimum) <code class="docutils literal notranslate"><span class="pre">design_flow</span></code>,
+<code class="docutils literal notranslate"><span class="pre">head</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_length</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_diameter</span></code> and updates
+working values such as <code class="docutils literal notranslate"><span class="pre">penstock_design_diameter</span></code>,
+<code class="docutils literal notranslate"><span class="pre">penstock_design_headloss</span></code>, and <code class="docutils literal notranslate"><span class="pre">penstock_frictionfactor</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters</span></code> in place.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters.penstock_diameter</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the method
+will iteratively increase diameter until the computed head loss is less
+than or equal to the allowed fraction of head (see
+<a class="reference internal" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.diameter_check" title="HydroGenerate.hydraulic_processing.DarcyWeisbach.diameter_check"><code class="xref py py-meth docutils literal notranslate"><span class="pre">diameter_check()</span></code></a>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DarcyWeisbach.diameter_check">
+<span class="sig-name descname"><span class="pre">diameter_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydraulic_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.diameter_check" title="Link to this definition">#</a></dt>
+<dd><p>Iteratively increase diameter until head-loss constraint is met.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hydraulic_parameters</strong> (<a class="reference internal" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><em>HydraulicDesignParameters</em></a>) – Parameter container updated in place. The method reads
+<code class="docutils literal notranslate"><span class="pre">max_headloss_allowed</span></code>, <code class="docutils literal notranslate"><span class="pre">head</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_length</span></code> and updates
+<code class="docutils literal notranslate"><span class="pre">penstock_design_diameter</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_design_headloss</span></code>, and
+finally <code class="docutils literal notranslate"><span class="pre">penstock_diameter</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters</span></code> in place.</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">max_headloss_allowed</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default of 10% is used.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">penstock_length</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the method sets design head loss
+to <code class="docutils literal notranslate"><span class="pre">head</span> <span class="pre">*</span> <span class="pre">max_headloss_allowed</span></code> and skips diameter iteration.</p></li>
+<li><p>Otherwise, the method uses recursion via
+<a class="reference internal" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator" title="HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">penstock_headloss_calculator()</span></code></a> while incrementing diameter by
+0.1 m until the constraint is satisfied.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator_ts">
+<span class="sig-name descname"><span class="pre">penstock_headloss_calculator_ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydraulic_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator_ts" title="Link to this definition">#</a></dt>
+<dd><p>Compute Darcy–Weisbach head loss for a flow time series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hydraulic_parameters</strong> (<a class="reference internal" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><em>HydraulicDesignParameters</em></a>) – Parameter container with:
+<code class="docutils literal notranslate"><span class="pre">turbine_flow</span></code> (array-like): flow values (m³/s),
+<code class="docutils literal notranslate"><span class="pre">penstock_length</span></code> (float): required,
+<code class="docutils literal notranslate"><span class="pre">penstock_design_diameter</span></code> (float),
+<code class="docutils literal notranslate"><span class="pre">penstock_frictionfactor</span></code> (float): Darcy friction factor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters.penstock_length</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters.head_loss</span></code> in place by
+computing head loss for each time-series flow value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HazenWilliamns">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HazenWilliamns</span></span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HazenWilliamns" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">HeadLoss</span></code></p>
+<p>Penstock head-loss calculator using Hazen–Williams.</p>
+<p class="rubric">Notes</p>
+<p>The class name is kept as in the source (<code class="docutils literal notranslate"><span class="pre">HazenWilliamns</span></code>), though the
+standard spelling is “HazenWilliams”.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator">
+<span class="sig-name descname"><span class="pre">penstock_headloss_calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydraulic_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator" title="Link to this definition">#</a></dt>
+<dd><p>Compute Hazen–Williams head loss and update parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hydraulic_parameters</strong> (<a class="reference internal" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><em>HydraulicDesignParameters</em></a>) – Parameter container. This method reads (at minimum) <code class="docutils literal notranslate"><span class="pre">design_flow</span></code>,
+<code class="docutils literal notranslate"><span class="pre">head</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_length</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_diameter</span></code> and updates
+<code class="docutils literal notranslate"><span class="pre">penstock_frictionfactor</span></code> (as Hazen–Williams <code class="docutils literal notranslate"><span class="pre">C</span></code>),
+<code class="docutils literal notranslate"><span class="pre">penstock_design_headloss</span></code>, and potentially <code class="docutils literal notranslate"><span class="pre">penstock_diameter</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters</span></code> in place.</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">penstock_diameter</span></code> is provided, head loss is computed directly.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">penstock_diameter</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, diameter is computed to satisfy
+a head-loss allowance (default 10% of head if not provided).</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator_ts">
+<span class="sig-name descname"><span class="pre">penstock_headloss_calculator_ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hydraulic_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator_ts" title="Link to this definition">#</a></dt>
+<dd><p>Compute Hazen–Williams head loss for a flow time series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hydraulic_parameters</strong> (<a class="reference internal" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters" title="HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><em>HydraulicDesignParameters</em></a>) – Parameter container with:
+<code class="docutils literal notranslate"><span class="pre">turbine_flow</span></code> (array-like): flow values (m³/s),
+<code class="docutils literal notranslate"><span class="pre">penstock_length</span></code> (float or None),
+<code class="docutils literal notranslate"><span class="pre">penstock_design_diameter</span></code> (float),
+<code class="docutils literal notranslate"><span class="pre">penstock_frictionfactor</span></code> (float): Hazen–Williams <code class="docutils literal notranslate"><span class="pre">C</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hydraulic_parameters.head_loss</span></code> in place.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">penstock_length</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the method returns immediately
+without modification.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./api"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="FPP.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Flow Preprocessing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="HYDPP.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Hydropower Potential</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters"><code class="docutils literal notranslate"><span class="pre">HydraulicDesignParameters</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.reynoldsnumber_calculator"><code class="docutils literal notranslate"><span class="pre">HydraulicDesignParameters.reynoldsnumber_calculator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.designdiameter_calculator"><code class="docutils literal notranslate"><span class="pre">HydraulicDesignParameters.designdiameter_calculator()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients"><code class="docutils literal notranslate"><span class="pre">RoughnessCoefficients</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values"><code class="docutils literal notranslate"><span class="pre">RoughnessCoefficients.Values</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values.add_roughnesscoefficient_values"><code class="docutils literal notranslate"><span class="pre">RoughnessCoefficients.Values.add_roughnesscoefficient_values()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_RoughnessSelector"><code class="docutils literal notranslate"><span class="pre">DW_RoughnessSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_RoughnessSelector.roughness_selector"><code class="docutils literal notranslate"><span class="pre">DW_RoughnessSelector.roughness_selector()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HW_RoughnessSelector"><code class="docutils literal notranslate"><span class="pre">HW_RoughnessSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HW_RoughnessSelector.roughness_selector"><code class="docutils literal notranslate"><span class="pre">HW_RoughnessSelector.roughness_selector()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector"><code class="docutils literal notranslate"><span class="pre">Manning_RoughnessSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector.roughness_selector"><code class="docutils literal notranslate"><span class="pre">Manning_RoughnessSelector.roughness_selector()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_FrictionFactor"><code class="docutils literal notranslate"><span class="pre">DW_FrictionFactor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DW_FrictionFactor.frictionfactor_calculator"><code class="docutils literal notranslate"><span class="pre">DW_FrictionFactor.frictionfactor_calculator()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach.penstock_headloss_calculator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.diameter_check"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach.diameter_check()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator_ts"><code class="docutils literal notranslate"><span class="pre">DarcyWeisbach.penstock_headloss_calculator_ts()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HazenWilliamns"><code class="docutils literal notranslate"><span class="pre">HazenWilliamns</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator"><code class="docutils literal notranslate"><span class="pre">HazenWilliamns.penstock_headloss_calculator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator_ts"><code class="docutils literal notranslate"><span class="pre">HazenWilliamns.penstock_headloss_calculator_ts()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Idaho National Laboratory
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

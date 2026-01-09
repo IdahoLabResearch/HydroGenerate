@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css?v=a0a71c94" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
@@ -585,7 +585,11 @@ window.addEventListener("load", load);
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="api/FPP.html">Flow Preprocessing API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/FPP.html">Flow Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/HYDPR.html">Hydraulic Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/HYDPP.html">Hydropower Potential</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/SR.html">Summary Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/TC.html">Turbine Calculation</a></li>
 </ul>
 
     </div>
@@ -740,15 +744,88 @@ document.write(`
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#H"><strong>H</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  
 </div>
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing.annual_maintenance_implementer">annual_maintenance_implementer() (HydroGenerate.flow_preprocessing.FlowPreProcessing method)</a>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values.add_roughnesscoefficient_values">add_roughnesscoefficient_values() (RoughnessCoefficients.Values method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing.annual_maintenance_implementer">annual_maintenance_implementer() (FlowPreProcessing method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Basic">Basic (class in HydroGenerate.hydropower_potential)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.calculate_head">calculate_head() (in module HydroGenerate.hydropower_potential)</a>
+</li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.calculate_hp_potential">calculate_hp_potential() (in module HydroGenerate.hydropower_potential)</a>
+</li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.ConstantEletrictyPrice">ConstantEletrictyPrice (class in HydroGenerate.hydropower_potential)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd">ConstantEletrictyPrice_pd (class in HydroGenerate.hydropower_potential)</a>
+</li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2.cost_calculation">cost_calculation() (ONRL_BaselineCostModeling_V2 method)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.CrossFlowTurbine">CrossFlowTurbine (class in HydroGenerate.turbine_calculation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DarcyWeisbach">DarcyWeisbach (class in HydroGenerate.hydraulic_processing)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.designdiameter_calculator">designdiameter_calculator() (HydraulicDesignParameters method)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.PercentExceedance.designflow_calculator">designflow_calculator() (PercentExceedance method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DarcyWeisbach.diameter_check">diameter_check() (DarcyWeisbach method)</a>
+</li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Diversion">Diversion (class in HydroGenerate.hydropower_potential)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DW_FrictionFactor">DW_FrictionFactor (class in HydroGenerate.hydraulic_processing)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DW_RoughnessSelector">DW_RoughnessSelector (class in HydroGenerate.hydraulic_processing)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.EconomicParameters">EconomicParameters (class in HydroGenerate.hydropower_potential)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -756,11 +833,25 @@ document.write(`
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.flow_duration_curve_plot">flow_duration_curve_plot() (in module HydroGenerate.summary_results)</a>
+</li>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.flow_efficiency_plot">flow_efficiency_plot() (in module HydroGenerate.summary_results)</a>
+</li>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.flow_efficiency_power_plot">flow_efficiency_power_plot() (in module HydroGenerate.summary_results)</a>
+</li>
       <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing">FlowPreProcessing (class in HydroGenerate.flow_preprocessing)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessingParameters">FlowPreProcessingParameters (class in HydroGenerate.flow_preprocessing)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.FlowRange">FlowRange (class in HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.FlowRange.flowrange_calculator">flowrange_calculator() (FlowRange method)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.FrancisTurbine">FrancisTurbine (class in HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DW_FrictionFactor.frictionfactor_calculator">frictionfactor_calculator() (DW_FrictionFactor method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -768,6 +859,12 @@ document.write(`
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HazenWilliamns">HazenWilliamns (class in HydroGenerate.hydraulic_processing)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HW_RoughnessSelector">HW_RoughnessSelector (class in HydroGenerate.hydraulic_processing)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HydraulicDesignParameters">HydraulicDesignParameters (class in HydroGenerate.hydraulic_processing)</a>
+</li>
       <li>
     HydroGenerate.flow_preprocessing
 
@@ -775,19 +872,71 @@ document.write(`
         <li><a href="api/FPP.html#module-HydroGenerate.flow_preprocessing">module</a>
 </li>
       </ul></li>
+      <li>
+    HydroGenerate.hydraulic_processing
+
+      <ul>
+        <li><a href="api/HYDPR.html#module-HydroGenerate.hydraulic_processing">module</a>
+</li>
+      </ul></li>
+      <li>
+    HydroGenerate.hydropower_potential
+
+      <ul>
+        <li><a href="api/HYDPP.html#module-HydroGenerate.hydropower_potential">module</a>
+</li>
+      </ul></li>
+      <li>
+    HydroGenerate.summary_results
+
+      <ul>
+        <li><a href="api/SR.html#module-HydroGenerate.summary_results">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    HydroGenerate.turbine_calculation
+
+      <ul>
+        <li><a href="api/TC.html#module-HydroGenerate.turbine_calculation">module</a>
+</li>
+      </ul></li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Hydrokinetic">Hydrokinetic (class in HydroGenerate.hydropower_potential)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.Hydrokinetic_Turbine">Hydrokinetic_Turbine (class in HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Hydropower">Hydropower (class in HydroGenerate.hydropower_potential)</a>
+</li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Basic.hydropower_calculation">hydropower_calculation() (Basic method)</a>
+
+      <ul>
+        <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Diversion.hydropower_calculation">(Diversion method)</a>
+</li>
+        <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Hydrokinetic.hydropower_calculation">(Hydrokinetic method)</a>
+</li>
+        <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Hydropower.hydropower_calculation">(Hydropower method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.KaplanTurbine">KaplanTurbine (class in HydroGenerate.turbine_calculation)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing.major_maintenance_implementer">major_maintenance_implementer() (HydroGenerate.flow_preprocessing.FlowPreProcessing method)</a>
+      <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing.major_maintenance_implementer">major_maintenance_implementer() (FlowPreProcessing method)</a>
 </li>
-      <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing.max_turbineflow_checker">max_turbineflow_checker() (HydroGenerate.flow_preprocessing.FlowPreProcessing method)</a>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector">Manning_RoughnessSelector (class in HydroGenerate.hydraulic_processing)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker">min_turbineflow_checker() (HydroGenerate.flow_preprocessing.FlowPreProcessing method)</a>
+      <li><a href="api/FPP.html#HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker">min_turbineflow_checker() (FlowPreProcessing method)</a>
 </li>
       <li>
     module
@@ -795,7 +944,143 @@ document.write(`
       <ul>
         <li><a href="api/FPP.html#module-HydroGenerate.flow_preprocessing">HydroGenerate.flow_preprocessing</a>
 </li>
+        <li><a href="api/HYDPR.html#module-HydroGenerate.hydraulic_processing">HydroGenerate.hydraulic_processing</a>
+</li>
+        <li><a href="api/HYDPP.html#module-HydroGenerate.hydropower_potential">HydroGenerate.hydropower_potential</a>
+</li>
+        <li><a href="api/SR.html#module-HydroGenerate.summary_results">HydroGenerate.summary_results</a>
+</li>
+        <li><a href="api/TC.html#module-HydroGenerate.turbine_calculation">HydroGenerate.turbine_calculation</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.monthly_figure_plot">monthly_figure_plot() (in module HydroGenerate.summary_results)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2">ONRL_BaselineCostModeling_V2 (class in HydroGenerate.hydropower_potential)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.PeltonTurbine">PeltonTurbine (class in HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator">penstock_headloss_calculator() (DarcyWeisbach method)</a>
+
+      <ul>
+        <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator">(HazenWilliamns method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DarcyWeisbach.penstock_headloss_calculator_ts">penstock_headloss_calculator_ts() (DarcyWeisbach method)</a>
+
+      <ul>
+        <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HazenWilliamns.penstock_headloss_calculator_ts">(HazenWilliamns method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.PercentExceedance">PercentExceedance (class in HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.plant_capfactor_plot">plant_capfactor_plot() (in module HydroGenerate.summary_results)</a>
+</li>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.plant_elecgeneration_plot">plant_elecgeneration_plot() (in module HydroGenerate.summary_results)</a>
+</li>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.plant_turbineflow_plot">plant_turbineflow_plot() (in module HydroGenerate.summary_results)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.PropellerTurbine">PropellerTurbine (class in HydroGenerate.turbine_calculation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.ReactionTurbines">ReactionTurbines (class in HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.ConstantEletrictyPrice.revenue_calculation">revenue_calculation() (ConstantEletrictyPrice method)</a>
+
+      <ul>
+        <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd.revenue_calculation">(ConstantEletrictyPrice_pd method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HydraulicDesignParameters.reynoldsnumber_calculator">reynoldsnumber_calculator() (HydraulicDesignParameters method)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.DW_RoughnessSelector.roughness_selector">roughness_selector() (DW_RoughnessSelector method)</a>
+
+      <ul>
+        <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.HW_RoughnessSelector.roughness_selector">(HW_RoughnessSelector method)</a>
+</li>
+        <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.Manning_RoughnessSelector.roughness_selector">(Manning_RoughnessSelector method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.RoughnessCoefficients">RoughnessCoefficients (class in HydroGenerate.hydraulic_processing)</a>
+</li>
+      <li><a href="api/HYDPR.html#HydroGenerate.hydraulic_processing.RoughnessCoefficients.Values">RoughnessCoefficients.Values (class in HydroGenerate.hydraulic_processing)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.ReactionTurbines.runnersize_calculator">runnersize_calculator() (ReactionTurbines method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Units.si_to_us_conversion">si_to_us_conversion() (Units method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.CrossFlowTurbine.turbine_calculator">turbine_calculator() (CrossFlowTurbine method)</a>
+
+      <ul>
+        <li><a href="api/TC.html#HydroGenerate.turbine_calculation.FrancisTurbine.turbine_calculator">(FrancisTurbine method)</a>
+</li>
+        <li><a href="api/TC.html#HydroGenerate.turbine_calculation.Hydrokinetic_Turbine.turbine_calculator">(Hydrokinetic_Turbine method)</a>
+</li>
+        <li><a href="api/TC.html#HydroGenerate.turbine_calculation.KaplanTurbine.turbine_calculator">(KaplanTurbine method)</a>
+</li>
+        <li><a href="api/TC.html#HydroGenerate.turbine_calculation.PeltonTurbine.turbine_calculator">(PeltonTurbine method)</a>
+</li>
+        <li><a href="api/TC.html#HydroGenerate.turbine_calculation.PropellerTurbine.turbine_calculator">(PropellerTurbine method)</a>
+</li>
+        <li><a href="api/TC.html#HydroGenerate.turbine_calculation.TurgoTurbine.turbine_calculator">(TurgoTurbine method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/SR.html#HydroGenerate.summary_results.turbine_type_plot">turbine_type_plot() (in module HydroGenerate.summary_results)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.turbine_type_selector">turbine_type_selector() (in module HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.TurbineParameters">TurbineParameters (class in HydroGenerate.turbine_calculation)</a>
+</li>
+      <li><a href="api/TC.html#HydroGenerate.turbine_calculation.TurgoTurbine">TurgoTurbine (class in HydroGenerate.turbine_calculation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Units">Units (class in HydroGenerate.hydropower_potential)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/HYDPP.html#HydroGenerate.hydropower_potential.Units.us_to_si_conversion">us_to_si_conversion() (Units method)</a>
+</li>
   </ul></td>
 </tr></table>
 

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css?v=a0a71c94" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
@@ -221,7 +221,11 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="api/FPP.html">Flow Preprocessing API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/FPP.html">Flow Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/HYDPR.html">Hydraulic Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/HYDPP.html">Hydropower Potential</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/SR.html">Summary Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/TC.html">Turbine Calculation</a></li>
 </ul>
 
     </div>
@@ -443,24 +447,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">HydroGenerate.hydropower_potential</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_hp_potential</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">dev_env</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">HydroGenerate</span><span class="o">/</span><span class="n">hydropower_potential</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">15</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.core.fromnumeric</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean</span>
-<span class="ne">---&gt; </span><span class="mi">15</span> <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.lib.function_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">median</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy.lib.function_base&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <section id="head-power-and-length-of-penstock-are-known-flow-is-a-single-value">
 <h2>Head, power, and length of penstock are known. Flow is a single value.<a class="headerlink" href="#head-power-and-length-of-penstock-are-known-flow-is-a-single-value" title="Link to this heading">#</a></h2>
@@ -499,23 +485,36 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 5000.0
-Turbine type: Francis
-Rated Power (MW): 116.74
-Net head (ft): 298.06
-Generator Efficiency: 0.98
-Head Loss method: Darcy-Weisbach
-Penstock length (ft): 400.0
-Penstock diameter (ft): 11.84
-Runner diameter (ft): 14.0
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">penstock_length</span> <span class="o">=</span> <span class="mi">400</span> <span class="c1"># ft</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">hp_type</span> <span class="o">=</span> <span class="s1">&#39;Diversion&#39;</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">hp</span> <span class="o">=</span> <span class="n">calculate_hp_potential</span><span class="p">(</span><span class="n">flow</span><span class="o">=</span> <span class="n">flow</span><span class="p">,</span> <span class="n">rated_power</span><span class="o">=</span> <span class="n">power</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span> <span class="n">head</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>                             <span class="n">penstock_headloss_calculation</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>                             <span class="c1"># penstock_headloss_method= &#39;Hazen-Williams&#39;,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>                             <span class="n">units</span><span class="o">=</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>                             <span class="n">hydropower_type</span><span class="o">=</span> <span class="n">hp_type</span><span class="p">,</span> <span class="n">penstock_length</span><span class="o">=</span> <span class="n">penstock_length</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>                             <span class="c1"># penstock_diameter= 15,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>                             <span class="n">max_headloss_allowed</span><span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># Explore output</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Design flow (cfs):&#39;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">design_flow</span><span class="p">)</span>
 
-Flow range evaluated (cfs): [2500.  2647.1 2794.1 2941.2 3088.2 3235.3 3382.4 3529.4 3676.5 3823.5
- 3970.6 4117.6 4264.7 4411.8 4558.8 4705.9 4852.9 5000. ]
-Turbine Efficiency for the given flow range: [0.867 0.887 0.902 0.915 0.925 0.932 0.938 0.941 0.943 0.944 0.944 0.944
- 0.944 0.944 0.943 0.943 0.943 0.943]
-Power (Kw) for the given flow range: [ 57943.8  62522.7  66959.4  71235.5  75338.2  79260.6  83001.7  86566.9
-  89968.8  93227.9  96375.4  99438.2 102444.2 105393.8 108284.9 111115.8
- 113884.6 116589.4]
+<span class="nn">File ~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:998,</span> in <span class="ni">calculate_hp_potential</span><span class="nt">(flow, head, rated_power, hydropower_type, units, penstock_headloss_method, design_flow, system_efficiency, generator_efficiency, turbine_type, head_loss, penstock_headloss_calculation, penstock_length, penstock_diameter, penstock_material, penstock_frictionfactor, pctime_runfull, max_headloss_allowed, turbine_Rm, pelton_n_jets, flow_column, channel_average_velocity, hk_blade_diameter, hk_blade_heigth, hk_blade_type, hk_swept_area, annual_caclulation, resource_category, electricity_sell_price, cost_calculation_method, capacity_factor, n_operation_days, minimum_turbineflow, minimum_turbineflow_percent, annual_maintenance_flag, major_maintenance_flag)</span>
+<span class="g g-Whitespace">    </span><span class="mi">996</span> <span class="c1"># Diversion projects</span>
+<span class="g g-Whitespace">    </span><span class="mi">997</span> <span class="k">elif</span> <span class="n">hydropower_type</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;DIVERSION&#39;</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">998</span>     <span class="n">Diversion</span><span class="p">()</span><span class="o">.</span><span class="n">hydropower_calculation</span><span class="p">(</span><span class="n">all_params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1000</span> <span class="k">elif</span> <span class="n">hydropower_type</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;HYDROKINETIC&#39;</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1001</span>     <span class="n">Hydrokinetic</span><span class="p">()</span><span class="o">.</span><span class="n">hydropower_calculation</span><span class="p">(</span><span class="n">all_params</span><span class="p">)</span>
+
+<span class="nn">File ~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:403,</span> in <span class="ni">Diversion.hydropower_calculation</span><span class="nt">(self, hp_params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">400</span> <span class="n">FlowRange</span><span class="p">()</span><span class="o">.</span><span class="n">flowrange_calculator</span><span class="p">(</span><span class="n">hp_params</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">402</span> <span class="c1"># Set max flow to the design flow and minimum flow passing throught the turbine</span>
+<span class="ne">--&gt; </span><span class="mi">403</span> <span class="n">FlowPreProcessing</span><span class="p">()</span><span class="o">.</span><span class="n">max_turbineflow_checker</span><span class="p">(</span><span class="n">hp_params</span><span class="p">)</span>      <span class="c1"># max flow check</span>
+<span class="g g-Whitespace">    </span><span class="mi">404</span> <span class="n">FlowPreProcessing</span><span class="p">()</span><span class="o">.</span><span class="n">min_turbineflow_checker</span><span class="p">(</span><span class="n">hp_params</span><span class="p">)</span>      <span class="c1"># min flow check</span>
+<span class="g g-Whitespace">    </span><span class="mi">406</span> <span class="c1"># Run major maintenance and annual maintenance</span>
+
+<span class="ne">AttributeError</span>: &#39;FlowPreProcessing&#39; object has no attribute &#39;max_turbineflow_checker&#39;
 </pre></div>
 </div>
 </div>
