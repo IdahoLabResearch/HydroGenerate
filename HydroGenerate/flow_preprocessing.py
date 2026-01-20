@@ -1,41 +1,3 @@
-'''
-Copyright 2023, Battelle Energy Alliance, LLC
-'''
-
-"""
-07-2024 
-@author: Soumyadeep Nag, Camilo J. Bastidas Pacheco, J. Gallego-Calderon
-
-This module applies the flow limit constraints and incorporates the impact
-of annual and major maintenance activities on turbine flow.
-
-It provides utilities to:
-1) Cap turbine flow at design limits.
-2) Enforce minimum turbine flow thresholds (absolute or % of design flow).
-3) Set turbine flow to zero during annual and major maintenance windows.
-
-Expected `flow_obj` interface (used by functions here)
------------------------------------------------------
-Attributes
-----------
-flow : numpy.ndarray
-    Raw inflow time series (m³/s), same length as `datetime_index`.
-design_flow : float or numpy.ndarray
-    Turbine design flow (m³/s). If array, must align with `flow`.
-turbine_flow : numpy.ndarray
-    Turbine flow (m³/s); created/updated by the functions in this module.
-datetime_index : pandas.DatetimeIndex
-    Timestamps for `flow`. Weekly grouping assumes this index (or a level)
-    is named "dateTime" when using pandas.Grouper(level="dateTime", ...).
-
-Notes
------
-- Annual maintenance zeros 7 consecutive days once per year, selecting the week
-  with the lowest weekly mean flow.
-- Major maintenance zeros 14 consecutive days every 5 years (skipping the first),
-  selecting the two-week period with the lowest bi-weekly mean flow.
-"""
-
 import numpy as np
 import pandas as pd
 from datetime import datetime
@@ -101,12 +63,10 @@ class FlowPreProcessing():
       name) is ``"dateTime"`` so that ``pd.Grouper(level="dateTime", ...)``
       works as written in the implementation.
     """
-    # Function that sets min turbine flow to the design flow
-    def min_turbineflow_checker(self, flow_obj):
-        """Enforce a minimum turbine flow threshold.
-
-        Any values in ``flow_obj.turbine_flow`` that fall below the computed
-        minimum are replaced with zero.
+    # Function that sets max turbine flow to the design flow
+    def max_turbineflow_checker(self, flow_obj):
+        """
+        Cap turbine flow at the design flow.
 
         Parameters
         ----------
@@ -117,6 +77,27 @@ class FlowPreProcessing():
             - ``design_flow`` (float)
             - ``minimum_turbineflow`` (float or None)
             - ``minimum_turbineflow_percent`` (float or None)
+
+        Notes
+        ------------
+        Updates `flow_obj.turbine_flow` (numpy.ndarray), where each element is
+        `min(flow, design_flow)`.
+        """
+
+        flow = flow_obj.flow            # this is a numpy array
+        design_flow = flow_obj.design_flow
+        flow_obj.turbine_flow = np.where(flow > design_flow, design_flow, flow)         # turbine_flow is created here as this code is always active and runs 1st. flow is < design flow
+
+    # Function that sets min turbine flow to the design flow
+    def min_turbineflow_checker(self, flow_obj):
+        """Enforce a minimum turbine flow threshold.
+
+        Any values in ``flow_obj.turbine_flow`` that fall below the computed
+        minimum are replaced with zero.
+
+        Parameters
+        ----------
+        flow_obj : object
 
         Notes
         -----

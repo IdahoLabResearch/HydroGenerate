@@ -463,17 +463,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import data retrieval</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">dataretrieval</span><span class="w"> </span><span class="kn">import</span> <span class="n">nwis</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;dataretrieval&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -594,11 +583,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 200.0
-Head_loss at design flow (ft): 8.94
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 194.0
+Head_loss at design flow (ft): 8.42
 Turbine type: Crossflow
-Rated Power (Kw): 1193.76
-Net head (ft): 91.06
+Rated Power (Kw): 1164.67
+Net head (ft): 91.58
 Generator Efficiency: 0.98
 Head Loss method: Darcy-Weisbach
 Penstock length (ft): 120.0
@@ -607,11 +596,11 @@ Penstock diameter (ft): 3.31
 Pandas dataframe output: 
                              site_no  00060_Mean 00060_Mean_cd    power_kW  \
 datetime                                                                    
-2010-01-01 00:00:00+00:00  10109000       108.0             A  502.584462   
-2010-01-02 00:00:00+00:00  10109000       107.0             A  456.688144   
-2010-01-03 00:00:00+00:00  10109000       106.0             A  398.442172   
-2010-01-04 00:00:00+00:00  10109000       102.0             A    0.000000   
-2010-01-05 00:00:00+00:00  10109000       105.0             A  324.023491   
+2010-01-01 00:00:00+00:00  10109000       108.0             A  582.174122   
+2010-01-02 00:00:00+00:00  10109000       107.0             A  559.829629   
+2010-01-03 00:00:00+00:00  10109000       106.0             A  532.266175   
+2010-01-04 00:00:00+00:00  10109000       102.0             A  327.160245   
+2010-01-05 00:00:00+00:00  10109000       105.0             A  497.807166   
 ...                             ...         ...           ...         ...   
 2020-12-27 00:00:00+00:00  10109000        91.0             A    0.000000   
 2020-12-28 00:00:00+00:00  10109000        85.9             A    0.000000   
@@ -621,11 +610,11 @@ datetime
 
                            turbine_flow_cfs  efficiency    energy_kWh  
 datetime                                                               
-2010-01-01 00:00:00+00:00             108.0    0.575850           NaN  
-2010-01-02 00:00:00+00:00             107.0    0.527893  10960.515465  
-2010-01-03 00:00:00+00:00             106.0    0.464683   9562.612123  
-2010-01-04 00:00:00+00:00             102.0    0.000000      0.000000  
-2010-01-05 00:00:00+00:00             105.0    0.381307   7776.563783  
+2010-01-01 00:00:00+00:00             108.0    0.667042           NaN  
+2010-01-02 00:00:00+00:00             107.0    0.647115  13435.911095  
+2010-01-03 00:00:00+00:00             106.0    0.620755  12774.388208  
+2010-01-04 00:00:00+00:00             102.0    0.395758   7851.845891  
+2010-01-05 00:00:00+00:00             105.0    0.585813  11947.371983  
 ...                                     ...         ...           ...  
 2020-12-27 00:00:00+00:00              91.0    0.000000      0.000000  
 2020-12-28 00:00:00+00:00              85.9    0.000000      0.000000  
@@ -637,31 +626,31 @@ datetime
 Annual output: 
            annual_turbinedvolume_ft3  mean_annual_effienciency  \
 datetime                                                        
-2010                    1319.865870                  0.398728   
-2011                    1835.676204                  0.687777   
-2012                    1442.086842                  0.559378   
-2013                    1087.183892                  0.213385   
-2014                    1290.223844                  0.401570   
-2015                    1208.405282                  0.285440   
-2016                    1374.823115                  0.478596   
-2017                    1917.789260                  0.772958   
-2018                    1416.658356                  0.546933   
-2019                    1458.516249                  0.568326   
-2020                    1333.259716                  0.402846   
+2010                    1306.698558                  0.439088   
+2011                    1794.163775                  0.713420   
+2012                    1428.608045                  0.579189   
+2013                    1080.217960                  0.229522   
+2014                    1275.753959                  0.440304   
+2015                    1198.041333                  0.302951   
+2016                    1359.701944                  0.505515   
+2017                    1876.106931                  0.776738   
+2018                    1402.726490                  0.582537   
+2019                    1441.469536                  0.585321   
+2020                    1319.497751                  0.458687   
 
           total_annual_energy_KWh  revenue_M$  capacity_factor  
 datetime                                                        
-2010                 4.266764e+06    0.248326         0.408017  
-2011                 8.650045e+06    0.503433         0.827177  
-2012                 6.069435e+06    0.353241         0.580401  
-2013                 2.392200e+06    0.139226         0.228759  
-2014                 4.319024e+06    0.251367         0.413015  
-2015                 3.219217e+06    0.187358         0.307844  
-2016                 5.142542e+06    0.299296         0.491765  
-2017                 9.640457e+06    0.561075         0.921887  
-2018                 5.757931e+06    0.335112         0.550613  
-2019                 6.103963e+06    0.355251         0.583703  
-2020                 4.347384e+06    0.253018         0.415727  
+2010                 4.509217e+06    0.262436         0.441973  
+2011                 8.669709e+06    0.504577         0.849765  
+2012                 6.167476e+06    0.358947         0.604508  
+2013                 2.482830e+06    0.144501         0.243356  
+2014                 4.546781e+06    0.264623         0.445655  
+2015                 3.307046e+06    0.192470         0.324141  
+2016                 5.282291e+06    0.307429         0.517746  
+2017                 9.501989e+06    0.553016         0.931341  
+2018                 5.965294e+06    0.347180         0.584691  
+2019                 6.163521e+06    0.358717         0.604120  
+2020                 4.704248e+06    0.273787         0.461089  
 </pre></div>
 </div>
 </div>
@@ -697,7 +686,7 @@ datetime
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c2de521295e4606295cd6e202ebf0d5eaec45bc46aef578cc5a7936b827d177b.png" src="_images/c2de521295e4606295cd6e202ebf0d5eaec45bc46aef578cc5a7936b827d177b.png" />
+<img alt="_images/5e0f0d7276a229098f5882b875ac42478ab72b5f1e858fc0a68e0ff6a02f253b.png" src="_images/5e0f0d7276a229098f5882b875ac42478ab72b5f1e858fc0a68e0ff6a02f253b.png" />
 </div>
 </div>
 </section>

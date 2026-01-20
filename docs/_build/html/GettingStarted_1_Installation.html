@@ -422,7 +422,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-basic-usage">For basic usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-verify-your-installation-run-tests">Optional - Verify your installation (run tests)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
 </ul>
             </nav>
@@ -446,15 +445,6 @@ document.write(`
 </pre></div>
 </div>
 <p>For a quick start guide, follow the steps in the <strong>Quick start</strong> page.</p>
-</section>
-<section id="optional-verify-your-installation-run-tests">
-<h2>Optional - Verify your installation (run tests)<a class="headerlink" href="#optional-verify-your-installation-run-tests" title="Link to this heading">#</a></h2>
-<p>After installing HydroGenerate locally, you can validate the setup and (optionally) see test coverage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># From the repository root</span>
-pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>pytest-cov
-pytest<span class="w"> </span>-q<span class="w"> </span>--cov<span class="o">=</span>HydroGenerate<span class="w"> </span>--cov-report<span class="o">=</span>term-missing:skip-covered
-</pre></div>
-</div>
 </section>
 <section id="for-developers">
 <h2>For developers<a class="headerlink" href="#for-developers" title="Link to this heading">#</a></h2>
@@ -493,6 +483,14 @@ pytest<span class="w"> </span>-q<span class="w"> </span>--cov<span class="o">=</
 <li><p>Install the package <code class="docutils literal notranslate"><span class="pre">dataretrieval</span></code> in your new environment to use streamflow data from a USGS stream gauge.</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">dataretrieval</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Optional - Verify your installation (run tests): After installing HydroGenerate locally, you can validate the setup and see test coverage:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># From the repository root</span>
+pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>pytest-cov
+pytest<span class="w"> </span>-q<span class="w"> </span>--cov<span class="o">=</span>HydroGenerate<span class="w"> </span>--cov-report<span class="o">=</span>term-missing:skip-covered
 </pre></div>
 </div>
 </section>
@@ -563,7 +561,6 @@ pytest<span class="w"> </span>-q<span class="w"> </span>--cov<span class="o">=</
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-basic-usage">For basic usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-verify-your-installation-run-tests">Optional - Verify your installation (run tests)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
 </ul>
   </nav></div>

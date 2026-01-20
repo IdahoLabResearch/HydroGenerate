@@ -5,7 +5,7 @@ This section describes all avaliable inputs and outputs and presents a graphic w
 {numref}`GWorkflow` shows the general workflow computations followed in **_HydroGenerate_**.
 
 
-```{figure} GeneralWorkflow.SVG
+```{figure} HG_workflow.jpg
 ---
 name: GWorkflow
 ---

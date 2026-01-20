@@ -423,6 +423,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessingParameters"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessingParameters</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.max_turbineflow_checker"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.max_turbineflow_checker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.min_turbineflow_checker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.annual_maintenance_implementer"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.annual_maintenance_implementer()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.major_maintenance_implementer"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.major_maintenance_implementer()</span></code></a></li>
@@ -489,11 +490,9 @@ name) is <code class="docutils literal notranslate"><span class="pre">&quot;date
 works as written in the implementation.</p></li>
 </ul>
 <dl class="py method">
-<dt class="sig sig-object py" id="HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker">
-<span class="sig-name descname"><span class="pre">min_turbineflow_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flow_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker" title="Link to this definition">#</a></dt>
-<dd><p>Enforce a minimum turbine flow threshold.</p>
-<p>Any values in <code class="docutils literal notranslate"><span class="pre">flow_obj.turbine_flow</span></code> that fall below the computed
-minimum are replaced with zero.</p>
+<dt class="sig sig-object py" id="HydroGenerate.flow_preprocessing.FlowPreProcessing.max_turbineflow_checker">
+<span class="sig-name descname"><span class="pre">max_turbineflow_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flow_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.max_turbineflow_checker" title="Link to this definition">#</a></dt>
+<dd><p>Cap turbine flow at the design flow.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>flow_obj</strong> (<em>object</em>) – <p>A flow object with attributes:</p>
@@ -504,6 +503,22 @@ minimum are replaced with zero.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">minimum_turbineflow_percent</span></code> (float or None)</p></li>
 </ul>
 </p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Updates <cite>flow_obj.turbine_flow</cite> (numpy.ndarray), where each element is
+<cite>min(flow, design_flow)</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker">
+<span class="sig-name descname"><span class="pre">min_turbineflow_checker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flow_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker" title="Link to this definition">#</a></dt>
+<dd><p>Enforce a minimum turbine flow threshold.</p>
+<p>Any values in <code class="docutils literal notranslate"><span class="pre">flow_obj.turbine_flow</span></code> that fall below the computed
+minimum are replaced with zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>flow_obj</strong> (<em>object</em>)</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -624,6 +639,7 @@ first year of the dataset. Two-week means are computed using
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessingParameters"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessingParameters</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.max_turbineflow_checker"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.max_turbineflow_checker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.min_turbineflow_checker"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.min_turbineflow_checker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.annual_maintenance_implementer"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.annual_maintenance_implementer()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.flow_preprocessing.FlowPreProcessing.major_maintenance_implementer"><code class="docutils literal notranslate"><span class="pre">FlowPreProcessing.major_maintenance_implementer()</span></code></a></li>
