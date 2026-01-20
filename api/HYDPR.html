@@ -494,25 +494,19 @@ the user or computed by head-loss calculators in this module.</p></li>
 <li><p><strong>max_headloss_allowed</strong> (<em>float</em><em> or </em><em>None</em>) – Maximum head loss allowed as a percentage of head (%, 1–100). If
 <code class="docutils literal notranslate"><span class="pre">None</span></code>, method-specific defaults may be applied.</p></li>
 <li><p><strong>penstock_headloss_method</strong> (<em>str</em><em> or </em><em>None</em>) – Name of the head-loss method. Current options in this module include
-<code class="docutils literal notranslate"><span class="pre">&quot;Darcy-Weisbach&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Hazen-Williams&quot;</span></code>. (Manning is referenced
-but not implemented in this file.)</p></li>
+<code class="docutils literal notranslate"><span class="pre">&quot;Darcy-Weisbach&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Hazen-Williams&quot;</span></code>.</p></li>
 <li><p><strong>penstock_headloss_calculation</strong> (<em>bool</em>) – Whether to calculate head loss in the penstock. If net head is already
 available externally, set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 <li><p><strong>penstock_length</strong> (<em>float</em><em> or </em><em>None</em>) – Penstock length (m). Required for head-loss calculations that depend on
 length.</p></li>
 <li><p><strong>penstock_diameter</strong> (<em>float</em><em> or </em><em>None</em>) – Penstock diameter (m). If <code class="docutils literal notranslate"><span class="pre">None</span></code>, some methods may size diameter to
 meet the allowed head-loss constraint.</p></li>
-<li><p><strong>penstock_material</strong> (<em>str</em><em> or </em><em>None</em>) – Penstock material key used for roughness selection. Expected options include: <code class="docutils literal notranslate"><span class="pre">CastIron</span></code>, <code class="docutils literal notranslate"><span class="pre">Concrete</span></code>, <code class="docutils literal notranslate"><span class="pre">GalvanizedIron</span></code>, <code class="docutils literal notranslate"><span class="pre">Plastic</span></code>, <code class="docutils literal notranslate"><span class="pre">Steel</span></code>.</p></li>
-<li><p><strong>penstock_frictionfactor</strong> (<em>float</em><em> or </em><em>None</em>) – <p>Friction parameter for the chosen method:
-- Darcy–Weisbach: friction factor <code class="docutils literal notranslate"><span class="pre">f</span></code> (if provided), or roughness</p>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">epsilon</span></code> used to compute <code class="docutils literal notranslate"><span class="pre">f</span></code>.</p>
-</div></blockquote>
-<ul>
-<li><p>Hazen–Williams: coefficient <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p></li>
-<li><p>Manning: <code class="docutils literal notranslate"><span class="pre">n</span></code> (not used in this file).</p></li>
-</ul>
-</p></li>
+<li><p><strong>penstock_material</strong> (<em>str</em><em> or </em><em>None</em>) – Penstock material key used for roughness selection.
+Expected options include: <code class="docutils literal notranslate"><span class="pre">CastIron</span></code>, <code class="docutils literal notranslate"><span class="pre">Concrete</span></code>, <code class="docutils literal notranslate"><span class="pre">GalvanizedIron</span></code>, <code class="docutils literal notranslate"><span class="pre">Plastic</span></code>, <code class="docutils literal notranslate"><span class="pre">Steel</span></code>.</p></li>
+<li><p><strong>penstock_frictionfactor</strong> (<em>float</em><em> or </em><em>None</em>) – Friction parameter for the chosen method:
+- Darcy–Weisbach: friction factor <code class="docutils literal notranslate"><span class="pre">f</span></code> (if provided), or roughness <code class="docutils literal notranslate"><span class="pre">epsilon</span></code> used to compute <code class="docutils literal notranslate"><span class="pre">f</span></code>.
+- Hazen–Williams: coefficient <code class="docutils literal notranslate"><span class="pre">C</span></code>.
+- Manning: <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p></li>
 <li><p><strong>channel_average_velocity</strong> (<em>float</em><em> or </em><em>None</em>) – Average cross-sectional water velocity in the channel (Q/A), if
 applicable.</p></li>
 </ul>

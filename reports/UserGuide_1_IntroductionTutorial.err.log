@@ -22,17 +22,10 @@ from HydroGenerate.hydropower_potential import calculate_hp_potential
 ------------------
 
 
-Traceback [36m(most recent call last)[39m:
+[31m---------------------------------------------------------------------------[39m
+[31mModuleNotFoundError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mHydroGenerate[39;00m[34;01m.[39;00m[34;01mhydropower_potential[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m calculate_hp_potential
 
-  File [92m~\anaconda3\envs\HG\Lib\site-packages\IPython\core\interactiveshell.py:3701[39m in [95mrun_code[39m
-    exec(code_obj, self.user_global_ns, self.user_ns)
-
-[36m  [39m[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 1[39m
-[31m    [39m[31mfrom HydroGenerate.hydropower_potential import calculate_hp_potential[39m
-
-  [36mFile [39m[32m~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:682[39m
-[31m    [39m[31mdef revenue_calculation(self, hp_params):[39m
-    ^
-[31mIndentationError[39m[31m:[39m unexpected indent
-
+[31mModuleNotFoundError[39m: No module named 'HydroGenerate'
 
