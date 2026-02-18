@@ -17,10 +17,16 @@ authors:
     equal-contrib: true 
     corresponding: true 
     affiliation: 1
+  - name: Bhaskar Mitra
+    equal-contrib: true 
+    affiliation: 2
 affiliations:
  - name: Idaho National Laboratory, Idaho Falls, ID, United States
    index: 1
    ror: 00ty2a548
+ - name: Pacific Northwest National Laboratory, Richland, WA, United States
+   index: 2
+   ror: 05h992307
 date: 15 April 2025
 bibliography: paper.bib
 ---
