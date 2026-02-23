@@ -13,9 +13,20 @@ execute:
 
 sphinx:
   extra_extensions:
-  - 'sphinx.ext.autodoc'
-  - 'sphinx.ext.napoleon'
-  - 'sphinx.ext.viewcode'
+   - 'sphinx.ext.autodoc'
+   - 'sphinx.ext.autosummary'
+   - 'sphinx.ext.coverage'
+   - 'sphinx.ext.napoleon'
+   - 'sphinx.ext.intersphinx'
+   - 'sphinxcontrib.autodoc_pydantic'
+   - 'sphinxcontrib.mermaid'
+   - 'sphinx.ext.mathjax'
+  
+  config:
+    autodoc_member_order: bysource
+    autoclass_content: both
+    add_module_names: false
+
 
 # Define the name of the latex output file for PDF builds
 #latex:

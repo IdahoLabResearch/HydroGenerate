@@ -1,46 +1,76 @@
 Traceback (most recent call last):
-  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
-    ~~~~~~~~~^
-        nb,
-        ^^^
-    ...<4 lines>...
-        **kwargs,
-        ^^^^^^^^^
-    )
-    ^
-  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 1324, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
-           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
-  File "/opt/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\asyncio\base_events.py", line 654, in run_until_complete
     return future.result()
-           ~~~~~~~~~~~~~^^
-  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-        cell, index, execution_count=self.code_cells_executed + 1
-    )
-  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+  File "C:\Users\sushm\anaconda3\envs\HG\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from HydroGenerate.hydropower_potential import calculate_hp_potential
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+# 1) Cost and Annual O&M as part of a project. Resource_category =  'Non-PoweredDam'
+flow = 2000 # cfs
+head = 1000 # ft
+power = None
+hydropower_type = 'Diversion'
+penstock_length = 1200
+resource_category = 'NewStream-reach'
+capacity_factor = 0.6
+
+hp = calculate_hp_potential(flow= flow, rated_power= power, head= head,
+                            penstock_headloss_calculation= True,
+                            hydropower_type= hydropower_type, penstock_length = penstock_length,
+                            resource_category= resource_category,
+                            capacity_factor = capacity_factor,
+                            annual_caclulation = True)
+
+print('\nResource Category:', hp.resource_category)
+print('Initial Capital Cost (M$):', np.round(hp.icc,2))
+print('Annual Operation and Maintennance (M$):', np.round(hp.annual_om,2))
+print('Annual Revenue (M$):', np.round(hp.annual_revenue,2))
+
 ------------------
 
 
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[1], line 1[0m
-[0;32m----> 1[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mHydroGenerate[39;00m[38;5;21;01m.[39;00m[38;5;21;01mhydropower_potential[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m calculate_hp_potential
-[1;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
-[1;32m      3[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
+[31m---------------------------------------------------------------------------[39m
+[31mUnboundLocalError[39m                         Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[2][39m[32m, line 10[39m
+[32m      7[39m resource_category = [33m'[39m[33mNewStream-reach[39m[33m'[39m
+[32m      8[39m capacity_factor = [32m0.6[39m
+[32m---> [39m[32m10[39m hp = [43mcalculate_hp_potential[49m[43m([49m[43mflow[49m[43m=[49m[43m [49m[43mflow[49m[43m,[49m[43m [49m[43mrated_power[49m[43m=[49m[43m [49m[43mpower[49m[43m,[49m[43m [49m[43mhead[49m[43m=[49m[43m [49m[43mhead[49m[43m,[49m
+[32m     11[39m [43m                            [49m[43mpenstock_headloss_calculation[49m[43m=[49m[43m [49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m
+[32m     12[39m [43m                            [49m[43mhydropower_type[49m[43m=[49m[43m [49m[43mhydropower_type[49m[43m,[49m[43m [49m[43mpenstock_length[49m[43m [49m[43m=[49m[43m [49m[43mpenstock_length[49m[43m,[49m
+[32m     13[39m [43m                            [49m[43mresource_category[49m[43m=[49m[43m [49m[43mresource_category[49m[43m,[49m
+[32m     14[39m [43m                            [49m[43mcapacity_factor[49m[43m [49m[43m=[49m[43m [49m[43mcapacity_factor[49m[43m,[49m
+[32m     15[39m [43m                            [49m[43mannual_caclulation[49m[43m [49m[43m=[49m[43m [49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+[32m     17[39m [38;5;28mprint[39m([33m'[39m[38;5;130;01m\n[39;00m[33mResource Category:[39m[33m'[39m, hp.resource_category)
+[32m     18[39m [38;5;28mprint[39m([33m'[39m[33mInitial Capital Cost (M$):[39m[33m'[39m, np.round(hp.icc,[32m2[39m))
 
-[0;31mModuleNotFoundError[0m: No module named 'HydroGenerate'
+[36mFile [39m[32m~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:1010[39m, in [36mcalculate_hp_potential[39m[34m(flow, head, rated_power, hydropower_type, units, penstock_headloss_method, design_flow, system_efficiency, generator_efficiency, turbine_type, head_loss, penstock_headloss_calculation, penstock_length, penstock_diameter, penstock_material, penstock_frictionfactor, pctime_runfull, max_headloss_allowed, turbine_Rm, pelton_n_jets, flow_column, channel_average_velocity, hk_blade_diameter, hk_blade_heigth, hk_blade_type, hk_swept_area, annual_caclulation, resource_category, electricity_sell_price, cost_calculation_method, capacity_factor, n_operation_days, minimum_turbineflow, minimum_turbineflow_percent, annual_maintenance_flag, major_maintenance_flag)[39m
+[32m   1008[39m [38;5;28;01melif[39;00m hydropower_type.upper() != [33m'[39m[33mHYDROKINETIC[39m[33m'[39m:
+[32m   1009[39m         [38;5;28;01mif[39;00m cost_calculation_method == [33m'[39m[33mORNL_HBCM[39m[33m'[39m:
+[32m-> [39m[32m1010[39m             [43mONRL_BaselineCostModeling_V2[49m[43m([49m[43m)[49m[43m.[49m[43mcost_calculation[49m[43m([49m[43mall_params[49m[43m)[49m
+[32m   1012[39m [38;5;66;03m# Annual energy and revenue calculation[39;00m
+[32m   1013[39m 
+[32m   1014[39m [38;5;66;03m# TODO: calculate pandas output when annual_calculation = False[39;00m
+[32m   1016[39m [38;5;28;01mif[39;00m annual_caclulation:
+
+[36mFile [39m[32m~\OneDrive\Desktop\Soumyadeep\HG\HydroGenerate-Docstrings_documentation\HydroGenerate\hydropower_potential.py:636[39m, in [36mONRL_BaselineCostModeling_V2.cost_calculation[39m[34m(self, hp_params)[39m
+[32m    633[39m [38;5;28;01mif[39;00m res_category == [33m'[39m[33mGENERATORREWIND[39m[33m'[39m:
+[32m    634[39m     icc = [32m250147[39m * 𝑃**[32m0.817[39m     [38;5;66;03m# Generator Rewind Projects[39;00m
+[32m--> [39m[32m636[39m icc = [43micc[49m / [32m1000000[39m     [38;5;66;03m# icc, million $[39;00m
+[32m    638[39m [38;5;66;03m# Annual Operation and Maintennance [39;00m
+[32m    639[39m annual_om = [32m225417[39m * 𝑃**[32m0.54[39m / [32m1000000[39m [38;5;66;03m# Annual Operation Maintennance, million $[39;00m
+
+[31mUnboundLocalError[39m: cannot access local variable 'icc' where it is not associated with a value
 

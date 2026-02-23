@@ -51,39 +51,27 @@ wholesale_elecprice_2023 = 0.0582       # Weigthed average wholesale electricity
 
 # Economic Parameters
 class EconomicParameters:
-    """
-    Container for simple economic inputs.
+    """Economic input parameter container.
 
     Parameters
     ----------
     resource_category : str or None
-        Category for cost model (e.g., 'Non-PoweredDam', 'NewStream-reachDevelopment').
+        Resource category identifier used by the cost model. Examples include
+        ``'Non-PoweredDam'`` and ``'NewStream-reachDevelopment'`` (exact accepted
+        values depend on the downstream model).
     capacity_factor : float or None
-        Capacity factor as a fraction (0–1) or percent (0–100) depending on use;
-        see revenue calculators for interpretation.
+        Capacity factor as a proportion (0–1) for constant-price energy
+        estimation. When using ``n_operation_days``, this may be inferred.
     electricity_sell_price : float or None
-        Electricity price ($/kWh). If None, a 2023 wholesale default is used.
-    n_operation_days : int or None
-        Days per year the plant operates (<= 365) when capacity factor is not supplied.
+        Electricity sell price ($/kWh). If ``None``, a default wholesale price
+        is used in revenue calculations.
+    n_operation_days : int or float or None
+        Number of operation days per year (0–365). Used when capacity factor is
+        not provided.
 
-    Attributes
-    ----------
-    resource_category : str or None
-    electricity_sell_price : float or None
-    capacity_factor : float or None
-    n_operation_days : int or None
     """
-
     def __init__(self, resource_category, 
                  capacity_factor, electricity_sell_price, n_operation_days):
-
-        '''
-        This class initializes the calculation of hydropower potential for a specific turbine type
-        Input variables:
-        - sell_price: Selects the particular turbine based on available head
-
-        Returns: None
-        '''
 
         self.resource_category = resource_category      # Options: 'Non-PoweredDam', 'NewStream-reachDevelopment', 
         self.electricity_sell_price = electricity_sell_price       # selling price of electricity, $/kWh
@@ -92,77 +80,85 @@ class EconomicParameters:
 
 # Function to combine multiple instances
 def merge_instances(ob1, *args):
-    """
-    Merge attributes from multiple objects into the first object.
+    """Merge the attributes of multiple objects into a single instance.
 
     Parameters
     ----------
     ob1 : object
-        Target object to be updated in-place.
+        Base object whose ``__dict__`` will be updated.
     *args : object
-        One or more objects whose `__dict__` will be merged into `ob1`.
+        Additional objects whose attributes are merged into ``ob1``. For each
+        object ``d``, the merge behavior is equivalent to::
+
+            ob1.__dict__.update(d.__dict__)
 
     Returns
     -------
     object
-        The updated `ob1` reference.
+        The updated ``ob1`` instance.
 
     Notes
     -----
-    Later objects in `*args` may overwrite attributes from earlier ones.
+    - If multiple objects share the same attribute name, later objects in
+      ``*args`` override earlier values.
+    - This function performs a shallow merge of ``__dict__`` only.
     """
-
     for d in args:
         ob1.__dict__.update(d.__dict__)
     return ob1
 
 # function to calculated head 
 def calculate_head(rated_flow, rated_power):
-    """
-    Compute net head (m) from rated flow and power.
+    """Compute net head from rated flow and rated power.
 
     Parameters
     ----------
     rated_flow : float
-        Flow at rated conditions (m³/s).
+        Rated flow (m³/s).
     rated_power : float
-        Electrical power (W).
+        Rated power (kW).
 
     Returns
     -------
     float
-        Net head in meters computed as `P / (rho * g * Q)`.
-    """
+        Head (m), computed as::
 
+            head = rated_power / (rho * g * rated_flow)
+
+    Notes
+    -----
+    - ``rated_power`` is expected in kW, consistent with the rest of this module.
+    - ``rho`` and ``g`` are module-level constants.
+    """
     return rated_power/(rho*g*rated_flow) 
 
 # Function to check if a pandas dataframe is used and extract flow values
 def pd_checker(flow, flow_column):
-    """
-    Normalize flow input and detect pandas DataFrame usage.
+    """Check for pandas DataFrame input and extract flow values.
 
     Parameters
     ----------
-    flow : float or array-like or pandas.DataFrame
-        Flow input. If DataFrame, must include the column named by `flow_column`.
+    flow : array-like or pandas.DataFrame
+        Flow input. If a DataFrame is provided, ``flow_column`` must specify the
+        column containing flow values.
     flow_column : str or None
-        Column name containing flow values when `flow` is a DataFrame.
+        Name of the DataFrame column that contains flow values.
 
     Returns
     -------
     tuple
-        (flow_data, pandas_dataframe) where:
-        - flow_data : float or numpy.ndarray
-            Scalar/array extracted from the DataFrame or the original value.
-        - pandas_dataframe : bool
-            True if DataFrame input was used.
+        ``(flow_data, pandas_dataframe)`` where:
+
+        - ``flow_data`` : array-like
+          Extracted flow values (NumPy array when DataFrame input is used).
+        - ``pandas_dataframe`` : bool
+          True if the original input was a DataFrame, otherwise False.
 
     Raises
     ------
     ValueError
-        If `flow` is a DataFrame but `flow_column` is not provided.
+        If ``flow`` is a DataFrame and ``flow_column`` is not provided.
     """
-
     pandas_dataframe = False        # flag to track if a pandas dataframe is used outside of this function
     
     if isinstance(flow, pd.DataFrame):      # check if a pandas dataframe is used
@@ -181,31 +177,30 @@ def pd_checker(flow, flow_column):
 
 # Unit transformation
 class Units:
-    """
-    Convert selected attributes on `self` from US to SI units.
+    """Unit conversion helper for HydroGenerate parameter objects.
 
-    Side Effects
-    ------------
-    Converts in place (when present):
-    - flow, design_flow, minimum_turbineflow : cfs → m³/s
-    - head, head_loss, penstock_length, hk_blade_diameter, hk_blade_heigth : ft → m
-    - channel_average_velocity : ft/s → m/s
-    - penstock_diameter : ft → m
-    """
+    Notes
+    -----
+    These methods assume ``self`` is an object with the relevant attributes
+    (e.g., the merged ``all_params`` object created by :func:`calculate_hp_potential`).
 
+    - ``us_to_si_conversion`` converts from US customary units to SI.
+    - ``si_to_us_conversion`` converts from SI back to US customary units.
+
+    The conversion is performed in place by mutating the corresponding attributes.
+    """
     def us_to_si_conversion(self):
-        """
-        Convert selected attributes on `self` from US to SI units.
+        """Convert supported attributes from US customary units to SI.
 
-        Side Effects
-        ------------
-        Converts in place (when present):
-        - flow, design_flow, minimum_turbineflow : cfs → m³/s
-        - head, head_loss, penstock_length, hk_blade_diameter, hk_blade_heigth : ft → m
-        - channel_average_velocity : ft/s → m/s
-        - penstock_diameter : ft → m
-        """
+        Notes
+        -----
+        This method mutates attributes on ``self`` in place when they are present.
 
+        Expected unit assumptions (US -> SI):
+        - Flow (cfs) -> m³/s
+        - Head/length (ft) -> m
+        - Velocity (ft/s) -> m/s (implemented via ``ft_to_m`` multiplier)
+        """
         if self.flow is not None:
             self.flow = self.flow * cfs_to_cms      # cfs to m3/s
 
@@ -237,24 +232,17 @@ class Units:
             self.hk_blade_heigth = self.hk_blade_heigth * ft_to_m       # ft to m
 
     def si_to_us_conversion(self):
-        """
-        Convert selected attributes on `self` from SI to US units.
-
-        Side Effects
-        ------------
-        Converts in place (when present):
-        - flow, turbine_flow, design_flow, minimum_turbineflow : m³/s → cfs
-        - dataframe_output['turbine_flow_cfs'] : m³/s → cfs
-        - head, head_loss, penstock_design_headloss, net_head, max_headloss_allowed,
-          penstock_length, penstock_diameter, hk_blade_diameter, hk_blade_heigth,
-          runner_diameter : m (or m-derived) → ft
-        - channel_average_velocity : m/s → ft/s
+        """Convert supported attributes from SI to US customary units.
 
         Notes
         -----
-        Net head is only converted for non-hydrokinetic modes.
-        """
+        This method mutates attributes on ``self`` in place when they are present.
 
+        Expected unit conversions (SI -> US):
+        - Flow (m³/s) -> cfs
+        - Head/length (m) -> ft
+        - Velocity (m/s) -> ft/s
+        """
         if self.flow is not None:
             self.flow = self.flow / cfs_to_cms      # m3/s tp cfs
 
@@ -306,51 +294,56 @@ class Units:
 
 # Hydropower calculation
 class Hydropower(ABC):
-    """
-    Abstract base class for hydropower calculators.
-    """
-
+    """Abstract base class for hydropower calculation workflows."""
     @abstractmethod
     def hydropower_calculation(self, hp_params):
-        """
-        Compute hydropower for the given parameter container.
+        """Run a hydropower calculation for a parameter container.
 
         Parameters
         ----------
         hp_params : object
-            Parameter object updated in place with results.
-        """
+            Parameter container holding hydropower inputs and outputs.
 
+        Notes
+        -----
+        Implementations typically mutate ``hp_params`` in place by setting fields
+        such as ``rated_power``, ``power``, ``turbine_efficiency``, and
+        ``net_head``.
+        """
         pass
 
 # Basic calculation
 class Basic(Hydropower):      
+    """Basic hydropower calculation using the standard power equation."""
+
     def hydropower_calculation(self, hp_params):
-        """
-        Solve for the missing variable among {flow, head, rated_power} and compute power.
+        """Compute hydropower (or back-calculate missing variable) for basic projects.
 
         Parameters
         ----------
         hp_params : object
-            Must supply at least two of {flow (m³/s), head (m), rated_power (kW)}.
-            May include `head_loss` (m) and `system_efficiency` (0–1).
+            Parameter container with attributes including:
+            ``flow`` (float), 
+            ``head`` (float), 
+            ``rated_power`` (float), 
+            ``system_efficiency`` (float or None), 
+            ``head_loss`` (float or None)
 
         Raises
         ------
         ValueError
-            If fewer than two of {flow, head, rated_power} are provided.
-
-        Side Effects
-        ------------
-        Updates `hp_params.flow`, `hp_params.head`, `hp_params.rated_power`,
-        `hp_params.net_head`, `hp_params.penstock_design_headloss` as needed.
+            If insufficient inputs are provided (at least two of flow, head,
+            rated power must be known).
 
         Notes
         -----
-        Default overall efficiency is 0.85 if not provided.
-        Power formula: `P[kW] = n * rho * g * Q * H / 1000`.
+        This method mutates ``hp_params`` in place. It may update:
+        ``hp_params.head`` (if head is computed), 
+        ``hp_params.flow`` (if flow is computed), 
+        ``hp_params.rated_power`` (if rated power is computed), 
+        ``hp_params.net_head`` and ``hp_params.head`` (net head accounting for head loss), 
+        ``hp_params.penstock_design_headloss`` (set to None for unit conversion reuse).
         """
-
         flow = hp_params.flow       # flow, m3/s
         head = hp_params.head       # head, m
         rated_power = hp_params.rated_power     # rated power, KW
@@ -393,38 +386,35 @@ class Basic(Hydropower):
      
 # Diversion - Run-of-river
 class Diversion(Hydropower):
-    def hydropower_calculation(self, hp_params):
-        """
-        Run full run-of-river (diversion) workflow from design flow to power.
+    """Diversion (run-of-river) hydropower workflow including turbine and head-loss modeling."""
 
+    def hydropower_calculation(self, hp_params):
+        """Compute diversion hydropower potential for single values or time series flows.
+        
         Parameters
         ----------
         hp_params : object
-            Requires:
-            - flow/design_flow and head (SI inside the routine)
-            - penstock settings if head-loss calculation is enabled
-            - turbine selection inputs (e.g., Rm, pelton_n_jets)
-            - flags for annual/major maintenance when time series present
+            Parameter container expected to include:
+            Flow inputs: ``flow`` / ``design_flow``, and possibly time series metadata, 
+            Turbine settings: ``turbine_type``, ``generator_efficiency``, 
+            Head-loss settings: ``penstock_headloss_calculation``, ``penstock_length``, ``penstock_headloss_method``, etc., 
+            Flow preprocessing settings: minimum flow, maintenance flags
 
         Raises
         ------
         ValueError
-            If unsupported turbine or head-loss method is requested, or when
-            required values for head-loss calculations are missing.
-
-        Side Effects
-        ------------
-        - Selects turbine type and computes efficiency curve.
-        - Applies flow min/max limits, maintenance outages (if flagged).
-        - Computes head loss (design and time series) for DW/HW as configured.
-        - Updates rated power, per-step power, net head, and related fields.
+            If turbine type is not supported, head-loss method is not supported,
+            or required inputs (e.g., penstock length when head-loss calculation is enabled)
+            are missing.
 
         Notes
         -----
-        Turbine types supported: Kaplan, Francis, Pelton, Turgo, Crossflow, Propeller.
-        Head-loss methods supported: Darcy–Weisbach, Hazen–Williams.
+        This method mutates ``hp_params`` in place. It updates (as available):
+        Flow range / turbine flow series, 
+        Turbine efficiencies and power time series, 
+        Rated power and net head, 
+        Head loss arrays (when penstock head-loss calculations are enabled)
         """
-
         # Calculate design flow
         if hp_params.design_flow is None:
             PercentExceedance().designflow_calculator(hp_params)
@@ -538,23 +528,26 @@ class Diversion(Hydropower):
         hp_params.head = h        # update
         
 class Hydrokinetic(Hydropower):
+    """Hydrokinetic (in-stream) hydropower workflow."""
     def hydropower_calculation(self, hp_params):
-        """
-        Compute hydrokinetic power from swept area and channel velocity.
+        """Compute hydrokinetic power based on velocity and swept area.
 
         Parameters
         ----------
         hp_params : object
-            Uses/updates:
-            - system_efficiency : percent if not None, otherwise defaults to 59 (Betz limit)
-            - hk_swept_area or geometry fields to compute it
-            - channel_average_velocity : m/s
+            Parameter container expected to include:
+            ``system_efficiency`` (percent, optional; defaults to Betz limit), 
+            ``hk_swept_area`` (m², optional), 
+            ``channel_average_velocity`` (m/s), 
+            Blade geometry if swept area needs to be computed
 
-        Side Effects
-        ------------
-        Updates `hp_params.rated_power` (kW).
+        Notes
+        -----
+        This method mutates ``hp_params`` in place by updating:
+        ``system_efficiency`` (defaulted to 59% if not provided), 
+        ``hk_swept_area`` (computed if not provided), 
+        ``rated_power`` (kW)
         """
-
         # System efficiency
         if hp_params.system_efficiency:         # if the user provides an efficiency value
             n = hp_params.system_efficiency
@@ -576,50 +569,58 @@ class Hydrokinetic(Hydropower):
 
 # Hydropower economic analysis: Cost
 class Cost(ABC):
-    """
-    Abstract base for cost models.
-    """
-
+    """Abstract base class for cost models."""
     @abstractmethod
     def cost_calculation(self, hp_params):
-        """
-        Compute and update capital and O&M cost fields on `hp_params`.
-        """
-
-        pass
-
-# ORNL_HBCM methods obtained from: https://info.ornl.gov/sites/publications/files/Pub58666.pdf
-class ONRL_BaselineCostModeling_V2(Cost):
-    def cost_calculation(self, hp_params):
-        """
-        Estimate initial capital cost (ICC) and annual O&M via ORNL HBCM (2014).
+        """Compute (or estimate) cost quantities and update ``hp_params``.
 
         Parameters
         ----------
         hp_params : object
-            Requires:
-            - rated_power : float (kW)
-            - net_head : float (m)
-            - resource_category : str (mapped to model cases)
-
-        Returns
-        -------
-        None
-
-        Side Effects
-        ------------
-        Sets:
-        - `hp_params.icc` : float
-            ICC in million 2014 USD.
-        - `hp_params.annual_om` : float
-            Annual O&M in million 2014 USD (min of model curve and 2.5% of ICC
-            for categories other than GENERATORREWIND).
+            Parameter container holding project descriptors and hydropower outputs.
 
         Notes
         -----
-        Internally converts head to ft and power to MW per model definitions.
+        Implementations typically mutate ``hp_params`` in place by adding fields
+        such as ``icc`` and ``annual_om``.
         """
+        pass
 
+# ORNL_HBCM methods obtained from: https://info.ornl.gov/sites/publications/files/Pub58666.pdf
+class ONRL_BaselineCostModeling_V2(Cost):
+    """ORNL baseline cost model (HBCM v2) implementation.
+
+    Notes
+    -----
+    The cost method is annotated in the source as derived from the ORNL report:
+    https://info.ornl.gov/sites/publications/files/Pub58666.pdf
+
+    The original source code contains some non-ASCII variable symbols in a few
+    expressions (e.g., ``𝑃`` / ``𝐻``). They are preserved here as-is to avoid
+    altering runtime behavior.
+    """
+    def cost_calculation(self, hp_params):
+        """Estimate initial capital cost (ICC) and annual O&M and update parameters.
+
+        Parameters
+        ----------
+        hp_params : object
+            Parameter container expected to include:
+            ``rated_power`` (kW), 
+            ``net_head`` (m), 
+            ``resource_category`` (str or None)
+
+        Raises
+        ------
+        ValueError
+            If ``resource_category`` is not in the accepted list.
+
+        Notes
+        -----
+        This method mutates ``hp_params`` in place by setting:
+        ``hp_params.icc`` (million $2014), 
+        ``hp_params.annual_om`` (million $2014)
+        """
         P = hp_params.rated_power / 1000       # rated power, mW
         H = hp_params.net_head / ft_to_m        # net head, ft
 
@@ -674,46 +675,50 @@ class ONRL_BaselineCostModeling_V2(Cost):
 
 # Hydropower economic analysis: evenue
 class Revenue(ABC):
-    """
-    Abstract base for revenue models.
-    """
-
+    """Abstract base class for revenue models."""
     @abstractmethod
     def revenue_calculation(self, hp_params):
-        """
-        Compute and update energy and revenue fields on `hp_params`.
-        """
-
-        pass
-
-# Constant electricty price for single / multiple values of flow - not a time series
-class ConstantEletrictyPrice(Revenue):
-     def revenue_calculation(self, hp_params):
-        """
-        Annual energy/revenue from mean power and capacity factor or days/year.
+        """Compute revenue quantities and update ``hp_params``.
 
         Parameters
         ----------
         hp_params : object
-            Uses:
-            - power : array-like of kW (time series)
-            - capacity_factor : float or None
-            - n_operation_days : int or None
-            - electricity_sell_price : float ($/kWh) or None
+            Parameter container holding power outputs and economic settings.
 
-        Side Effects
-        ------------
-        Sets:
-        - `hp_params.annual_energy_generated` : float (kWh)
-        - `hp_params.annual_revenue` : float (million $)
-        - Harmonizes `capacity_factor` and `n_operation_days` when one is given.
+        Notes
+        -----
+        Implementations typically mutate ``hp_params`` in place by adding fields
+        such as ``annual_energy_generated`` and ``annual_revenue``.
+        """
+        pass
+
+# Constant electricty price for single / multiple values of flow - not a time series
+class ConstantEletrictyPrice(Revenue):
+    """Revenue model using a constant electricity price (non-time-indexed flows)."""
+    def revenue_calculation(self, hp_params):
+        """Compute annual energy and revenue using constant price assumptions.
+
+        Parameters
+        ----------
+        hp_params : object
+            Parameter container expected to include:
+            ``power`` (array-like): kW time series or flow-range power, 
+            ``capacity_factor`` (float or None): proportion (0–1), 
+            ``n_operation_days`` (int/float or None): 0–365, 
+            ``electricity_sell_price`` (float or None): $/kWh
 
         Raises
         ------
         ValueError
-            If `n_operation_days` > 365 when capacity factor is not provided.
-        """
+            If ``n_operation_days`` exceeds 365.
 
+        Notes
+        -----
+        This method mutates ``hp_params`` in place by setting:
+        ``annual_energy_generated`` (kWh), 
+        ``annual_revenue`` (million $), 
+        and may update ``capacity_factor`` / ``n_operation_days`` defaults.
+        """
         mean_power = np.mean(hp_params.power)       # mean of the power provided for a time series of flow
 
         if hp_params.n_operation_days is None:
@@ -738,29 +743,29 @@ class ConstantEletrictyPrice(Revenue):
 
 # Constant electricty price for a pandas dataframe with a dateTime index. 
 class ConstantEletrictyPrice_pd(Revenue):
+    """Revenue model for a time-indexed pandas DataFrame flow input."""
+
     def revenue_calculation(self, hp_params, flow):
-        """
-        Annual energy/revenue from a time-indexed pandas DataFrame.
+        """Compute annual energy, revenue, and summary statistics for time series flows.
 
         Parameters
         ----------
         hp_params : object
-            Uses/updates: power (kW), turbine_flow (m³/s or cfs depending on mode),
-            turbine_efficiency (0–1), rated_power (kW), electricity_sell_price ($/kWh).
+            Parameter container expected to include:
+            ``power`` (array-like): kW time series aligned with ``flow.index``, 
+            ``turbine_flow`` (array-like): turbine flow aligned with ``flow.index``, 
+            ``rated_power`` (float): kW, 
+            ``electricity_sell_price`` (float or None), 
+            ``turbine_efficiency`` (array-like): turbine efficiency series
         flow : pandas.DataFrame
-            Time-indexed DataFrame; index frequency determines hourly energy step.
-
-        Side Effects
-        ------------
-        - Populates `hp_params.dataframe_output` with power/flow/efficiency/energy.
-        - Populates `hp_params.annual_dataframe_output` with annual KPIs
-          (energy, revenue, capacity factor).
+            Original user-provided flow DataFrame with a DatetimeIndex.
 
         Notes
         -----
-        Capacity factor is clipped to ≤ 1. Hours are computed from index diffs.
+        This method mutates ``hp_params`` in place by setting:
+        ``dataframe_output`` : per-timestep outputs (power, energy, efficiency), 
+        ``annual_dataframe_output`` : annual aggregates including capacity factor and revenue
         """
-
         if  hp_params.electricity_sell_price is None:
             hp_params.electricity_sell_price = wholesale_elecprice_2023       # electricity sell price, defined above
 
@@ -834,100 +839,124 @@ def calculate_hp_potential(flow= None,
                            minimum_turbineflow_percent = None, 
                            annual_maintenance_flag = False,
                            major_maintenance_flag = False): 
-    """
-    End-to-end hydropower potential calculation and (optionally) revenue/costs.
+    """Calculate hydropower potential and related outputs.
+
+    This is the primary user-facing entry point for HydroGenerate. It constructs
+    parameter containers, merges them into a single object, performs unit
+    conversions, runs the requested hydropower calculation workflow, and (optionally)
+    runs cost and annual revenue calculations.
 
     Parameters
     ----------
-    flow : float or array-like or pandas.DataFrame, optional
-        Input flow. If DataFrame, provide `flow_column` with the column name.
-    head : float, optional
-        Gross head (ft or m depending on `units`).
-    rated_power : float, optional
-        Rated power (kW). Used with `flow`/`head` to solve missing variables in BASIC.
-    hydropower_type : {'BASIC','DIVERSION','HYDROKINETIC'} or None, default 'BASIC'
-        Calculation mode. If None, skips hydro calc but enables cost if requested.
-    units : {'US','SI'}, default 'US'
-        Input/output unit system. Internally converted to SI for calculations.
-    penstock_headloss_method : {'Darcy-Weisbach','Hazen-Williams'}, default 'Darcy-Weisbach'
-        Method for head-loss estimation when `penstock_headloss_calculation` is True.
-    design_flow : float, optional
-        Design flow (same units as `flow`). If None, estimated from percent exceedance when available.
-    system_efficiency : float, optional
-        Overall efficiency (0–1 or 0–100% depending on context).
-    generator_efficiency : float, optional
-        Generator efficiency (0–1 or 0–100%). Defaults to 0.98 if None.
-    turbine_type : str, optional
-        Fixed turbine type; if None, selected automatically in DIVERSION mode.
-    head_loss : float, optional
-        Known head loss (same units as `head`).
-    penstock_headloss_calculation : bool, default False
-        Whether to compute penstock head-loss (design and time series).
-    penstock_length, penstock_diameter : float, optional
-        Penstock geometry (length, diameter).
-    penstock_material : str, optional
-        Material key for roughness tables (e.g., 'Steel').
-    penstock_frictionfactor : float, optional
-        DW friction factor or HW C value; if None, computed/selected.
-    pctime_runfull : float, optional
-        Target percent exceedance used to derive `design_flow` from FDC.
-    max_headloss_allowed : float, optional
-        Max allowed head loss as percent of head.
-    turbine_Rm : float, optional
-        Manufacturer/design coefficient for reaction turbines.
-    pelton_n_jets : int, optional
-        Pelton jet count.
-    flow_column : str, optional
-        Column name when `flow` is a pandas.DataFrame.
-    channel_average_velocity : float, optional
-        Cross-sectional mean velocity (m/s) for hydrokinetic mode.
-    hk_blade_diameter, hk_blade_heigth : float, optional
-        Hydrokinetic rotor geometry (m).
-    hk_blade_type : {'ConventionalRotor','H-DarrieusRotor','DarrieusRotor'}, optional
-    hk_swept_area : float, optional
-        Hydrokinetic swept area (m²); computed if not provided.
-    annual_caclulation : bool, default False
-        If True, compute annual energy and revenue (DataFrame-based if available).
-    resource_category : str, optional
-        Cost model category used by ORNL HBCM.
-    electricity_sell_price : float, optional
-        Price of electricity ($/kWh) for revenue.
-    cost_calculation_method : {'ORNL_HBCM'}, default 'ORNL_HBCM'
-        Cost model selector.
-    capacity_factor : float, optional
-        Capacity factor (0–1 or 0–100%) for revenue if not using DataFrame timing.
-    n_operation_days : int, optional
-        Days/year the plant operates when `capacity_factor` not supplied.
-    minimum_turbineflow : float, optional
-        Absolute minimum turbine flow (same units as `flow`).
-    minimum_turbineflow_percent : float, optional
-        Minimum turbine flow as percent of design flow when absolute min not given.
-    annual_maintenance_flag, major_maintenance_flag : bool, default False
-        Zero-flow outages (7 days/year, 14 days/5 years) applied in DIVERSION
-        when a DataFrame with a datetime index is provided.
+    flow : array-like or pandas.DataFrame or None
+        Flow values. If a DataFrame is provided, a DatetimeIndex is expected for
+        annual calculations and ``flow_column`` must indicate which column
+        contains flow values.
+    head : float or None
+        Gross head. In US units this is in ft; in SI units this is in m.
+    rated_power : float or None
+        Rated power (kW).
+    hydropower_type : str or None
+        Hydropower calculation type. Supported values:
+        ``'BASIC'``: uses the basic power equation, 
+        ``'DIVERSION'``: run-of-river workflow (turbines + head losses), 
+        ``'HYDROKINETIC'``: in-stream kinetic workflow, 
+        If ``None``, hydropower computation is skipped and only cost calculation
+        (when configured) may run.
+    units : {'US', 'SI'}
+        Units of the input values.
+
+    penstock_headloss_method : str
+        Penstock head-loss method (e.g., ``'Darcy-Weisbach'`` or ``'Hazen-Williams'``).
+    design_flow : float or None
+        Design flow. If not provided for diversion projects, it may be computed
+        from exceedance logic.
+    system_efficiency : float or None
+        System efficiency. For BASIC workflow, used directly; for hydrokinetic,
+        treated as a percent.
+    generator_efficiency : float or None
+        Generator efficiency (%) for diversion workflow.
+    turbine_type : str or None
+        Turbine type identifier.
+    head_loss : float or None
+        External head loss (if already computed), in same unit system as head.
+
+    penstock_headloss_calculation : bool
+        If True, penstock head loss is calculated and applied to compute net head.
+    penstock_length : float or None
+        Penstock length.
+    penstock_diameter : float or None
+        Penstock diameter.
+    penstock_material : str or None
+        Penstock material used for roughness defaults.
+    penstock_frictionfactor : float or None
+        Friction parameter value (method-dependent).
+
+    pctime_runfull : float or None
+        Turbine parameter: percent time running full (method-specific).
+    max_headloss_allowed : float or None
+        Maximum allowable head loss (percent of head) used for sizing.
+    turbine_Rm : float or None
+        Turbine parameter used in turbine selection/parameter calculation.
+    pelton_n_jets : int or None
+        Pelton turbine number of jets.
+    flow_column : str or None
+        Flow column name when ``flow`` is a pandas DataFrame.
+
+    channel_average_velocity : float or None
+        Channel average velocity (m/s).
+    hk_blade_diameter : float or None
+        Hydrokinetic blade diameter.
+    hk_blade_heigth : float or None
+        Hydrokinetic blade height.
+    hk_blade_type : str or None
+        Hydrokinetic blade type identifier.
+    hk_swept_area : float or None
+        Hydrokinetic swept area (m²). If None, may be computed.
+
+    annual_caclulation : bool
+        If True, annual energy and revenue are computed.
+    resource_category : str or None
+        Cost model resource category.
+    electricity_sell_price : float or None
+        Electricity sell price ($/kWh).
+    cost_calculation_method : str
+        Cost calculation method identifier (currently supports ``'ORNL_HBCM'``).
+    capacity_factor : float or None
+        Capacity factor (0–1) for annual revenue model when not using a time series.
+    n_operation_days : int or float or None
+        Operation days per year (0–365) for annual revenue model.
+
+    minimum_turbineflow : float or None
+        Minimum turbine flow threshold (method-dependent units; converted if needed).
+    minimum_turbineflow_percent : float or None
+        Minimum turbine flow as a percent of design flow.
+    annual_maintenance_flag : bool
+        Whether to apply annual maintenance downtime (DataFrame/time-series only).
+    major_maintenance_flag : bool
+        Whether to apply major maintenance downtime (DataFrame/time-series only).
 
     Returns
     -------
     object
-        A merged parameter/result object containing inputs and computed fields,
-        including (as available) `rated_power`, `power`, `net_head`, `head_loss`,
-        `turbine_efficiency`, `dataframe_output`, `annual_dataframe_output`,
-        and cost/revenue summaries.
+        A merged parameter object containing inputs and computed outputs. This
+        includes (as available) attributes such as:
+        ``rated_power`` (kW), 
+        ``power`` (kW series), 
+        ``head_loss`` (m/ft series), 
+        ``net_head`` (m/ft), 
+        cost outputs (``icc``, ``annual_om``), 
+        revenue outputs (``annual_energy_generated``, ``annual_revenue``), 
+        DataFrame summaries when applicable
 
     Raises
     ------
     ValueError
-        For invalid unit choices, unsupported hydro types, bad inputs for
-        DataFrame flow, or missing values required by selected sub-methods.
-
-    Notes
-    -----
-    - US inputs are converted to SI internally; results are converted back to US
-      when `units == 'US'`.
-    - In DIVERSION mode, turbine selection and performance are computed before
-      penstock head-loss if enabled.
+        If:
+        ``units`` is not ``'US'`` or ``'SI'``, 
+        ``hydropower_type`` is invalid, 
+        required inputs are missing for the chosen workflow
     """
-    
     # Check if a pandas dataframe
     flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values
 
