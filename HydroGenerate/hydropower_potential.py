@@ -9,6 +9,8 @@ Copyright 2023, Battelle Energy Alliance, LLC
 This module calculates hydropower potential for diffrent type of hydropower installations
 """
 
+from typing import Optional, Union, Tuple, Any
+
 import numpy as np
 import math
 # from numpy.core.fromnumeric import mean
@@ -35,8 +37,11 @@ wholesale_elecprice_2023 = 0.0582       # Weigthed average wholesale electricity
 
 # Economic Parameters
 class EconomicParameters:
-    def __init__(self, resource_category, 
-                 capacity_factor, electricity_sell_price, n_operation_days):
+    def __init__(self,
+                 resource_category: Optional[str],
+                 capacity_factor: Optional[float],
+                 electricity_sell_price: Optional[float],
+                 n_operation_days: Optional[int]) -> None:
 
         '''
         This class initializes the calculation of hydropower potential for a specific turbine type
@@ -58,7 +63,7 @@ def merge_instances(ob1, *args):
     return ob1
 
 # function to calculated head 
-def calculate_head(rated_flow, rated_power):
+def calculate_head(rated_flow: float, rated_power: float) -> float:
     '''
     Returns the head in meters based on known rated flow (m3/s) and rated power (W)
     Input = flow
@@ -67,7 +72,7 @@ def calculate_head(rated_flow, rated_power):
     return rated_power/(rho*g*rated_flow) 
 
 # Function to check if a pandas dataframe is used and extract flow values
-def pd_checker(flow, flow_column):
+def pd_checker(flow: Any, flow_column: Optional[str]) -> Tuple[Any, bool]:
     
     pandas_dataframe = False        # flag to track if a pandas dataframe is used outside of this function
     
@@ -538,7 +543,7 @@ def calculate_hp_potential(flow= None,
                            minimum_turbineflow = None,
                            minimum_turbineflow_percent = None, 
                            annual_maintenance_flag = False,
-                           major_maintenance_flag = False): 
+                           major_maintenance_flag = False) -> HydraulicDesignParameters:
 
     # Check if a pandas dataframe
     flow_data, pandas_dataframe = pd_checker(flow, flow_column)       # check if a dataframe is used and extract flow values

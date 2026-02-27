@@ -9,6 +9,8 @@ Copyright 2023, Battelle Energy Alliance, LLC
 This module applies the flow limit constaints and incorporates the impact of annual maintenance activities
 """
 
+from typing import Any, Optional
+
 import numpy as np
 import pandas as pd
 from datetime import datetime
@@ -16,8 +18,11 @@ from datetime import datetime
 
 # Hydraulic design parameters
 class FlowPreProcessingParameters:
-    def __init__(self, minimum_turbineflow, minimum_turbineflow_percent,       # Flow parameters
-                 annual_maintenance_flag, major_maintenance_flag): 
+    def __init__(self,
+                 minimum_turbineflow: Optional[float],
+                 minimum_turbineflow_percent: Optional[float],
+                 annual_maintenance_flag: bool,
+                 major_maintenance_flag: bool) -> None:
         '''
 #         This class initializes Flow preprocessing parameters needed for multiple calculations 
 #         Parameter descriptions are provided below:
@@ -33,14 +38,14 @@ class FlowPreProcessingParameters:
 class FlowPreProcessing():
 
     # Function that sets max turbine flow to the design flow
-    def max_turbineflow_checker(self, flow_obj):
+    def max_turbineflow_checker(self, flow_obj: Any) -> None:
 
         flow = flow_obj.flow            # this is a numpy array
         design_flow = flow_obj.design_flow
         flow_obj.turbine_flow = np.where(flow > design_flow, design_flow, flow)         # turbine_flow is created here as this code is always active and runs 1st. flow is < design flow
 
     # Function that sets min turbine flow to the design flow
-    def min_turbineflow_checker(self, flow_obj):
+    def min_turbineflow_checker(self, flow_obj: Any) -> None:
         flow = flow_obj.turbine_flow # this is a numpy array        
         design_flow = flow_obj.design_flow
 
@@ -58,7 +63,7 @@ class FlowPreProcessing():
 
         flow_obj.turbine_flow = np.where(flow < min_flow, 0, flow)          # replace flows less than min flow with 0
 
-    def annual_maintenance_implementer(self, flow_obj):
+    def annual_maintenance_implementer(self, flow_obj: Any) -> None:
         # Function to set annual maintennace - i.e., make the flow 0 for a week a year
 
         turbine_flow = flow_obj.turbine_flow            # turbine flow series with max and min (if on) limits implemented
@@ -94,7 +99,7 @@ class FlowPreProcessing():
         flow_obj.turbine_flow = flow['flow_cms'].to_numpy()         # update
 
     # Function that schedules the major maintennace
-    def major_maintenance_implementer(self, flow_obj):
+    def major_maintenance_implementer(self, flow_obj: Any) -> None:
         # Major maintenance will happend on the month with lowest flow a year - during the first 15 days of this month.
 
         turbine_flow = flow_obj.turbine_flow            # turbine flow series with max and min (if on) limits implemented

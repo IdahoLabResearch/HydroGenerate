@@ -9,6 +9,8 @@ Copyright 2023, Battelle Energy Alliance, LLC
 This module handles turbine selection and efficiency calculation
 """
 
+from typing import Optional, Union, Any
+
 import numpy as np
 import pandas as pd
 from abc import ABC, abstractmethod
@@ -26,11 +28,22 @@ max_flow_turbine = 1      # multiplier for the maximum flow that can be passed t
 # Turbine Parameters
 class TurbineParameters:
 
-    def __init__(self, turbine_type, flow, design_flow, flow_column, head, 
-                 rated_power,
-                 system_efficiency,
-                 generator_efficiency, Rm, pctime_runfull, pelton_n_jets, 
-                 hk_blade_diameter, hk_blade_heigth, hk_blade_type, hk_swept_area):
+    def __init__(self,
+                 turbine_type: Optional[str],
+                 flow: Optional[Union[float, np.ndarray, pd.DataFrame]],
+                 design_flow: Optional[float],
+                 flow_column: Optional[str],
+                 head: Optional[float],
+                 rated_power: Optional[float],
+                 system_efficiency: Optional[float],
+                 generator_efficiency: Optional[float],
+                 Rm: Optional[float],
+                 pctime_runfull: Optional[float],
+                 pelton_n_jets: Optional[int],
+                 hk_blade_diameter: Optional[float],
+                 hk_blade_heigth: Optional[float],
+                 hk_blade_type: Optional[str],
+                 hk_swept_area: Optional[float]) -> None:
         '''
         This class initializes the calculation of all turbines parameters.        
         Parameter descriptions are provided below:
@@ -65,7 +78,7 @@ class TurbineParameters:
         self.dataframe_output = None    # placeholder for pandas dataframe output
         self.runner_diameter = None    # placeholder for the runner diameter   
     
-def turbine_type_selector(hp_params):
+def turbine_type_selector(hp_params: TurbineParameters) -> None:
 
     # inputs
     head = hp_params.head           # head, m
@@ -137,7 +150,7 @@ class FlowRange():
     Function to calculate a range of flows from 0.5 to max_flow_turbine.
     '''
 
-    def flowrange_calculator(self, turbine):
+    def flowrange_calculator(self, turbine: TurbineParameters) -> None:
         if isinstance(turbine.flow, Number):
             range = np.linspace(0.5, max_flow_turbine, 18) # the values are %
             turbine.flow = turbine.flow * range
@@ -150,7 +163,7 @@ class ReactionTurbines():
     Function to calculate the turbine runner diameter
     '''
 
-    def runnersize_calculator(self, design_flow):  
+    def runnersize_calculator(self, design_flow: float) -> float:
         if design_flow > 23: # d > 1.8 - The formula in the document has an 'undefined' area
             k = 0.41
         else:
@@ -169,7 +182,7 @@ class FrancisTurbine(Turbine):
     '''
     Francis turbine calculation
     '''
-    def turbine_calculator(self, turbine):   
+    def turbine_calculator(self, turbine: TurbineParameters) -> None:
 
         Qd = turbine.design_flow        # design flow
         d = ReactionTurbines().runnersize_calculator(Qd)
@@ -202,7 +215,7 @@ class KaplanTurbine(Turbine):
     '''
     Kaplan turbine calculation
     '''
-    def turbine_calculator(self, turbine):
+    def turbine_calculator(self, turbine: TurbineParameters) -> None:
         
         Qd = turbine.design_flow        # design flow
         d = ReactionTurbines().runnersize_calculator(Qd)
@@ -221,8 +234,8 @@ class PropellerTurbine(Turbine):
     '''
     Propellor turbine calculation
     '''
-      
-    def turbine_calculator(self, turbine):
+
+    def turbine_calculator(self, turbine: TurbineParameters) -> None:
         
         Qd = turbine.design_flow        # design flow
         d = ReactionTurbines().runnersize_calculator(Qd)
@@ -237,12 +250,12 @@ class PropellerTurbine(Turbine):
         turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency) # Correct negative efficiencies
         turbine.runner_diameter = d     # update
 
-class PeltonTurbine(Turbine):  
+class PeltonTurbine(Turbine):
     '''
     Pelton turbine calculation
     '''
 
-    def turbine_calculator(self, turbine):  
+    def turbine_calculator(self, turbine: TurbineParameters) -> None:
         if turbine.pelton_n_jets is None:
             turbine.pelton_n_jets = 3
     
@@ -263,7 +276,7 @@ class TurgoTurbine(Turbine):
     Pelton turbine calculation
     '''
 
-    def turbine_calculator(self, turbine):
+    def turbine_calculator(self, turbine: TurbineParameters) -> None:
           PeltonTurbine().turbine_calculator(turbine)       # Calculate Pelton efficiency
           turbine.turbine_efficiency = turbine.turbine_efficiency - 0.03        # Pelton efficiency - 0.03
           turbine.turbine_efficiency = np.where(turbine.turbine_efficiency <= 0 , 0, turbine.turbine_efficiency)        # Correct negative efficiencies 
@@ -272,8 +285,8 @@ class CrossFlowTurbine(Turbine):
     '''
     Pelton turbine calculation
     '''
-      
-    def turbine_calculator(self, turbine):
+
+    def turbine_calculator(self, turbine: TurbineParameters) -> None:
         Qd = turbine.design_flow 
         FlowRange().flowrange_calculator(turbine= turbine)      # generate a flow range from 60% to 120% of the flow given
         Q = turbine.turbine_flow
@@ -285,7 +298,7 @@ class Hydrokinetic_Turbine(Turbine):
     Hydrokinetic turbine calculation
     '''       
 
-    def turbine_calculator(self, turbine):
+    def turbine_calculator(self, turbine: TurbineParameters) -> None:
 
         if turbine.hk_blade_type is None:       # if a turbine type is not given
             turbine.hk_blade_type = 'ConventionalRotor'     # default - update
@@ -330,7 +343,7 @@ class PercentExceedance(DesignFlow):
     Design flow calculation based on the percent exceedance
     '''
 
-    def designflow_calculator(self, turbine):
+    def designflow_calculator(self, turbine: TurbineParameters) -> None:
 
         pe = turbine.pctime_runfull     # percentage of time a turbine is running full
         flow = turbine.flow     # user-entered flow

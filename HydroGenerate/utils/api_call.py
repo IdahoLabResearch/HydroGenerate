@@ -2,6 +2,8 @@
 Copyright 2021, Battelle Energy Alliance, LLC
 '''
 
+from typing import Any, Dict, Optional
+
 import requests
 import pandas as pd
 import numpy as np
@@ -15,7 +17,7 @@ import os
 
 # class definition
 class Stream:
-    def __init__(self, huc, site_id, site_name, data, no_data_value):
+    def __init__(self, huc: str, site_id: str, site_name: str, data: Any, no_data_value: float) -> None:
         self.name = huc
         self.site_id = site_id
         self.site_name = site_name
@@ -27,7 +29,7 @@ class Stream:
 # The url where the parameter codes (parameterCd) are described: https://help.waterdata.usgs.gov/code/parameter_cd_nm_query?parm_nm_cd=%25discharge%25&fmt=html
 # [DONE] TODO: deal with missing values. It looks like USGS makes them -999999.0
 # TODO: generalize get_data to take either HUC or site_id
-def get_data(query, format = 'json', id_type = 'huc', endpoint='iv', save_data = True, path = os.path.join('data','test.json')):
+def get_data(query: Dict[str, str], format: str = 'json', id_type: str = 'huc', endpoint: str = 'iv', save_data: bool = True, path: str = os.path.join('data', 'test.json')) -> Optional[pd.DataFrame]:
     '''
     This is the top level function to pull data from the USGS instantaneous value REST service. The 15-min data includes water discharge in cfs and it is requested by HUC codes. 
     The function requests a json object that contains several sites (discretize by site_id). The function returns a list of objects of the type stream_gage class (see class description above)
@@ -83,7 +85,7 @@ def discretize_huc_response(json_obj):
 
 
 
-def format_api_response(json_obj, save_csv = True, path = os.path.join('data','test.csv')):
+def format_api_response(json_obj: requests.Response, save_csv: bool = True, path: str = os.path.join('data', 'test.csv')) -> pd.DataFrame:
     ''' Return a dataframe with the discharge data
     Inputs:
     - json_obj: raw json object from REST.
@@ -109,7 +111,7 @@ def format_api_response(json_obj, save_csv = True, path = os.path.join('data','t
     return df
 
 
-def clean_data(df, column_change={'Streamflow, ft&#179;/s':'discharge_cfs'}, keep_nan = False, timestamp_col = 'dateTime', no_data=-999999):
+def clean_data(df: pd.DataFrame, column_change: Dict[str, str] = {'Streamflow, ft&#179;/s': 'discharge_cfs'}, keep_nan: bool = False, timestamp_col: str = 'dateTime', no_data: float = -999999) -> pd.DataFrame:
     '''General house keeping on data: finding missing values and assign nan (if wanted) and changing the default column name. It also sets the timestamp column as index
     Inputs:
     - df: dataframe with the data from the REST API, generally with discharge

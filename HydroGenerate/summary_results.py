@@ -9,9 +9,12 @@ Copyright 2023, Battelle Energy Alliance, LLC
 This module includes function to summarize HydroGenerate results. 
 """
 
+from typing import Any, Optional
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 from shapely.geometry import Point
 from shapely.geometry import Polygon
    
@@ -21,7 +24,7 @@ cfs_to_cms = 0.0283168 # 1 cubic feet per second to cubic meter per second
 ft_to_m = 0.3048 # 1 feet to meters
 
 # function to plot turbine efficiency and power generation as a function of flow
-def flow_efficiency_power_plot(x) :
+def flow_efficiency_power_plot(x: Any) -> Optional[Figure]:
     # extract dataframe output, order and subset wanted values
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -52,7 +55,7 @@ def flow_efficiency_power_plot(x) :
         print('Plotting turbine efficiency annd power requires flow time series data '\
               'provided as pandas dataframe')
 
-def flow_efficiency_plot(x) :
+def flow_efficiency_plot(x: Any) -> Optional[Figure]:
     # extract dataframe output, order and subset wanted values
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -78,7 +81,7 @@ def flow_efficiency_plot(x) :
               'provided as pandas dataframe')
 
 # function to plot the flow duration curve
-def flow_duration_curve_plot(x):
+def flow_duration_curve_plot(x: Any) -> Optional[Figure]:
 
     # if x.flowduration_curve:
     try:
@@ -116,7 +119,7 @@ def flow_duration_curve_plot(x):
               'provided as pandas dataframe')
 
 # function to plot turbine selection figure
-def turbine_type_plot(x):
+def turbine_type_plot(x: Any) -> Figure:
 
  # inputs
     head = x.net_head           # head, m
@@ -165,7 +168,7 @@ def turbine_type_plot(x):
     return fig
 
 # function that generates a monhtly figure given a dataframe and a column name
-def monthly_figure_plot(df, var_fig):
+def monthly_figure_plot(df: pd.DataFrame, var_fig: str) -> Figure:
     y_mean = df[var_fig].groupby(df[var_fig].index.month).mean()
     y_med = df[var_fig].groupby(df[var_fig].index.month).median()
     x = y_mean.index
@@ -204,7 +207,7 @@ def monthly_figure_plot(df, var_fig):
 # functions to generate monthly figures for capacity factor, turbine flow, electricity generation 
 
 # 1) Capacity factor
-def plant_capfactor_plot(x):
+def plant_capfactor_plot(x: Any) -> Optional[Figure]:
     
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -218,7 +221,7 @@ def plant_capfactor_plot(x):
               'provided as pandas dataframe')
         
 # 2) turbine flow
-def plant_turbineflow_plot(x):
+def plant_turbineflow_plot(x: Any) -> Optional[Figure]:
     
     if x.pandas_dataframe:
         df = x.dataframe_output
@@ -230,7 +233,7 @@ def plant_turbineflow_plot(x):
               'provided as pandas dataframe')
         
 # 3) Electricty generation
-def plant_elecgeneration_plot(x):
+def plant_elecgeneration_plot(x: Any) -> Optional[Figure]:
     
     if x.pandas_dataframe:
         df = x.dataframe_output
