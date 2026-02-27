@@ -361,7 +361,7 @@ class PercentExceedance(DesignFlow):
             flow = flow[~np.isnan(flow)] # remove nan values
             flow_percentiles = np.percentile(flow, q = np.linspace(1, 100, 100))        # percentiles to compute, 1:100
             flowduration_curve = {'Flow': flow_percentiles, 'Percent_Exceedance':pc_e}      # Flow duration curve
-            design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe])     # flow for the selected percent of excedante
+            design_flow = float(flowduration_curve['Flow'][flowduration_curve['Percent_Exceedance'] == pe].item())     # flow for the selected percent of excedance
             turbine.flowduration_curve = pd.DataFrame(data = flowduration_curve)
         
         turbine.design_flow = design_flow       # Update
