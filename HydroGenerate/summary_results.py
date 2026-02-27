@@ -9,6 +9,7 @@ Copyright 2023, Battelle Energy Alliance, LLC
 This module includes function to summarize HydroGenerate results. 
 """
 
+import logging
 from typing import Any, Optional
 
 import numpy as np
@@ -17,6 +18,8 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from shapely.geometry import Point
 from shapely.geometry import Polygon
+
+logger = logging.getLogger(__name__)
    
 
 # define constants needed
@@ -52,8 +55,8 @@ def flow_efficiency_power_plot(x: Any) -> Optional[Figure]:
         return fig
     
     else:
-        print('Plotting turbine efficiency annd power requires flow time series data '\
-              'provided as pandas dataframe')
+        logger.warning('Plotting turbine efficiency and power requires flow time series data '
+                       'provided as pandas dataframe')
 
 def flow_efficiency_plot(x: Any) -> Optional[Figure]:
     # extract dataframe output, order and subset wanted values
@@ -77,8 +80,8 @@ def flow_efficiency_plot(x: Any) -> Optional[Figure]:
         return fig
 
     else:        
-        print('Plotting turbine efficiency requires flow time series data '\
-              'provided as pandas dataframe')
+        logger.warning('Plotting turbine efficiency requires flow time series data '
+                       'provided as pandas dataframe')
 
 # function to plot the flow duration curve
 def flow_duration_curve_plot(x: Any) -> Optional[Figure]:
@@ -115,8 +118,8 @@ def flow_duration_curve_plot(x: Any) -> Optional[Figure]:
     
     # else:
     except AttributeError:
-        print('Plotting the flow duration curve requires flow time series data '\
-              'provided as pandas dataframe')
+        logger.warning('Plotting the flow duration curve requires flow time series data '
+                       'provided as pandas dataframe')
 
 # function to plot turbine selection figure
 def turbine_type_plot(x: Any) -> Figure:
@@ -217,9 +220,9 @@ def plant_capfactor_plot(x: Any) -> Optional[Figure]:
         return(cf)
     
     else:
-        print('Plotting plant performance requires flow time series data '\
-              'provided as pandas dataframe')
-        
+        logger.warning('Plotting plant performance requires flow time series data '
+                       'provided as pandas dataframe')
+
 # 2) turbine flow
 def plant_turbineflow_plot(x: Any) -> Optional[Figure]:
     
@@ -229,9 +232,9 @@ def plant_turbineflow_plot(x: Any) -> Optional[Figure]:
         return(tf)
     
     else:
-        print('Plotting plant performance requires flow time series data '\
-              'provided as pandas dataframe')
-        
+        logger.warning('Plotting plant performance requires flow time series data '
+                       'provided as pandas dataframe')
+
 # 3) Electricty generation
 def plant_elecgeneration_plot(x: Any) -> Optional[Figure]:
     
@@ -241,5 +244,5 @@ def plant_elecgeneration_plot(x: Any) -> Optional[Figure]:
         return(eg)
     
     else:
-        print('Plotting plant performance requires flow time series data '\
-              'provided as pandas dataframe')
+        logger.warning('Plotting plant performance requires flow time series data '
+                       'provided as pandas dataframe')

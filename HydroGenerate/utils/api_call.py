@@ -2,6 +2,7 @@
 Copyright 2021, Battelle Energy Alliance, LLC
 '''
 
+import logging
 from typing import Any, Dict, Optional
 
 import requests
@@ -9,6 +10,8 @@ import pandas as pd
 import numpy as np
 import json
 import os
+
+logger = logging.getLogger(__name__)
 
 # 02.19.2021: Juan Gallego-Calderon
 # This is the older url where we were taking the data from. We found that the REST API of water services is more structure so we are going with that.
@@ -48,12 +51,12 @@ def get_data(query: Dict[str, str], format: str = 'json', id_type: str = 'huc', 
             bBox_str = "".join((query['id'][0],',',query['id'][1],',',query['id'][2],',',query['id'][3]))
             base_url=f"https://waterservices.usgs.gov/nwis/iv/?format={format}&{id_type}={bBox_str}&startDT={query['start_date']}&endDT={query['end_date']}&parameterCd=00060&siteStatus=all"
             #json_filename = os.path.join(path,f"{query['start_date']}_{query['end_date']}.json")
-        print(base_url)
+        logger.debug('USGS API request URL: %s', base_url)
         response = requests.get(base_url)
-        
+
         if response:
             # Checking for a success response from the API and write response to a text file
-            print('Success with data retrieval from API')
+            logger.info('Success with data retrieval from API')
             if save_data:
                 response_file = path
                 with open(response_file, "w") as f:
@@ -64,7 +67,7 @@ def get_data(query: Dict[str, str], format: str = 'json', id_type: str = 'huc', 
             df_respose = format_api_response(response, save_csv=save_data, path=csv_filename) 
             return df_respose
         else:
-            print(response.status_code)
+            logger.error('API request failed with status code: %s', response.status_code)
 
 
 def discretize_huc_response(json_obj):
@@ -80,7 +83,7 @@ def discretize_huc_response(json_obj):
         site_id = var['sourceInfo']['siteCode'][0]['value']
         location['latitude'] = var['sourceInfo']['geoLocation']['geogLocation']['latitude']
         location['longitude'] = var['sourceInfo']['geoLocation']['geogLocation']['longitude']
-        print(f'Site name: {site_name}, site ID:{site_id}')
+        logger.info('Site name: %s, site ID: %s', site_name, site_id)
     return None
 
 
