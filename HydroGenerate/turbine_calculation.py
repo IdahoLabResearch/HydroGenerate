@@ -398,9 +398,9 @@ if __name__ == "__main__":
                                            flow_column= None, pelton_n_jets= None,
                                            hk_blade_diameter= None, hk_blade_heigth= None, hk_blade_type= None, hk_swept_area= None)  # Initialize a TurbinePower instance
     # Propellor Turbine
-    turb = PropellorTurbine()
+    turb = PropellerTurbine()
     turb.turbine_calculator(turbine = turbine_parameters)
-    print("\nPropellor")
+    print("\nPropeller")
     print("\nEfficiency",turbine_parameters.turbine_efficiency)
 
     turbine_parameters = TurbineParameters(turbine_type = None, flow= 90, head= 200, design_flow = 100, 

@@ -47,7 +47,7 @@ def get_data(query, format = 'json', id_type = 'huc', endpoint='iv', save_data =
             base_url=f"https://waterservices.usgs.gov/nwis/iv/?format={format}&{id_type}={bBox_str}&startDT={query['start_date']}&endDT={query['end_date']}&parameterCd=00060&siteStatus=all"
             #json_filename = os.path.join(path,f"{query['start_date']}_{query['end_date']}.json")
         print(base_url)
-        response = requests.get(base_url, verify=False)
+        response = requests.get(base_url)
         
         if response:
             # Checking for a success response from the API and write response to a text file
@@ -92,25 +92,21 @@ def format_api_response(json_obj, save_csv = True, path = os.path.join('data','t
     '''
     data = json_obj.json()
     df_list = []
-    #ßprint(len(data['value']['timeSeries']))
     for var in data['value']['timeSeries']:
         var_name = var['variable']['variableName']
-        #print(var['values'][0]['value'])
         df_temp = pd.json_normalize(var['values'][0]['value'])
         df_temp.rename(columns={"value": var_name}, inplace=True)
         df_temp['site_name'] = var['sourceInfo']['siteName']
         df_temp['site_id'] = var['sourceInfo']['siteCode'][0]['value']
-        #print(var['sourceInfo']['geoLocation'])
         df_temp['lat'] = var['sourceInfo']['geoLocation']['geogLocation']['latitude']
         df_temp['long'] = var['sourceInfo']['geoLocation']['geogLocation']['longitude']
         df_list.append(df_temp)
-        df_temp.to_csv(path)
-        #print(df)
-    #df = pd.concat(df_list)
 
-    #discretize_huc_response(json_obj)
+    df = pd.concat(df_list, ignore_index=True)
+    if save_csv:
+        df.to_csv(path)
 
-    return df_list
+    return df
 
 
 def clean_data(df, column_change={'Streamflow, ft&#179;/s':'discharge_cfs'}, keep_nan = False, timestamp_col = 'dateTime', no_data=-999999):
