@@ -22,10 +22,28 @@ from abc import ABC, abstractmethod
 from numbers import Number
 from math import exp
 
-from HydroGenerate.hydraulic_processing import *
-from HydroGenerate.turbine_calculation import *
-from HydroGenerate.flow_preprocessing import *
-from HydroGenerate.summary_results import *
+from HydroGenerate.hydraulic_processing import (
+    HydraulicDesignParameters,
+    DarcyWeisbach,
+    HazenWilliamns,
+)
+from HydroGenerate.turbine_calculation import (
+    TurbineParameters,
+    turbine_type_selector,
+    FlowRange,
+    FrancisTurbine,
+    KaplanTurbine,
+    PropellerTurbine,
+    PeltonTurbine,
+    TurgoTurbine,
+    CrossFlowTurbine,
+    Hydrokinetic_Turbine,
+    PercentExceedance,
+)
+from HydroGenerate.flow_preprocessing import (
+    FlowPreProcessingParameters,
+    FlowPreProcessing,
+)
 
 # Constant definition / unit conversion
 rho = 1000 # water density in Kg/m^3
