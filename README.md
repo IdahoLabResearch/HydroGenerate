@@ -96,7 +96,7 @@ _Chicago_
 
 ```
 
-Mitra, Bhaskar, Gallego-Calderon, Juan F., Elliott, Shiloh N, Mosier, Thomas M, Bastidas Pacheco, Camilo Jose, and USDOE Office of Energy Efficiency and Renewable Energy. Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series. Computer software. Version 3.6 or newer. October 19, 2021. https://www.osti.gov//servlets/purl/1829986. doi:https://doi.org/10.11578/dc.20211112.1.
+Mitra, Bhaskar, Gallego-Calderon, Juan F., Elliott, Shiloh N, Mosier, Thomas M, Bastidas Pacheco, Camilo Jose, Nag, Soumyadeep, and USDOE Office of Energy Efficiency and Renewable Energy. Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series. Computer software. Version 3.6 or newer. October 19, 2021. https://www.osti.gov//servlets/purl/1829986. doi:https://doi.org/10.11578/dc.20211112.1.
 
 ```
 
@@ -104,7 +104,7 @@ _APA_
 
 ```
 
-Mitra, Bhaskar, Gallego-Calderon, Juan F., Elliott, Shiloh N, Mosier, Thomas M, Bastidas Pacheco, Camilo Jose, & USDOE Office of Energy Efficiency and Renewable Energy. (2021, October 19). Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series (Version 3.6 or newer) [Computer software]. https://www.osti.gov//servlets/purl/1829986. https://doi.org/10.11578/dc.20211112.1
+Mitra, Bhaskar, Gallego-Calderon, Juan F., Elliott, Shiloh N, Mosier, Thomas M, Bastidas Pacheco, Camilo Jose,  Nag, Soumyadeep, & USDOE Office of Energy Efficiency and Renewable Energy. (2021, October 19). Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series (Version 3.6 or newer) [Computer software]. https://www.osti.gov//servlets/purl/1829986. https://doi.org/10.11578/dc.20211112.1
 
 ```
 
@@ -112,7 +112,7 @@ _MLA_
 
 ```
 
-Mitra, Bhaskar, Gallego-Calderon, Juan F., Elliott, Shiloh N, Mosier, Thomas M, Bastidas Pacheco, Camilo Jose, and USDOE Office of Energy Efficiency and Renewable Energy. Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series. Computer software. https://www.osti.gov//servlets/purl/1829986. Vers. 3.6 or newer. USDOE Office of Energy Efficiency and Renewable Energy (EERE). 19 Oct. 2021. Web. doi:10.11578/dc.20211112.1.
+Mitra, Bhaskar, Gallego-Calderon, Juan F., Elliott, Shiloh N, Mosier, Thomas M, Bastidas Pacheco, Camilo Jose,  Nag, Soumyadeep, and USDOE Office of Energy Efficiency and Renewable Energy. Hydrogenerate: Open Source Python Tool To Estimate Hydropower Generation Time-series. Computer software. https://www.osti.gov//servlets/purl/1829986. Vers. 3.6 or newer. USDOE Office of Energy Efficiency and Renewable Energy (EERE). 19 Oct. 2021. Web. doi:10.11578/dc.20211112.1.
 
 ```
 
