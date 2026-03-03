@@ -191,29 +191,48 @@ class DarcyWeisbach(HeadLoss):      # Head loss calculator using Darcy-Weisbach
 
     def diameter_check(self, hydraulic_parameters: HydraulicDesignParameters) -> None:
 
-        # max head loss allowes 
         max_headloss_allowed = hydraulic_parameters.max_headloss_allowed
-        
         if max_headloss_allowed is None:
-            max_headloss_allowed = 10      # If a maximum head loss allowed is not used, the default is 10%
-        
-        max_headloss_allowed = max_headloss_allowed / 100        # Transform from percentage
+            max_headloss_allowed = 10      # default: 10%
+        max_headloss_allowed = max_headloss_allowed / 100        # percentage to proportion
 
-        # if a penstcok lenght is not provided, head loss = head * max allowed losses
-        if hydraulic_parameters.penstock_length is None: 
-            hydraulic_parameters.penstock_design_headloss = hl = hydraulic_parameters.head * max_headloss_allowed      # update
-        
+        if hydraulic_parameters.penstock_length is None:
+            hydraulic_parameters.penstock_design_headloss = hydraulic_parameters.head * max_headloss_allowed
         else:
-            hl = hydraulic_parameters.penstock_design_headloss     # head loss 
-            h = hydraulic_parameters.head       # head
- 
-            if hl > max_headloss_allowed * h:       # head loss larger than maximum allowed
-                while hl > max_headloss_allowed * h:        # iterate until head loss is less than the max allowed
-                    hydraulic_parameters.penstock_design_diameter = hydraulic_parameters.penstock_design_diameter + 0.1       # increase by 0.1
-                    DarcyWeisbach().penstock_headloss_calculator(hydraulic_parameters)       # Recursion to solve until head loss = desired head loss
-                    hl = hydraulic_parameters.penstock_design_headloss       # update after each step
-        
-        hydraulic_parameters.penstock_diameter = hydraulic_parameters.penstock_design_diameter       # update     
+            hl = hydraulic_parameters.penstock_design_headloss
+            h = hydraulic_parameters.head
+            target = max_headloss_allowed * h
+
+            if hl > target:
+                Q = hydraulic_parameters.design_flow
+                L = hydraulic_parameters.penstock_length
+                ff = hydraulic_parameters.penstock_frictionfactor  # set by penstock_headloss_calculator before this call
+
+                def headloss_at(d: float) -> float:
+                    """Head loss via Darcy-Weisbach for a given diameter, holding ff constant."""
+                    V = Q / (np.pi * (d / 2) ** 2)
+                    return ff * L * V ** 2 / (d * 2 * g)
+
+                # Find upper bound: double diameter until head loss is within limit
+                D_low = hydraulic_parameters.penstock_design_diameter
+                D_high = D_low * 2
+                while headloss_at(D_high) > target:
+                    D_low = D_high
+                    D_high *= 2
+
+                # Binary search for minimum valid diameter, tolerance = 1 mm
+                while D_high - D_low > 0.001:
+                    D_mid = (D_low + D_high) / 2
+                    if headloss_at(D_mid) > target:
+                        D_low = D_mid
+                    else:
+                        D_high = D_mid
+
+                hydraulic_parameters.penstock_design_diameter = D_high
+                hydraulic_parameters.penstock_design_headloss = headloss_at(D_high)
+                hydraulic_parameters.reynoldsnumber_calculator()
+
+        hydraulic_parameters.penstock_diameter = hydraulic_parameters.penstock_design_diameter
     
     def penstock_headloss_calculator_ts(self, hydraulic_parameters: HydraulicDesignParameters) -> None:
             " Head loss calculation for a series of flow"

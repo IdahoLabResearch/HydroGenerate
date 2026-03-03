@@ -41,6 +41,6 @@ def test_diversion_calculate_potential():
                                 resource_category= 'CanalConduit',
                                 hydropower_type= hp_type, penstock_length= penstock_length,
                                 flow_column= 'discharge_cfs', annual_caclulation= True)
-    assert round(hp.rated_power, 0) == 4505
+    assert round(hp.rated_power, 0) == 4441
 
 
