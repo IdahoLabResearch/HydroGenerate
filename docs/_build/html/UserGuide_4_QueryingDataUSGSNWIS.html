@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Querying data from the USGS National Water Information System</title>
   
@@ -15,56 +14,53 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css?v=a0a71c94" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'UserGuide_4_QueryingDataUSGSNWIS';</script>
     <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/UserGuide_4_QueryingDataUSGSNWIS.html" />
-    <link rel="shortcut icon" href="_static/HG_icon.ico"/>
+    <link rel="icon" href="_static/HG_icon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Cost and Revenue Calculations" href="UserGuide_5_Cost%26Revenue.html" />
@@ -78,28 +74,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -121,12 +112,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -142,6 +141,8 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
+  
+    
   
 
 <a class="navbar-brand logo" href="HydroGenerate_Introduction.html">
@@ -160,7 +161,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -207,6 +219,14 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api/FPP.html">Flow Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/HYDPR.html">Hydraulic Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/HYDPP.html">Hydropower Potential</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/SR.html">Summary Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/TC.html">Turbine Calculation</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -221,7 +241,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -230,14 +250,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -362,10 +382,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -373,14 +393,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -411,22 +431,22 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="querying-data-from-the-usgs-national-water-information-system">
-<h1>Querying data from the USGS National Water Information System<a class="headerlink" href="#querying-data-from-the-usgs-national-water-information-system" title="Permalink to this heading">#</a></h1>
+<h1>Querying data from the USGS National Water Information System<a class="headerlink" href="#querying-data-from-the-usgs-national-water-information-system" title="Link to this heading">#</a></h1>
 <p>The USGS National Water Information System (NWIS) provides access to surface-water data at approximately 8,500 sites. The data are served online—most in near realtime—to meet many diverse needs. For additional information regarding NWIS, visit the <a class="reference external" href="https://waterdata.usgs.gov/nwis">USGS website</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">HydroGenerate.hydropower_potential</span> <span class="kn">import</span> <span class="n">calculate_hp_potential</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">HydroGenerate.hydropower_potential</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_hp_potential</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
 <section id="use-streamflow-data-from-a-usgs-stream-gauge">
-<h2>Use streamflow data from a USGS stream gauge.<a class="headerlink" href="#use-streamflow-data-from-a-usgs-stream-gauge" title="Permalink to this heading">#</a></h2>
+<h2>Use streamflow data from a USGS stream gauge.<a class="headerlink" href="#use-streamflow-data-from-a-usgs-stream-gauge" title="Link to this heading">#</a></h2>
 <p>The USGS has a Python package (<strong><em>dataretrieval</em></strong>) designed to simplify the process of loading hydrologic data into the Python environment. <strong><em>dataretrieval</em></strong> can be pip installed into a Python environment. The example code shows how to donwload data using <strong><em>dataretrieval</em></strong> and format it for hydropower potential evaluation in <strong><em>HydroGenerate</em></strong>. The example used, and additional information, is avlaiable as a <a class="reference external" href="http://www.hydroshare.org/resource/c97c32ecf59b4dff90ef013030c54264">HydroShare Resource</a>. Information about <strong><em>dataretrieval</em></strong> is avaliable directly on the <a class="reference external" href="https://github.com/DOI-USGS/dataretrieval-python">USGS GitHUb Repository</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -439,7 +459,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import data retrieval</span>
-<span class="kn">from</span> <span class="nn">dataretrieval</span> <span class="kn">import</span> <span class="n">nwis</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataretrieval</span><span class="w"> </span><span class="kn">import</span> <span class="n">nwis</span>
 </pre></div>
 </div>
 </div>
@@ -563,11 +583,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 200.0
-Head_loss at design flow (ft): 8.94
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Design flow (cfs): 194.0
+Head_loss at design flow (ft): 8.42
 Turbine type: Crossflow
-Rated Power (Kw): 1193.76
-Net head (ft): 91.06
+Rated Power (Kw): 1164.67
+Net head (ft): 91.58
 Generator Efficiency: 0.98
 Head Loss method: Darcy-Weisbach
 Penstock length (ft): 120.0
@@ -576,11 +596,11 @@ Penstock diameter (ft): 3.31
 Pandas dataframe output: 
                              site_no  00060_Mean 00060_Mean_cd    power_kW  \
 datetime                                                                    
-2010-01-01 00:00:00+00:00  10109000       108.0             A  502.584462   
-2010-01-02 00:00:00+00:00  10109000       107.0             A  456.688144   
-2010-01-03 00:00:00+00:00  10109000       106.0             A  398.442172   
-2010-01-04 00:00:00+00:00  10109000       102.0             A    0.000000   
-2010-01-05 00:00:00+00:00  10109000       105.0             A  324.023491   
+2010-01-01 00:00:00+00:00  10109000       108.0             A  582.174122   
+2010-01-02 00:00:00+00:00  10109000       107.0             A  559.829629   
+2010-01-03 00:00:00+00:00  10109000       106.0             A  532.266175   
+2010-01-04 00:00:00+00:00  10109000       102.0             A  327.160245   
+2010-01-05 00:00:00+00:00  10109000       105.0             A  497.807166   
 ...                             ...         ...           ...         ...   
 2020-12-27 00:00:00+00:00  10109000        91.0             A    0.000000   
 2020-12-28 00:00:00+00:00  10109000        85.9             A    0.000000   
@@ -590,11 +610,11 @@ datetime
 
                            turbine_flow_cfs  efficiency    energy_kWh  
 datetime                                                               
-2010-01-01 00:00:00+00:00             108.0    0.575850           NaN  
-2010-01-02 00:00:00+00:00             107.0    0.527893  10960.515465  
-2010-01-03 00:00:00+00:00             106.0    0.464683   9562.612123  
-2010-01-04 00:00:00+00:00             102.0    0.000000      0.000000  
-2010-01-05 00:00:00+00:00             105.0    0.381307   7776.563783  
+2010-01-01 00:00:00+00:00             108.0    0.667042           NaN  
+2010-01-02 00:00:00+00:00             107.0    0.647115  13435.911095  
+2010-01-03 00:00:00+00:00             106.0    0.620755  12774.388208  
+2010-01-04 00:00:00+00:00             102.0    0.395758   7851.845891  
+2010-01-05 00:00:00+00:00             105.0    0.585813  11947.371983  
 ...                                     ...         ...           ...  
 2020-12-27 00:00:00+00:00              91.0    0.000000      0.000000  
 2020-12-28 00:00:00+00:00              85.9    0.000000      0.000000  
@@ -606,31 +626,31 @@ datetime
 Annual output: 
            annual_turbinedvolume_ft3  mean_annual_effienciency  \
 datetime                                                        
-2010                    1319.865870                  0.398728   
-2011                    1835.676204                  0.687777   
-2012                    1442.086842                  0.559378   
-2013                    1087.183892                  0.213385   
-2014                    1290.223844                  0.401570   
-2015                    1208.405282                  0.285440   
-2016                    1374.823115                  0.478596   
-2017                    1917.789260                  0.772958   
-2018                    1416.658356                  0.546933   
-2019                    1458.516249                  0.568326   
-2020                    1333.259716                  0.402846   
+2010                    1306.698558                  0.439088   
+2011                    1794.163775                  0.713420   
+2012                    1428.608045                  0.579189   
+2013                    1080.217960                  0.229522   
+2014                    1275.753959                  0.440304   
+2015                    1198.041333                  0.302951   
+2016                    1359.701944                  0.505515   
+2017                    1876.106931                  0.776738   
+2018                    1402.726490                  0.582537   
+2019                    1441.469536                  0.585321   
+2020                    1319.497751                  0.458687   
 
           total_annual_energy_KWh  revenue_M$  capacity_factor  
 datetime                                                        
-2010                 4.266764e+06    0.248326         0.408017  
-2011                 8.650045e+06    0.503433         0.827177  
-2012                 6.069435e+06    0.353241         0.580401  
-2013                 2.392200e+06    0.139226         0.228759  
-2014                 4.319024e+06    0.251367         0.413015  
-2015                 3.219217e+06    0.187358         0.307844  
-2016                 5.142542e+06    0.299296         0.491765  
-2017                 9.640457e+06    0.561075         0.921887  
-2018                 5.757931e+06    0.335112         0.550613  
-2019                 6.103963e+06    0.355251         0.583703  
-2020                 4.347384e+06    0.253018         0.415727  
+2010                 4.509217e+06    0.262436         0.441973  
+2011                 8.669709e+06    0.504577         0.849765  
+2012                 6.167476e+06    0.358947         0.604508  
+2013                 2.482830e+06    0.144501         0.243356  
+2014                 4.546781e+06    0.264623         0.445655  
+2015                 3.307046e+06    0.192470         0.324141  
+2016                 5.282291e+06    0.307429         0.517746  
+2017                 9.501989e+06    0.553016         0.931341  
+2018                 5.965294e+06    0.347180         0.584691  
+2019                 6.163521e+06    0.358717         0.604120  
+2020                 4.704248e+06    0.273787         0.461089  
 </pre></div>
 </div>
 </div>
@@ -666,7 +686,7 @@ datetime
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c2de521295e4606295cd6e202ebf0d5eaec45bc46aef578cc5a7936b827d177b.png" src="_images/c2de521295e4606295cd6e202ebf0d5eaec45bc46aef578cc5a7936b827d177b.png" />
+<img alt="_images/5e0f0d7276a229098f5882b875ac42478ab72b5f1e858fc0a68e0ff6a02f253b.png" src="_images/5e0f0d7276a229098f5882b875ac42478ab72b5f1e858fc0a68e0ff6a02f253b.png" />
 </div>
 </div>
 </section>
@@ -699,7 +719,7 @@ datetime
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -728,6 +748,7 @@ datetime
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -760,7 +781,7 @@ By Idaho National Laboratory
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -784,8 +805,8 @@ By Idaho National Laboratory
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

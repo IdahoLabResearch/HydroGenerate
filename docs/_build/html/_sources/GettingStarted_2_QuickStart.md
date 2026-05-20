@@ -26,7 +26,7 @@ The results are returned in an object with multiple attributes. In the example a
 
 ## Time-series usage
 
-HydroGenerate truly shines when used with a time-series. The tool can be used in several applications such as dispatch optimization of hydropower hybrids, techno-economic assessment, nation-wide resource assesment, etc. The best way to utilize the time-series capabilities is through a **pandas dataframe**.
+HydroGenerate truly shines when used with a time-series. The tool can be used in several applications such as dispatch optimization of hydropower hybrids, techno-economic assessment, nation-wide resource assesment, etc. The best way to utilize the time-series capabilities is through a **pandas dataframe**. Note: The file data_test.csv used in the examples below is available in the ./examples/ directory of the repository. The Jupyter notebook files for all examples are located in the jugc-docs branch, within the docs folder.
 
 ```
 # Local imports

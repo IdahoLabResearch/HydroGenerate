@@ -2,20 +2,20 @@
 
 ## Introduction
 
-**HydroGenerate** is an open-source python library that estimates hydropower generation based on head height and flow rate for different types of hydropower:impoundment, diversion, and hydrokinetic. Additional features allow the user to retrieve instantaneous flow from United States Geological Survey (USGS) water data services stream gages where available. The tool calculates the turbine efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user. Some of the additional features are:
+**HydroGenerate** is an open-source python library that estimates hydropower generation based on head height and flow rate for different types of hydropower: impoundment, diversion, and hydrokinetic. Additional features allow the user to retrieve instantaneous flow from the United States Geological Survey (USGS) water data services stream gages where available. The tool calculates the turbine efficiency as a function of flow based on the turbine type either selected by the user or estimated based on the “head” provided by the user. Some of the additional features are:
 
-- In the power calculation, the net hydraulic head is conisidered. Where penstock dimameter is available, the user can select from several methods (see thr **User Guide** for more details). If the penstock diameter is not known, HG will calculate a diameter that will limit head losses to 10% (default) of the available head.
+- In the power calculation, the net hydraulic head is considered. Where penstock diameter is available, the user can select from several methods (see the **User Guide** for more details). If the penstock diameter is not known, HG will calculate a diameter that will limit head losses to 10% (default) of the available head.
 - For power extraction from kinetic energy, the available head is the velocity head.
 - HydroGenerate uses a simplified configuration consisting of one penstock, turbine, and generator.
-- The user can specify a set of flow constraints as a proxy of hydropower operation. Otherwise, the results are the **maximum technical potential**.
+- The user can specify a set of flow constraints as a proxy for hydropower operation. Otherwise, the results are the **maximum technical potential**.
 - When a flow-time series is available, HydroGenerate computes at every time-step, the generated power, capacity factor, and annual energy production (AEP).
-- Using publicly available CAPEX and OPEX data for hydropower, HydroGenerate performs a "light" techno-economic analysis of turbine configuration based on the nameplate capacity. Furthermore, the LCOE is computed using the wholesale electricity price as an user input.
+- Using publicly available CAPEX and OPEX data for hydropower, HydroGenerate performs a "light" techno-economic analysis of turbine configuration based on the nameplate capacity. Furthermore, the LCOE is computed using the wholesale electricity price as a user input.
 
 
 
 ## Giving credit
 
-HydroGenerate was built with support from the USDOE Office of Energy Efficiency and Renewable Energy (EERE). For more information please refer to the [OSTI webpage](https://www.osti.gov/biblio/1829986).
+HydroGenerate was built with support from the USDOE Office of Energy Efficiency and Renewable Energy (EERE). For more information, please refer to the [OSTI webpage](https://www.osti.gov/biblio/1829986).
 
 **Authors**
 ```

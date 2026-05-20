@@ -14,17 +14,6 @@ pip install HydroGenerate
 
 For a quick start guide, follow the steps in the **Quick start** page. 
 
-
-## Optional - Verify your installation (run tests)
-
-After installing HydroGenerate locally, you can validate the setup and (optionally) see test coverage:
-
-``` bash
-# From the repository root
-pip install pytest pytest-cov
-pytest -q --cov=HydroGenerate --cov-report=term-missing:skip-covered
-```
-
 ## For developers
 
 1. Clone the repo:
@@ -64,4 +53,12 @@ conda install -c conda-forge jupyterlab
 
 ```
 pip install dataretrieval
+```
+
+6. Optional - Verify your installation (run tests): After installing HydroGenerate locally, you can validate the setup and see test coverage:
+
+``` bash
+# From the repository root
+pip install pytest pytest-cov
+pytest -q --cov=HydroGenerate --cov-report=term-missing:skip-covered
 ```
