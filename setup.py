@@ -35,5 +35,5 @@ setup(
     license='BSD 3-Clause License',
     install_requires=REQUIRED,
     packages=find_packages(),
-    python_requires='>=3.8'
+    python_requires='>=3.10'
 )

@@ -1,0 +1,1011 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Hydropower Potential</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css?v=a0a71c94" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/HYDPP';</script>
+    <link rel="canonical" href="https://idaholabresearch.github.io/HydroGenerate/api/HYDPP.html" />
+    <link rel="icon" href="../_static/HG_icon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Summary Results" href="SR.html" />
+    <link rel="prev" title="Hydraulic Processing" href="HYDPR.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../HydroGenerate_Introduction.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/HG_horizontal.png" class="logo__image only-light" alt=" - Home"/>
+    <script>document.write(`<img src="../_static/HG_horizontal.png" class="logo__image only-dark" alt=" - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../HydroGenerate_Introduction.html">
+                    HydroGenerate
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted_1_Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted_2_QuickStart.html">Quick Start</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_1_IntroductionTutorial.html">Introduction - Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_2_Diversion.html">Diversion Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_3_FlowOptions.html">Flow Input Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_4_QueryingDataUSGSNWIS.html">Querying data from the USGS National Water Information System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_5_Cost%26Revenue.html">Cost and Revenue Calculations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_6_Hydrokinetics.html">Hydrokinetics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_7_HydroGenerateWorkflow.html">Inputs / Outputs - General Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UserGuide_8_Issues_Support.html">Getting Help and Reporting Issues</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_1_Architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_2_MethodsFunctions.html">Methods, Functions, Classes, and Input Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_3_Contributing.html">Contributing to HydroGenerate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DeveloperGuide_4_Testing.html">HydroGenerate Test Suite</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Theory_1_Hydropower.html">Hydropower Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Theory_2_Design_Flow.html">Design Flow Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Theory_3_Efficiency.html">Turbine Selection &amp; Efficiency Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory_4_HeadLoss.html">Head Loss Estimation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Theory_5_CostOM.html">Cost, O&amp;M, and Revenue Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Theory_6_FlowConstraints.html">Flow Constraints for Maintenance</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="FPP.html">Flow Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HYDPR.html">Hydraulic Processing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hydropower Potential</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SR.html">Summary Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TC.html">Turbine Calculation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/IdahoLabResearch/HydroGenerate/issues/new?title=Issue%20on%20page%20%2Fapi/HYDPP.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/HYDPP.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Hydropower Potential</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.EconomicParameters"><code class="docutils literal notranslate"><span class="pre">EconomicParameters</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.calculate_head"><code class="docutils literal notranslate"><span class="pre">calculate_head()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Units"><code class="docutils literal notranslate"><span class="pre">Units</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Units.us_to_si_conversion"><code class="docutils literal notranslate"><span class="pre">Units.us_to_si_conversion()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Units.si_to_us_conversion"><code class="docutils literal notranslate"><span class="pre">Units.si_to_us_conversion()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydropower"><code class="docutils literal notranslate"><span class="pre">Hydropower</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydropower.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Hydropower.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Basic"><code class="docutils literal notranslate"><span class="pre">Basic</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Basic.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Basic.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Diversion"><code class="docutils literal notranslate"><span class="pre">Diversion</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Diversion.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Diversion.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydrokinetic"><code class="docutils literal notranslate"><span class="pre">Hydrokinetic</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydrokinetic.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Hydrokinetic.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2"><code class="docutils literal notranslate"><span class="pre">ONRL_BaselineCostModeling_V2</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2.cost_calculation"><code class="docutils literal notranslate"><span class="pre">ONRL_BaselineCostModeling_V2.cost_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice.revenue_calculation"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice.revenue_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice_pd</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd.revenue_calculation"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice_pd.revenue_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.calculate_hp_potential"><code class="docutils literal notranslate"><span class="pre">calculate_hp_potential()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="hydropower-potential">
+<h1>Hydropower Potential<a class="headerlink" href="#hydropower-potential" title="Link to this heading">#</a></h1>
+<p>This page documents the classes and functions in the <code class="docutils literal notranslate"><span class="pre">hydropower_potential</span></code> module of the HydroGenerate package.</p>
+<dl class="py class" id="module-HydroGenerate.hydropower_potential">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.EconomicParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EconomicParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">electricity_sell_price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_operation_days</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.EconomicParameters" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Economic input parameter container.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resource_category</strong> (<em>str</em><em> or </em><em>None</em>) – Resource category identifier used by the cost model. Examples include
+<code class="docutils literal notranslate"><span class="pre">'Non-PoweredDam'</span></code> and <code class="docutils literal notranslate"><span class="pre">'NewStream-reachDevelopment'</span></code> (exact accepted
+values depend on the downstream model).</p></li>
+<li><p><strong>capacity_factor</strong> (<em>float</em><em> or </em><em>None</em>) – Capacity factor as a proportion (0–1) for constant-price energy
+estimation. When using <code class="docutils literal notranslate"><span class="pre">n_operation_days</span></code>, this may be inferred.</p></li>
+<li><p><strong>electricity_sell_price</strong> (<em>float</em><em> or </em><em>None</em>) – Electricity sell price ($/kWh). If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default wholesale price
+is used in revenue calculations.</p></li>
+<li><p><strong>n_operation_days</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>None</em>) – Number of operation days per year (0–365). Used when capacity factor is
+not provided.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.calculate_head">
+<span class="sig-name descname"><span class="pre">calculate_head</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rated_flow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rated_power</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.calculate_head" title="Link to this definition">#</a></dt>
+<dd><p>Compute net head from rated flow and rated power.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rated_flow</strong> (<em>float</em>) – Rated flow (m³/s).</p></li>
+<li><p><strong>rated_power</strong> (<em>float</em>) – Rated power (kW).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>Head (m), computed as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">head</span> <span class="o">=</span> <span class="n">rated_power</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">rated_flow</span><span class="p">)</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rated_power</span></code> is expected in kW, consistent with the rest of this module.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rho</span></code> and <code class="docutils literal notranslate"><span class="pre">g</span></code> are module-level constants.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Units">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Units</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Units" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Unit conversion helper for HydroGenerate parameter objects.</p>
+<p class="rubric">Notes</p>
+<p>These methods assume <code class="docutils literal notranslate"><span class="pre">self</span></code> is an object with the relevant attributes
+(e.g., the merged <code class="docutils literal notranslate"><span class="pre">all_params</span></code> object created by <a class="reference internal" href="#HydroGenerate.hydropower_potential.calculate_hp_potential" title="HydroGenerate.hydropower_potential.calculate_hp_potential"><code class="xref py py-func docutils literal notranslate"><span class="pre">calculate_hp_potential()</span></code></a>).</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">us_to_si_conversion</span></code> converts from US customary units to SI.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">si_to_us_conversion</span></code> converts from SI back to US customary units.</p></li>
+</ul>
+<p>The conversion is performed in place by mutating the corresponding attributes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Units.us_to_si_conversion">
+<span class="sig-name descname"><span class="pre">us_to_si_conversion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Units.us_to_si_conversion" title="Link to this definition">#</a></dt>
+<dd><p>Convert supported attributes from US customary units to SI.</p>
+<p class="rubric">Notes</p>
+<p>This method mutates attributes on <code class="docutils literal notranslate"><span class="pre">self</span></code> in place when they are present.</p>
+<p>Expected unit assumptions (US -&gt; SI):
+- Flow (cfs) -&gt; m³/s
+- Head/length (ft) -&gt; m
+- Velocity (ft/s) -&gt; m/s (implemented via <code class="docutils literal notranslate"><span class="pre">ft_to_m</span></code> multiplier)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Units.si_to_us_conversion">
+<span class="sig-name descname"><span class="pre">si_to_us_conversion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Units.si_to_us_conversion" title="Link to this definition">#</a></dt>
+<dd><p>Convert supported attributes from SI to US customary units.</p>
+<p class="rubric">Notes</p>
+<p>This method mutates attributes on <code class="docutils literal notranslate"><span class="pre">self</span></code> in place when they are present.</p>
+<p>Expected unit conversions (SI -&gt; US):
+- Flow (m³/s) -&gt; cfs
+- Head/length (m) -&gt; ft
+- Velocity (m/s) -&gt; ft/s</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Hydropower">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Hydropower</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Hydropower" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for hydropower calculation workflows.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Hydropower.hydropower_calculation">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hydropower_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Hydropower.hydropower_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Run a hydropower calculation for a parameter container.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hp_params</strong> (<em>object</em>) – Parameter container holding hydropower inputs and outputs.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Implementations typically mutate <code class="docutils literal notranslate"><span class="pre">hp_params</span></code> in place by setting fields
+such as <code class="docutils literal notranslate"><span class="pre">rated_power</span></code>, <code class="docutils literal notranslate"><span class="pre">power</span></code>, <code class="docutils literal notranslate"><span class="pre">turbine_efficiency</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">net_head</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Basic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Basic</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Basic" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#HydroGenerate.hydropower_potential.Hydropower" title="HydroGenerate.hydropower_potential.Hydropower"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hydropower</span></code></a></p>
+<p>Basic hydropower calculation using the standard power equation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Basic.hydropower_calculation">
+<span class="sig-name descname"><span class="pre">hydropower_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Basic.hydropower_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Compute hydropower (or back-calculate missing variable) for basic projects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hp_params</strong> (<em>object</em>) – Parameter container with attributes including:
+<code class="docutils literal notranslate"><span class="pre">flow</span></code> (float),
+<code class="docutils literal notranslate"><span class="pre">head</span></code> (float),
+<code class="docutils literal notranslate"><span class="pre">rated_power</span></code> (float),
+<code class="docutils literal notranslate"><span class="pre">system_efficiency</span></code> (float or None),
+<code class="docutils literal notranslate"><span class="pre">head_loss</span></code> (float or None)</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If insufficient inputs are provided (at least two of flow, head,
+    rated power must be known).</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hp_params</span></code> in place. It may update:
+<code class="docutils literal notranslate"><span class="pre">hp_params.head</span></code> (if head is computed),
+<code class="docutils literal notranslate"><span class="pre">hp_params.flow</span></code> (if flow is computed),
+<code class="docutils literal notranslate"><span class="pre">hp_params.rated_power</span></code> (if rated power is computed),
+<code class="docutils literal notranslate"><span class="pre">hp_params.net_head</span></code> and <code class="docutils literal notranslate"><span class="pre">hp_params.head</span></code> (net head accounting for head loss),
+<code class="docutils literal notranslate"><span class="pre">hp_params.penstock_design_headloss</span></code> (set to None for unit conversion reuse).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Diversion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Diversion</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Diversion" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#HydroGenerate.hydropower_potential.Hydropower" title="HydroGenerate.hydropower_potential.Hydropower"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hydropower</span></code></a></p>
+<p>Diversion (run-of-river) hydropower workflow including turbine and head-loss modeling.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Diversion.hydropower_calculation">
+<span class="sig-name descname"><span class="pre">hydropower_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Diversion.hydropower_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Compute diversion hydropower potential for single values or time series flows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hp_params</strong> (<em>object</em>) – Parameter container expected to include:
+Flow inputs: <code class="docutils literal notranslate"><span class="pre">flow</span></code> / <code class="docutils literal notranslate"><span class="pre">design_flow</span></code>, and possibly time series metadata,
+Turbine settings: <code class="docutils literal notranslate"><span class="pre">turbine_type</span></code>, <code class="docutils literal notranslate"><span class="pre">generator_efficiency</span></code>,
+Head-loss settings: <code class="docutils literal notranslate"><span class="pre">penstock_headloss_calculation</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_length</span></code>, <code class="docutils literal notranslate"><span class="pre">penstock_headloss_method</span></code>, etc.,
+Flow preprocessing settings: minimum flow, maintenance flags</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If turbine type is not supported, head-loss method is not supported,
+    or required inputs (e.g., penstock length when head-loss calculation is enabled)
+    are missing.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hp_params</span></code> in place. It updates (as available):
+Flow range / turbine flow series,
+Turbine efficiencies and power time series,
+Rated power and net head,
+Head loss arrays (when penstock head-loss calculations are enabled)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Hydrokinetic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Hydrokinetic</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Hydrokinetic" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#HydroGenerate.hydropower_potential.Hydropower" title="HydroGenerate.hydropower_potential.Hydropower"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hydropower</span></code></a></p>
+<p>Hydrokinetic (in-stream) hydropower workflow.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.Hydrokinetic.hydropower_calculation">
+<span class="sig-name descname"><span class="pre">hydropower_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.Hydrokinetic.hydropower_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Compute hydrokinetic power based on velocity and swept area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hp_params</strong> (<em>object</em>) – Parameter container expected to include:
+<code class="docutils literal notranslate"><span class="pre">system_efficiency</span></code> (percent, optional; defaults to Betz limit),
+<code class="docutils literal notranslate"><span class="pre">hk_swept_area</span></code> (m², optional),
+<code class="docutils literal notranslate"><span class="pre">channel_average_velocity</span></code> (m/s),
+Blade geometry if swept area needs to be computed</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hp_params</span></code> in place by updating:
+<code class="docutils literal notranslate"><span class="pre">system_efficiency</span></code> (defaulted to 59% if not provided),
+<code class="docutils literal notranslate"><span class="pre">hk_swept_area</span></code> (computed if not provided),
+<code class="docutils literal notranslate"><span class="pre">rated_power</span></code> (kW)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ONRL_BaselineCostModeling_V2</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Cost</span></code></p>
+<p>ORNL baseline cost model (HBCM v2) implementation.</p>
+<p class="rubric">Notes</p>
+<p>The cost method is annotated in the source as derived from the ORNL report:
+<a class="reference external" href="https://info.ornl.gov/sites/publications/files/Pub58666.pdf">https://info.ornl.gov/sites/publications/files/Pub58666.pdf</a></p>
+<p>The original source code contains some non-ASCII variable symbols in a few
+expressions (e.g., <code class="docutils literal notranslate"><span class="pre">𝑃</span></code> / <code class="docutils literal notranslate"><span class="pre">𝐻</span></code>). They are preserved here as-is to avoid
+altering runtime behavior.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2.cost_calculation">
+<span class="sig-name descname"><span class="pre">cost_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2.cost_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Estimate initial capital cost (ICC) and annual O&amp;M and update parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hp_params</strong> (<em>object</em>) – Parameter container expected to include:
+<code class="docutils literal notranslate"><span class="pre">rated_power</span></code> (kW),
+<code class="docutils literal notranslate"><span class="pre">net_head</span></code> (m),
+<code class="docutils literal notranslate"><span class="pre">resource_category</span></code> (str or None)</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">resource_category</span></code> is not in the accepted list.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hp_params</span></code> in place by setting:
+<code class="docutils literal notranslate"><span class="pre">hp_params.icc</span></code> (million $2014),
+<code class="docutils literal notranslate"><span class="pre">hp_params.annual_om</span></code> (million $2014)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.ConstantEletrictyPrice">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConstantEletrictyPrice</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Revenue</span></code></p>
+<p>Revenue model using a constant electricity price (non-time-indexed flows).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.ConstantEletrictyPrice.revenue_calculation">
+<span class="sig-name descname"><span class="pre">revenue_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice.revenue_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Compute annual energy and revenue using constant price assumptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hp_params</strong> (<em>object</em>) – Parameter container expected to include:
+<code class="docutils literal notranslate"><span class="pre">power</span></code> (array-like): kW time series or flow-range power,
+<code class="docutils literal notranslate"><span class="pre">capacity_factor</span></code> (float or None): proportion (0–1),
+<code class="docutils literal notranslate"><span class="pre">n_operation_days</span></code> (int/float or None): 0–365,
+<code class="docutils literal notranslate"><span class="pre">electricity_sell_price</span></code> (float or None): $/kWh</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">n_operation_days</span></code> exceeds 365.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hp_params</span></code> in place by setting:
+<code class="docutils literal notranslate"><span class="pre">annual_energy_generated</span></code> (kWh),
+<code class="docutils literal notranslate"><span class="pre">annual_revenue</span></code> (million $),
+and may update <code class="docutils literal notranslate"><span class="pre">capacity_factor</span></code> / <code class="docutils literal notranslate"><span class="pre">n_operation_days</span></code> defaults.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConstantEletrictyPrice_pd</span></span><a class="headerlink" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Revenue</span></code></p>
+<p>Revenue model for a time-indexed pandas DataFrame flow input.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd.revenue_calculation">
+<span class="sig-name descname"><span class="pre">revenue_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flow</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd.revenue_calculation" title="Link to this definition">#</a></dt>
+<dd><p>Compute annual energy, revenue, and summary statistics for time series flows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hp_params</strong> (<em>object</em>) – Parameter container expected to include:
+<code class="docutils literal notranslate"><span class="pre">power</span></code> (array-like): kW time series aligned with <code class="docutils literal notranslate"><span class="pre">flow.index</span></code>,
+<code class="docutils literal notranslate"><span class="pre">turbine_flow</span></code> (array-like): turbine flow aligned with <code class="docutils literal notranslate"><span class="pre">flow.index</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rated_power</span></code> (float): kW,
+<code class="docutils literal notranslate"><span class="pre">electricity_sell_price</span></code> (float or None),
+<code class="docutils literal notranslate"><span class="pre">turbine_efficiency</span></code> (array-like): turbine efficiency series</p></li>
+<li><p><strong>flow</strong> (<em>pandas.DataFrame</em>) – Original user-provided flow DataFrame with a DatetimeIndex.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method mutates <code class="docutils literal notranslate"><span class="pre">hp_params</span></code> in place by setting:
+<code class="docutils literal notranslate"><span class="pre">dataframe_output</span></code> : per-timestep outputs (power, energy, efficiency),
+<code class="docutils literal notranslate"><span class="pre">annual_dataframe_output</span></code> : annual aggregates including capacity factor and revenue</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="HydroGenerate.hydropower_potential.calculate_hp_potential">
+<span class="sig-name descname"><span class="pre">calculate_hp_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rated_power</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hydropower_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'BASIC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'US'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_headloss_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Darcy-Weisbach'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_flow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_efficiency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generator_efficiency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbine_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_headloss_calculation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_diameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_material</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penstock_frictionfactor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pctime_runfull</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_headloss_allowed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">turbine_Rm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pelton_n_jets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flow_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_average_velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hk_blade_diameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hk_blade_heigth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hk_blade_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hk_swept_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annual_caclulation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_category</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">electricity_sell_price</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost_calculation_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ORNL_HBCM'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_operation_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_turbineflow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_turbineflow_percent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annual_maintenance_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">major_maintenance_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HydroGenerate.hydropower_potential.calculate_hp_potential" title="Link to this definition">#</a></dt>
+<dd><p>Calculate hydropower potential and related outputs.</p>
+<p>This is the primary user-facing entry point for HydroGenerate. It constructs
+parameter containers, merges them into a single object, performs unit
+conversions, runs the requested hydropower calculation workflow, and (optionally)
+runs cost and annual revenue calculations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flow</strong> (<em>array-like</em><em> or </em><em>pandas.DataFrame</em><em> or </em><em>None</em>) – Flow values. If a DataFrame is provided, a DatetimeIndex is expected for
+annual calculations and <code class="docutils literal notranslate"><span class="pre">flow_column</span></code> must indicate which column
+contains flow values.</p></li>
+<li><p><strong>head</strong> (<em>float</em><em> or </em><em>None</em>) – Gross head. In US units this is in ft; in SI units this is in m.</p></li>
+<li><p><strong>rated_power</strong> (<em>float</em><em> or </em><em>None</em>) – Rated power (kW).</p></li>
+<li><p><strong>hydropower_type</strong> (<em>str</em><em> or </em><em>None</em>) – Hydropower calculation type. Supported values:
+<code class="docutils literal notranslate"><span class="pre">'BASIC'</span></code>: uses the basic power equation,
+<code class="docutils literal notranslate"><span class="pre">'DIVERSION'</span></code>: run-of-river workflow (turbines + head losses),
+<code class="docutils literal notranslate"><span class="pre">'HYDROKINETIC'</span></code>: in-stream kinetic workflow,
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, hydropower computation is skipped and only cost calculation
+(when configured) may run.</p></li>
+<li><p><strong>units</strong> (<em>{'US'</em><em>, </em><em>'SI'}</em>) – Units of the input values.</p></li>
+<li><p><strong>penstock_headloss_method</strong> (<em>str</em>) – Penstock head-loss method (e.g., <code class="docutils literal notranslate"><span class="pre">'Darcy-Weisbach'</span></code> or <code class="docutils literal notranslate"><span class="pre">'Hazen-Williams'</span></code>).</p></li>
+<li><p><strong>design_flow</strong> (<em>float</em><em> or </em><em>None</em>) – Design flow. If not provided for diversion projects, it may be computed
+from exceedance logic.</p></li>
+<li><p><strong>system_efficiency</strong> (<em>float</em><em> or </em><em>None</em>) – System efficiency. For BASIC workflow, used directly; for hydrokinetic,
+treated as a percent.</p></li>
+<li><p><strong>generator_efficiency</strong> (<em>float</em><em> or </em><em>None</em>) – Generator efficiency (%) for diversion workflow.</p></li>
+<li><p><strong>turbine_type</strong> (<em>str</em><em> or </em><em>None</em>) – Turbine type identifier.</p></li>
+<li><p><strong>head_loss</strong> (<em>float</em><em> or </em><em>None</em>) – External head loss (if already computed), in same unit system as head.</p></li>
+<li><p><strong>penstock_headloss_calculation</strong> (<em>bool</em>) – If True, penstock head loss is calculated and applied to compute net head.</p></li>
+<li><p><strong>penstock_length</strong> (<em>float</em><em> or </em><em>None</em>) – Penstock length.</p></li>
+<li><p><strong>penstock_diameter</strong> (<em>float</em><em> or </em><em>None</em>) – Penstock diameter.</p></li>
+<li><p><strong>penstock_material</strong> (<em>str</em><em> or </em><em>None</em>) – Penstock material used for roughness defaults.</p></li>
+<li><p><strong>penstock_frictionfactor</strong> (<em>float</em><em> or </em><em>None</em>) – Friction parameter value (method-dependent).</p></li>
+<li><p><strong>pctime_runfull</strong> (<em>float</em><em> or </em><em>None</em>) – Turbine parameter: percent time running full (method-specific).</p></li>
+<li><p><strong>max_headloss_allowed</strong> (<em>float</em><em> or </em><em>None</em>) – Maximum allowable head loss (percent of head) used for sizing.</p></li>
+<li><p><strong>turbine_Rm</strong> (<em>float</em><em> or </em><em>None</em>) – Turbine parameter used in turbine selection/parameter calculation.</p></li>
+<li><p><strong>pelton_n_jets</strong> (<em>int</em><em> or </em><em>None</em>) – Pelton turbine number of jets.</p></li>
+<li><p><strong>flow_column</strong> (<em>str</em><em> or </em><em>None</em>) – Flow column name when <code class="docutils literal notranslate"><span class="pre">flow</span></code> is a pandas DataFrame.</p></li>
+<li><p><strong>channel_average_velocity</strong> (<em>float</em><em> or </em><em>None</em>) – Channel average velocity (m/s).</p></li>
+<li><p><strong>hk_blade_diameter</strong> (<em>float</em><em> or </em><em>None</em>) – Hydrokinetic blade diameter.</p></li>
+<li><p><strong>hk_blade_heigth</strong> (<em>float</em><em> or </em><em>None</em>) – Hydrokinetic blade height.</p></li>
+<li><p><strong>hk_blade_type</strong> (<em>str</em><em> or </em><em>None</em>) – Hydrokinetic blade type identifier.</p></li>
+<li><p><strong>hk_swept_area</strong> (<em>float</em><em> or </em><em>None</em>) – Hydrokinetic swept area (m²). If None, may be computed.</p></li>
+<li><p><strong>annual_caclulation</strong> (<em>bool</em>) – If True, annual energy and revenue are computed.</p></li>
+<li><p><strong>resource_category</strong> (<em>str</em><em> or </em><em>None</em>) – Cost model resource category.</p></li>
+<li><p><strong>electricity_sell_price</strong> (<em>float</em><em> or </em><em>None</em>) – Electricity sell price ($/kWh).</p></li>
+<li><p><strong>cost_calculation_method</strong> (<em>str</em>) – Cost calculation method identifier (currently supports <code class="docutils literal notranslate"><span class="pre">'ORNL_HBCM'</span></code>).</p></li>
+<li><p><strong>capacity_factor</strong> (<em>float</em><em> or </em><em>None</em>) – Capacity factor (0–1) for annual revenue model when not using a time series.</p></li>
+<li><p><strong>n_operation_days</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>None</em>) – Operation days per year (0–365) for annual revenue model.</p></li>
+<li><p><strong>minimum_turbineflow</strong> (<em>float</em><em> or </em><em>None</em>) – Minimum turbine flow threshold (method-dependent units; converted if needed).</p></li>
+<li><p><strong>minimum_turbineflow_percent</strong> (<em>float</em><em> or </em><em>None</em>) – Minimum turbine flow as a percent of design flow.</p></li>
+<li><p><strong>annual_maintenance_flag</strong> (<em>bool</em>) – Whether to apply annual maintenance downtime (DataFrame/time-series only).</p></li>
+<li><p><strong>major_maintenance_flag</strong> (<em>bool</em>) – Whether to apply major maintenance downtime (DataFrame/time-series only).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A merged parameter object containing inputs and computed outputs. This
+includes (as available) attributes such as:
+<code class="docutils literal notranslate"><span class="pre">rated_power</span></code> (kW),
+<code class="docutils literal notranslate"><span class="pre">power</span></code> (kW series),
+<code class="docutils literal notranslate"><span class="pre">head_loss</span></code> (m/ft series),
+<code class="docutils literal notranslate"><span class="pre">net_head</span></code> (m/ft),
+cost outputs (<code class="docutils literal notranslate"><span class="pre">icc</span></code>, <code class="docutils literal notranslate"><span class="pre">annual_om</span></code>),
+revenue outputs (<code class="docutils literal notranslate"><span class="pre">annual_energy_generated</span></code>, <code class="docutils literal notranslate"><span class="pre">annual_revenue</span></code>),
+DataFrame summaries when applicable</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If:
+    <code class="docutils literal notranslate"><span class="pre">units</span></code> is not <code class="docutils literal notranslate"><span class="pre">'US'</span></code> or <code class="docutils literal notranslate"><span class="pre">'SI'</span></code>,
+    <code class="docutils literal notranslate"><span class="pre">hydropower_type</span></code> is invalid,
+    required inputs are missing for the chosen workflow</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./api"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="HYDPR.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Hydraulic Processing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="SR.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Summary Results</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.EconomicParameters"><code class="docutils literal notranslate"><span class="pre">EconomicParameters</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.calculate_head"><code class="docutils literal notranslate"><span class="pre">calculate_head()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Units"><code class="docutils literal notranslate"><span class="pre">Units</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Units.us_to_si_conversion"><code class="docutils literal notranslate"><span class="pre">Units.us_to_si_conversion()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Units.si_to_us_conversion"><code class="docutils literal notranslate"><span class="pre">Units.si_to_us_conversion()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydropower"><code class="docutils literal notranslate"><span class="pre">Hydropower</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydropower.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Hydropower.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Basic"><code class="docutils literal notranslate"><span class="pre">Basic</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Basic.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Basic.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Diversion"><code class="docutils literal notranslate"><span class="pre">Diversion</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Diversion.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Diversion.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydrokinetic"><code class="docutils literal notranslate"><span class="pre">Hydrokinetic</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.Hydrokinetic.hydropower_calculation"><code class="docutils literal notranslate"><span class="pre">Hydrokinetic.hydropower_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2"><code class="docutils literal notranslate"><span class="pre">ONRL_BaselineCostModeling_V2</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ONRL_BaselineCostModeling_V2.cost_calculation"><code class="docutils literal notranslate"><span class="pre">ONRL_BaselineCostModeling_V2.cost_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice.revenue_calculation"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice.revenue_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice_pd</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.ConstantEletrictyPrice_pd.revenue_calculation"><code class="docutils literal notranslate"><span class="pre">ConstantEletrictyPrice_pd.revenue_calculation()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#HydroGenerate.hydropower_potential.calculate_hp_potential"><code class="docutils literal notranslate"><span class="pre">calculate_hp_potential()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Idaho National Laboratory
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
