@@ -1,5 +1,5 @@
 # Inputs / Outputs - General Workflow
-This section describes all avaliable inputs and outputs and presents a graphic with general workflow computations intended to all HydroGenerate users. The section [Methods, functions, classes, and input handling](DeveloperGuide_2_MethodsFunctions.md) includes detials on input handling, and describes all exisitng funcitons, methods, and classes to inform future contributors.
+This section describes all available inputs and outputs and presents a graphic with general workflow computations intended to all HydroGenerate users. The section [Methods, functions, classes, and input handling](DeveloperGuide_2_MethodsFunctions.md) includes details on input handling, and describes all existing functions, methods, and classes to inform future contributors.
 
 ## General Computations Workflow
 {numref}`GWorkflow` shows the general workflow computations followed in **_HydroGenerate_**.
@@ -98,7 +98,7 @@ General Computations Workflow
 |	31	|	penstock_length	|	Penstock length	|	Numerical	|	-	|	ft	|	m	|
 |	32	|	penstock_material_o	|	Penstock material	|	String	|	CastIron, Concrete, GalvanizedIron, Plastic, Steel	|	-	|	-	|
 |	33	|	power	|	Power output for different values of flow	|	Series	|		|	KW	|	KW	|
-|	34	|	rated_power	|	Power output at design flow, nameplace capcity	|	Numerical	|	-	|	kW	|	kW	|
+|	34	|	rated_power	|	Power output at design flow, nameplace capacity	|	Numerical	|	-	|	kW	|	kW	|
 |	35	|	resource_category	|	Type of hydroelectryc project category	|	String	|	NewStream-reach, Non-PoweredDam, CanalConduit, UnitAddition, GeneratorRewind	|	-	|	-	|
 |	36	|	runner_diameter	|	Turbine runner diameter	|	Numeric	|	-	|	ft	|	m	|
 |	37	|	system_efficiency	|	Total efficiency of the system. Total efficiency = turbine efficieincy * generator efficiency	|	Numerical / Percent	|	1 - 100	|		DL*		|

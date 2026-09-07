@@ -1,5 +1,5 @@
 # Methods, Functions, Classes, and Input Handling
-This section includes detials on input handling, and describes all exisitng funcitons, methods, and classes to inform future contributors.
+This section includes details on input handling, and describes all existing functions, methods, and classes to inform future contributors.
 
 ## Input Handling
 {numref}`HG_InputH` shows how input parameters are handled in **_HydroGenerate_**. For details on inputs and outputs, data types, units, and a general view of the workflow visit [](UserGuide_7_HydroGenerateWorkflow.md). 
@@ -12,7 +12,7 @@ Input Handling
 ```
 
 ## Computations Workflow, methods, functions, and classes
-{numref}`DetWorkflow` shows methods, functions, and classes avaliable in **_HydroGenerate_**.
+{numref}`DetWorkflow` shows methods, functions, and classes available in **_HydroGenerate_**.
 
 ```{figure} DetailedWorkflow.SVG
 ---

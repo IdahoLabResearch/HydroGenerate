@@ -5,7 +5,7 @@ Cost and O&M are calculated using the _Hydropower Baseline Cost Modeling, Versio
 
 
 ##### Initial Capital Cost (ICC)
-Cost for hydropower project is calcualted using the following equations (ORNL, 2015):
+Cost for hydropower project is calculated using the following equations (ORNL, 2015):
 
 |	#	|	Resource Category (HG)   |	Cost Model Equation *	|
 |	:---	|	:---:	|	:---:	|
@@ -31,7 +31,7 @@ $$Annual O\&M (2014\$) = 225,417 P^{0.547}$$
 The _Hydropower Baseline Cost Modeling, Version 2_ report (ORNL, 2015) recommends using the lesser of 2.5% of ICC or the result of the equation above. This recommendation is implemented in HG. 
 
 ## Revenue
-Revenue is computed assuming a unique electricty price. The default is 0.0582 $/kW, which is the average wholesale electricity price in 2023 https://www.eia.gov/electricity/wholesale/
+Revenue is computed assuming a unique electricity price. The default is 0.0582 $/kW, which is the average wholesale electricity price in 2023 https://www.eia.gov/electricity/wholesale/
 
 ## References
 Oak Ridge Natiional Laboratory, 2015. Hydropower Baseline Cost Modeling, Version 2. https://info.ornl.gov/sites/publications/files/Pub58666.pdf
