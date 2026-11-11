@@ -329,7 +329,7 @@ class DW_FrictionFactor():      # Darcy-Weisbach friction factor calculator
         elif Re > 2000:     # Cubic interpolation formula derived from the Moody Diagram (Dunlop, 1991)
             AA= -1.5634601348517065795
             AB= 0.00328895476345399058690
-            Y2 = (epsilon / 3.7 * D) + AB
+            Y2 = (epsilon / (3.7 * D)) + AB
             Y3 = -2 * np.log10(Y2)
             FA = Y3**-2
             FB = FA * (2 - (AA * AB / (Y2 * Y3)))

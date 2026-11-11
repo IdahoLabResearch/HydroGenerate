@@ -271,9 +271,6 @@ class Units:
             if self.net_head is not None:
                 self.net_head = self.net_head / ft_to_m #       m to ft
     
-        if self.max_headloss_allowed is not None:
-            self.max_headloss_allowed = self.max_headloss_allowed / ft_to_m     # m to ft 
-
         if self.penstock_length is not None:
             self.penstock_length = self.penstock_length / ft_to_m       # m to ft 
 
